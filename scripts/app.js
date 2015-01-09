@@ -3,7 +3,7 @@ var allQuestions = [{question: "Question 1",
                                "b", 
                                "c", 
                                "d"],
-                     correctAnwser: 2
+                     correctAnswer: 2
                     }, 
                     {question: "Question 2", 
                      choices: ["1", 
@@ -24,7 +24,8 @@ var allQuestions = [{question: "Question 1",
 $(document).ready(function() {
     
     //Load first quiz question
-    var questionsIndex = 0;
+    var questionsIndex = 0,
+        numberOfCorrectAnswers = 0;
         
     
     var printQuizQuestions = function() {
@@ -36,8 +37,9 @@ $(document).ready(function() {
     
         for(var i = 0, x = pathToChoices.length; i < x; i++) {
             var choicesTag = "<label class='radio-label'>" +
-                             "<input type='radio' name='quiz-radio-button' value='" + 
-                             pathToChoices[i] + "'>" +  pathToChoices[i] + "</label>";
+                             "<input type='radio' name='quiz-radio-button-" + questionsIndex + 
+                             "' id='" + questionsIndex + "-" + i + "'>" +  pathToChoices[i] + "</label>";
+            
             $('#quiz').append(choicesTag);
         }
     };
@@ -49,6 +51,15 @@ $(document).ready(function() {
         $('.question').hide();
         $('.radio-label').hide();
         
+        var talleyScore = function() {
+                var findAnswer = allQuestions[questionsIndex].correctAnswer,
+                    answerID = questionsIndex + "-" + findAnswer;
+                
+                if(document.getElementById(answerID).checked) {numberOfCorrectAnswers++;}
+            };
+            
+        talleyScore();
+        
         questionsIndex++;
         
         if(questionsIndex < allQuestions.length) {
@@ -56,14 +67,8 @@ $(document).ready(function() {
         }
         
         else {
-            
-            
-            var talleyScore = function() {
-                
-            };
-            
             $('#next-button').hide();
-            $('#quiz').append("<p>You're total score is: </p>");
+            $('#quiz').append("<p>Your total score is: " + numberOfCorrectAnswers + "</p>");
         }
     });
 });
