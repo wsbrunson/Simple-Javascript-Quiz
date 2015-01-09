@@ -8,11 +8,14 @@ $(document).ready(function() {
     //Load first quiz question
     var questionsIndex = 0,
         pathToQuestion = allQuestions[questionsIndex].question,
-        pathToChoices = allQuestions[questionsIndex].choices;
+        pathToChoices = allQuestions[questionsIndex].choices,
+        questionTag = "<div class='question'>" + pathToQuestion + "</div>";
     
-    $('#quiz').append(pathToQuestion)
+    $('#quiz').append(questionTag);
     
     for(var i = 0, x = pathToChoices.length; i < x; i++) {
-        $('#quiz').append(pathToChoices[i]);
+        var choicesTag = "<input type='radio' name='quiz-radio-button' value='" + pathToChoices[i] + "'>";
+        $('#quiz').append(choicesTag);
+        $('#quiz').append("<label class='radio-label'>" + pathToChoices[i] + "</label>");
     }
 });
