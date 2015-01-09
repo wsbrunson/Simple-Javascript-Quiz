@@ -6,17 +6,17 @@ var allQuestions = [{question: "Question 1",
                      correctAnwser: 2
                     }, 
                     {question: "Question 2", 
-                     choices: ["a", 
-                               "b", 
-                               "c", 
-                               "d"],
+                     choices: ["1", 
+                               "2", 
+                               "3", 
+                               "4"],
                      correctAnswer: 0
                     }, 
                     {question: "Question 3", 
-                     choices: ["a", 
-                               "b", 
-                               "c", 
-                               "d"],
+                     choices: ["z", 
+                               "y", 
+                               "x", 
+                               "w"],
                      correctAnswer: 1
                     }
                     ];
@@ -35,7 +35,9 @@ $(document).ready(function() {
         $('#quiz').append(questionTag);
     
         for(var i = 0, x = pathToChoices.length; i < x; i++) {
-            var choicesTag = "<label class='radio-label'><input type='radio' name='quiz-radio-button' value='" + pathToChoices[i] + "'>" +  pathToChoices[i] + "</label>";
+            var choicesTag = "<label class='radio-label'>" +
+                             "<input type='radio' name='quiz-radio-button' value='" + 
+                             pathToChoices[i] + "'>" +  pathToChoices[i] + "</label>";
             $('#quiz').append(choicesTag);
         }
     };
@@ -44,8 +46,8 @@ $(document).ready(function() {
 
     //Next button
     $('#next-button').click(function() {
-        $('.question').remove();
-        $('.radio-label').remove();
+        $('.question').hide();
+        $('.radio-label').hide();
         
         questionsIndex++;
         
@@ -54,7 +56,13 @@ $(document).ready(function() {
         }
         
         else {
-            $('#next-button').remove();
+            
+            
+            var talleyScore = function() {
+                
+            };
+            
+            $('#next-button').hide();
             $('#quiz').append("<p>You're total score is: </p>");
         }
     });

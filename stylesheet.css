@@ -1,9 +1,8 @@
 input {
     display: inline;
-    margin-bottom: 3px;
 }
 
 .radio-label {
-    display: inline-block;
+    display: block;
     text-decoration: underline;
 }
