@@ -107,10 +107,10 @@ $(document).ready(function() {
         
         $(questionNavIDToShow).show();
 
-        if(questionNavIndex === allQuestionsArrayLength) {
+        if(questionNavIndex >= allQuestionsArrayLength) {
             $('#next-button').hide();
             tallyScore();
-            $('#quiz').append("<p>Your total score is: " + numberOfCorrectAnswers + "</p>");
+            $('#quiz').append("<p id='total'>Your total score is: " + numberOfCorrectAnswers + "</p>");
         }
     });
     
@@ -126,7 +126,13 @@ $(document).ready(function() {
         
         $(questionNavIDToShow).show();
         
+        if(questionNavIndex <= allQuestionsArrayLength) {
+            $('#next-button').show();
+            $('#total').hide();
+        }
         
-        
+        if(questionNavIndex === 0) {
+            $('back-button').hide();
+        }
     });
 });
