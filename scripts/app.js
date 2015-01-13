@@ -61,9 +61,11 @@ $(document).ready(function() {
         for(var loopIndexQuestion = 0; loopIndexQuestion < allQuestionsArrayLength; loopIndexQuestion++) {
             var pathToQuestion = allQuestions[loopIndexQuestion].question,
                 pathToChoices = allQuestions[loopIndexQuestion].choices,
+                
                 questionsDivElementID = "question-" + loopIndexQuestion,
                 questionsDivElement = "<div class='question-container' id='" + questionsDivElementID + "'></div>",
                 hastagDivElement = "#" + questionsDivElementID,
+                
                 questionID = "q"+ loopIndexQuestion,
                 questionTag = "<p class='question' id='" + questionID + "'>" + pathToQuestion + "</div>";
 
@@ -100,34 +102,38 @@ $(document).ready(function() {
 
         $('#score-total').html(numberOfCorrectAnswers);
     };
+    
+    // ---Hide & Show button---
+    var hideBackButton = $('#back-button').hide('fast');
 
-    //Begin button
+    
+
+    // ----Begin button----
     $('#begin-button').click(function() {
         $('#welcome').hide('fast');
-        $('.nav-button').show('fast');
+        $('#nav-button').show('fast');
 
         if(questionNavIndex === 0) {
-            $('#back-button').hide('fast');
+            //$('#back-button').hide('fast');
+            hideBackButton;
         }
 
         printQuizQuestions();
         $('#question-0').show('fast');
     });
 
-    //Next button
+    // ----Next button----
     $('#next-button').click(function() {
         var questionNavIDToHide = "#question-" + questionNavIndex;
-
         $(questionNavIDToHide).hide('fast');
 
         questionNavIndex++
 
         var questionNavIDToShow = "#question-" + questionNavIndex;
-
         $(questionNavIDToShow).show('fast');
 
         if(questionNavIndex >= allQuestionsArrayLength) {
-            $('.nav-button').hide('fast');
+            $('#nav-button').hide('fast');
             tallyScore();
             $('#score').show('fast');
         }
@@ -137,24 +143,22 @@ $(document).ready(function() {
          }
     });
 
-    //Back button
+    // ----Back button----
     $('#back-button').click(function() {
         if(questionNavIndex === 0) {
-            $('#back-button').hide('fast');
+            hideBackButton;
         }
 
         var questionNavIDToHide = "#question-" + questionNavIndex;
-
         $(questionNavIDToHide).hide('fast');
 
         questionNavIndex--
 
         var questionNavIDToShow = "#question-" + questionNavIndex;
-
         $(questionNavIDToShow).show('fast');
     });
 
-    //Retake Quiz button
+    // ----Retake Quiz button----
     $('#retake-button').click(function() {
         $('#quiz').children().remove();
         questionNavIndex = 0
@@ -164,5 +168,11 @@ $(document).ready(function() {
         $('#welcome').show('fast');
 
         console.log(previousQuizAttempts);
+    });
+    
+    // ----Show Answers button----
+    $('#retake-button').click(function() {
+        ('.question-1').show('fast');
+        ('label').children().hide();
     });
 });
