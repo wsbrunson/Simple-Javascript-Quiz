@@ -1,3 +1,4 @@
+
 var allQuestions = [{question: "Question 1: Grand Central Terminal, Park Avenue, New York is the world's", 
                      choices: ["A: largest railway station", 
                                "B: highest railway station", 
@@ -48,6 +49,7 @@ var allQuestions = [{question: "Question 1: Grand Central Terminal, Park Avenue,
                      correctAnswer: 2
                     }
                     ];
+                    
 
 $(document).ready(function() {
     
@@ -70,11 +72,17 @@ $(document).ready(function() {
             
             for(var loopIndexChoices = 0, x = pathToChoices.length; loopIndexChoices < x; loopIndexChoices++) {
                 var choicesID = "c" + loopIndexQuestion + "-" + loopIndexChoices,
+                    findAnswer = allQuestions[loopIndexQuestion].correctAnswer,                                             //This checks the correct answer
+                    answerID = "c" + loopIndexQuestion + "-" + findAnswer,                                                  //This checks the correct answer
                     choicesTag = "<label class='radio-label' id='" + choicesID + "'>" +
                                  "<input type='radio' name='quiz-radio-button-" + loopIndexQuestion + 
-                                 "'>" +  pathToChoices[loopIndexChoices] + "</label>";
+                                 "'>   " +  pathToChoices[loopIndexChoices] + "</label>",
+                    correctChoicesTag = "<label class='radio-label' id='" + choicesID + "'>" +                              //This checks the correct answer
+                                 "<input type='radio' checked='checked' name='quiz-radio-button-" + loopIndexQuestion + 
+                                 "'>   " +  pathToChoices[loopIndexChoices] + "</label>";
                 
-                $(hastagDivElement).append(choicesTag);
+                if(choicesID === answerID) {$(hastagDivElement).append(correctChoicesTag);}                                 //This checks the correct answer
+                else {$(hastagDivElement).append(choicesTag);}
             }
             
             if(loopIndexQuestion !==0) {$(hastagDivElement).hide();}
@@ -83,18 +91,36 @@ $(document).ready(function() {
     
     var tallyScore = function() {
         for(var i = 0; i < allQuestionsArrayLength; i++) {
-            var findAnswer = allQuestions[i].correctAnswer;
-            var answerID = "c" + i + "-" + findAnswer;
+            var findAnswer = allQuestions[i].correctAnswer,
+                answerID = "#c" + i + "-" + findAnswer;
+            
             console.log(answerID);
-            console.log(document.getElementById(answerID).checked);
-            if(document.getElementById(answerID).checked) {
+            console.log(answerID.getAttribute('checked'));
+            // Doesn't work right now: document.getElementById(answerID).checked
+            if(answerID.getAttribute('checked')) {
                 console.log('true');
-                numberOfCorrectAnswers++};
+                numberOfCorrectAnswers++;
+                console.log(numberOfCorrectAnswers);
+            };
         }
     };
-    
-    printQuizQuestions();
 
+    printQuizQuestions();
+    tallyScore();
+    
+    //Begin button
+    $('#begin-button').click(function() {
+        $('#welcome').hide();
+        $('.nav-button').show();
+        
+        if(questionNavIndex === 0) {
+            $('#back-button').hide();
+        }
+        
+        printQuizQuestions();
+        tallyScore();
+    });
+    
     //Next button
     $('#next-button').click(function() {
         var questionNavIDToHide = "#question-" + questionNavIndex;
@@ -108,14 +134,23 @@ $(document).ready(function() {
         $(questionNavIDToShow).show();
 
         if(questionNavIndex >= allQuestionsArrayLength) {
-            $('#next-button').hide();
+            $('.nav-button').hide();
+            $('#score').show();
             tallyScore();
-            $('#quiz').append("<p id='total'>Your total score is: " + numberOfCorrectAnswers + "</p>");
+            $('#score').append("<p id='total'>Your total score is: " + numberOfCorrectAnswers + "</p>");
         }
+        
+         if(questionNavIndex >= 0) {
+            $('#back-button').show();
+         }
     });
     
     //Back button
     $('#back-button').click(function() {
+        if(questionNavIndex === 0) {
+            $('#back-button').hide();
+        }
+        
         var questionNavIDToHide = "#question-" + questionNavIndex;
         
         $(questionNavIDToHide).hide();
@@ -129,10 +164,6 @@ $(document).ready(function() {
         if(questionNavIndex <= allQuestionsArrayLength) {
             $('#next-button').show();
             $('#total').hide();
-        }
-        
-        if(questionNavIndex === 0) {
-            $('back-button').hide();
         }
     });
 });
