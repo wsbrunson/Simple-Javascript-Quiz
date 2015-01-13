@@ -7,14 +7,15 @@ input {
 }
 
 .question-container {
-    background-color: #01FF70;
+    background-color: #3D9970;
     margin-left: auto;
     margin-right: auto;
     width: 50%;
 }
 
 .question-container * {
-    margin-left: 10px;    
+    margin-left: 10px;
+    color: white;
 }
 
 .page-header {
@@ -40,11 +41,12 @@ label {
     color: #111111;
 }
 
-.question {
-    color: #111111;
+#begin-button {
+    display: block;
+    margin: 0 auto;
 }
 
-#begin-button {
+#retake-button {
     display: block;
     margin: 0 auto;
 }
