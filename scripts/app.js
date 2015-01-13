@@ -54,6 +54,7 @@ $(document).ready(function() {
 
     var questionNavIndex = 0,
         numberOfCorrectAnswers = 0,
+        previousQuizAttempts = [],
         allQuestionsArrayLength = allQuestions.length;
 
     var printQuizQuestions = function() {
@@ -78,7 +79,7 @@ $(document).ready(function() {
                 $(hastagDivElement).append(choicesTag);
             }
 
-            if(loopIndexQuestion !==0) {$(hastagDivElement).hide();}
+            $(hastagDivElement).hide();
         }
     };
 
@@ -96,63 +97,72 @@ $(document).ready(function() {
                 //console.log(numberOfCorrectAnswers);
             };
         }
+
+        $('#score-total').html(numberOfCorrectAnswers);
     };
 
     //Begin button
     $('#begin-button').click(function() {
-        $('#welcome').hide();
-        $('.nav-button').show();
+        $('#welcome').hide('fast');
+        $('.nav-button').show('fast');
 
         if(questionNavIndex === 0) {
-            $('#back-button').hide();
+            $('#back-button').hide('fast');
         }
 
         printQuizQuestions();
+        $('#question-0').show('fast');
     });
 
     //Next button
     $('#next-button').click(function() {
         var questionNavIDToHide = "#question-" + questionNavIndex;
 
-        $(questionNavIDToHide).hide();
+        $(questionNavIDToHide).hide('fast');
 
         questionNavIndex++
 
         var questionNavIDToShow = "#question-" + questionNavIndex;
 
-        $(questionNavIDToShow).show();
+        $(questionNavIDToShow).show('fast');
 
         if(questionNavIndex >= allQuestionsArrayLength) {
-            $('.nav-button').hide();
-            $('#score').show();
+            $('.nav-button').hide('fast');
             tallyScore();
-            $('#score').append("<p id='total'>Your total score is: " + numberOfCorrectAnswers + "</p>");
+            $('#score').show('fast');
         }
 
          if(questionNavIndex >= 0) {
-            $('#back-button').show();
+            $('#back-button').show('fast');
          }
     });
 
     //Back button
     $('#back-button').click(function() {
         if(questionNavIndex === 0) {
-            $('#back-button').hide();
+            $('#back-button').hide('fast');
         }
 
         var questionNavIDToHide = "#question-" + questionNavIndex;
 
-        $(questionNavIDToHide).hide();
+        $(questionNavIDToHide).hide('fast');
 
         questionNavIndex--
 
         var questionNavIDToShow = "#question-" + questionNavIndex;
 
-        $(questionNavIDToShow).show();
+        $(questionNavIDToShow).show('fast');
+    });
 
-        if(questionNavIndex <= allQuestionsArrayLength) {
-            $('#next-button').show();
-            $('#total').hide();
-        }
+    //Retake Quiz button
+    $('#retake-button').click(function() {
+        $('#quiz').children().remove();
+        questionNavIndex = 0
+        previousQuizAttempts.push(numberOfCorrectAnswers);
+        numberOfCorrectAnswers = 0;
+        $('#score').hide('fast');
+        $('#welcome').show('fast');
+
+        console.log(previousQuizAttempts);
     });
 });
