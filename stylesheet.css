@@ -28,24 +28,27 @@ input {
 .page-header * {
     text-align: center;
     color: #FFFFFF;
-}
-
-.button-holder {
-    text-align: center;
-    display: none;
-}
+} 
 
 #nav-button {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
     display: none;
-}
-
-#begin-button {
-    margin: 0 auto;
-    display: block;
 }
 
 label {
     color: #111111;
+}
+
+#begin-button {
+    display: block;
+    margin: 0 auto;
+}
+
+#retake-button {
+    display: block;
+    margin: 0 auto;
 }
 
 .jumbotron * {
@@ -58,4 +61,12 @@ label {
 
 table {
     margin: 0 auto;
+}
+
+.highlight-correct { 
+    background-color: #2ECC40; 
+}
+
+.highlight-incorrect { 
+    background-color: #FF4136; 
 }

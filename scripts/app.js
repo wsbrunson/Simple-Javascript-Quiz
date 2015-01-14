@@ -97,65 +97,86 @@ $(document).ready(function() {
                 //console.log('true');
                 numberOfCorrectAnswers++;
                 //console.log(numberOfCorrectAnswers);
-            };
+            }
         }
 
         $('#score-total').html(numberOfCorrectAnswers);
     };
     
-    // ---Hide & Show button---
-    var hideBackButton = $('#back-button').hide('fast');
-
+    // ----Hide & Show button----
+    var changeDisplayOfElements = function(elem, state) {
+        var element = "#" + elem;
+        
+        if(state === 'hide') {$(element).hide('slow');}
+        else if(state === 'show') {$(element).show('slow');}
+        else {
+            console.log("changeDisplayOfElements state or elem is incorrect");
+            console.log(elem);
+            console.log(state);
+        }
+    };
     
+    // ----Nav Button Function----
+    var navigateQuestions = function(direction) {
+        var questionNavIDToHide = "question-" + questionNavIndex;
+        //$(questionNavIDToHide).hide('fast');
+        changeDisplayOfElements(questionNavIDToHide, 'hide');
+
+        if(direction==="next") {questionNavIndex++;}
+        else if(direction==="back") {questionNavIndex--;}
+        else {
+            console.log("navigateQuestions() recieved unexpexted input - use next or back");
+            console.log(direction);
+        }
+
+        var questionNavIDToShow = "question-" + questionNavIndex;
+        //$(questionNavIDToShow).show('fast');
+        changeDisplayOfElements(questionNavIDToShow, 'show');
+    }
 
     // ----Begin button----
     $('#begin-button').click(function() {
-        $('#welcome').hide('fast');
-        $('#nav-button').show('fast');
+        //$('#welcome').hide('fast');
+        changeDisplayOfElements('welcome', 'hide');
+        //$('#nav-button').show('fast');
+        changeDisplayOfElements('nav-button', 'show');
 
         if(questionNavIndex === 0) {
             //$('#back-button').hide('fast');
-            hideBackButton;
+            changeDisplayOfElements('back-button', 'hide');
         }
 
         printQuizQuestions();
-        $('#question-0').show('fast');
+        //$('#question-0').show('fast');
+        changeDisplayOfElements('question-0', 'show');
+        changeDisplayOfElements('show-button', 'show');
     });
 
     // ----Next button----
     $('#next-button').click(function() {
-        var questionNavIDToHide = "#question-" + questionNavIndex;
-        $(questionNavIDToHide).hide('fast');
-
-        questionNavIndex++
-
-        var questionNavIDToShow = "#question-" + questionNavIndex;
-        $(questionNavIDToShow).show('fast');
-
+        navigateQuestions("next");
+        
         if(questionNavIndex >= allQuestionsArrayLength) {
-            $('#nav-button').hide('fast');
+            //$('#nav-button').hide('fast');
+            changeDisplayOfElements('nav-button', 'hide');
             tallyScore();
-            $('#score').show('fast');
+            //$('#score').show('fast');
+            changeDisplayOfElements('score', 'show')
         }
 
          if(questionNavIndex >= 0) {
-            $('#back-button').show('fast');
+            //$('#back-button').show('fast');
+            changeDisplayOfElements('back-button', 'show');
          }
     });
 
     // ----Back button----
     $('#back-button').click(function() {
+        navigateQuestions("back");
+        
         if(questionNavIndex === 0) {
-            hideBackButton;
+            $(this).hide();
         }
-
-        var questionNavIDToHide = "#question-" + questionNavIndex;
-        $(questionNavIDToHide).hide('fast');
-
-        questionNavIndex--
-
-        var questionNavIDToShow = "#question-" + questionNavIndex;
-        $(questionNavIDToShow).show('fast');
     });
 
     // ----Retake Quiz button----
@@ -164,15 +185,58 @@ $(document).ready(function() {
         questionNavIndex = 0
         previousQuizAttempts.push(numberOfCorrectAnswers);
         numberOfCorrectAnswers = 0;
-        $('#score').hide('fast');
-        $('#welcome').show('fast');
+        //$('#score').hide('fast');
+        changeDisplayOfElements('score', 'hide');
+        //$('#welcome').show('fast');
+        changeDisplayOfElements('welcome', 'show');
 
         console.log(previousQuizAttempts);
     });
     
     // ----Show Answers button----
-    $('#retake-button').click(function() {
-        ('.question-1').show('fast');
-        ('label').children().hide();
+    $('#show-button').click(function() {
+
+            /*console.log(answerID);
+            console.log(labelID)
+            console.log(document.getElementById(answerID));
+            console.log(document.getElementById(answerID).checked);
+            console.log('true');
+            $(labelID).addClass('highlight-correct');
+            */
+        
+        
+        for(var i = 0; i < allQuestionsArrayLength; i++) {
+            for(var j = 0; j < allQuestions[i].choices.length; j++) {
+                var findAnswer = allQuestions[i].correctAnswer,
+                answerID = "radio-c" + i + "-" + findAnswer,
+                //hastagAnswerID = "#" + answerID,
+                labelID = "#c" + i + "-" + j,
+                radioID = "radio-c" + i + "-" + j;
+                console.log("answerID " + answerID);
+                console.log("labeID " + labelID);
+                console.log("radioID " + radioID);
+                //console.log("hastagAnswerID " + hastagAnswerID);
+                console.log(document.getElementById(radioID).checked);
+                console.log(!(answerID === radioID));
+                
+                if(document.getElementById(radioID).checked & !(answerID === radioID)) {
+                    console.log("painted incorrect");
+                    $(labelID).addClass('highlight-incorrect');
+                    
+                }
+                else if(answerID === radioID) {
+                    $(labelID).addClass('highlight-correct');
+                    
+                }
+            }
+        }
+        
+        for(var i = 0; i < allQuestionsArrayLength; i++) {
+            var element = 'question-' + i;
+            //$('.question').show('fast');
+            changeDisplayOfElements(element, 'show');
+            $('label').children().hide();
+        }
+        
     });
 });
