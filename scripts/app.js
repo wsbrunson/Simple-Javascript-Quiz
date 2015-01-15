@@ -107,8 +107,8 @@ $(document).ready(function() {
     var changeDisplayOfElements = function(elem, state) {
         var element = "#" + elem;
         
-        if(state === 'hide') {$(element).hide('slow');}
-        else if(state === 'show') {$(element).show('slow');}
+        if(state === 'hide') {$(element).hide();}
+        else if(state === 'show') {$(element).show();}
         else {
             console.log("changeDisplayOfElements state or elem is incorrect");
             console.log(elem);
@@ -156,7 +156,7 @@ $(document).ready(function() {
     $('#next-button').click(function() {
         navigateQuestions("next");
         
-        if(questionNavIndex >= allQuestionsArrayLength) {
+        if(questionNavIndex === allQuestionsArrayLength) {
             //$('#nav-button').hide('fast');
             changeDisplayOfElements('nav-button', 'hide');
             tallyScore();
@@ -175,7 +175,7 @@ $(document).ready(function() {
         navigateQuestions("back");
         
         if(questionNavIndex === 0) {
-            $(this).hide();
+            changeDisplayOfElements('back-button', 'hide');
         }
     });
 
@@ -211,7 +211,8 @@ $(document).ready(function() {
                 answerID = "radio-c" + i + "-" + findAnswer,
                 //hastagAnswerID = "#" + answerID,
                 labelID = "#c" + i + "-" + j,
-                radioID = "radio-c" + i + "-" + j;
+                radioID = "radio-c" + i + "-" + j,
+                questionContainer = "question-" + i;
                 console.log("answerID " + answerID);
                 console.log("labeID " + labelID);
                 console.log("radioID " + radioID);
@@ -222,6 +223,7 @@ $(document).ready(function() {
                 if(document.getElementById(radioID).checked & !(answerID === radioID)) {
                     console.log("painted incorrect");
                     $(labelID).addClass('highlight-incorrect');
+                    $(questionContainer).addClass('question-incorrect');
                     
                 }
                 else if(answerID === radioID) {
