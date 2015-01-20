@@ -12,10 +12,11 @@ input {
     padding-top: 15px;
     padding-bottom: 15px;
     margin-bottom: 6px;
+    display: none;
 }
 
 .question {
-    margin-left: 600px;
+    margin-left: 35%;
     width: 500px;
     font-weight: bold;
     font-size: 18px;
@@ -23,7 +24,7 @@ input {
 }
 
 .radio-label {
-    margin-left: 600px;
+    margin-left: 35%;
 }
 
 .page-header {
