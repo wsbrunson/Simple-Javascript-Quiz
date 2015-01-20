@@ -56,8 +56,14 @@ $(document).ready(function() {
         numberOfCorrectAnswers = 0,
         previousQuizAttempts = [],
         allQuestionsArrayLength = allQuestions.length;
-
+    
+    // ----Print Questions Function ----
+    // Prints questions by adding tag IDs to the allQuestions array. Then uses Handlebars to
+    // add the questions, choices, and IDs to the DOM
+    
     var printQuizQuestions = function() {
+        console.log(previousQuizAttempts == 0);
+        if(previousQuizAttempts == 0) {
         for(var loopIndexQuestion = 0; loopIndexQuestion < allQuestionsArrayLength; loopIndexQuestion++) {
             var pathToQuestions = allQuestions[loopIndexQuestion];
                 
@@ -71,14 +77,18 @@ $(document).ready(function() {
                 pathToChoices.radioButtonGroup = "quiz-radio-button-" + loopIndexQuestion;
                 pathToChoices.radioID = "radio-" + pathToChoices.choiceID;
             }
-        }
+        }}
         
         var theTemplateScript = $("#quiz-template").html();
         var theTemplate = Handlebars.compile(theTemplateScript);
         $(".quiz").append(theTemplate(allQuestions));
         
     };
-
+    
+    // ---- Tally Score ----
+    // Creates the ID of the correct question for each radio-button-group, then finds out
+    // if that radio button has been checked
+    
     var tallyScore = function() {
         for(var i = 0; i < allQuestionsArrayLength; i++) {
             var findAnswer = allQuestions[i].correctAnswer,
@@ -90,12 +100,21 @@ $(document).ready(function() {
         $('#score-total').html(numberOfCorrectAnswers);
     };
     
+    var updateProgressBar = function() {
+        var value = 100 / (allQuestionsArrayLength / questionNavIndex)
+        $('.progress-bar').css('width', value+'%').attr('aria-valuenow', value);
+    };
+    
     // ----Hide & Show elements----
-    var changeDisplayOfElements = function(elem, state) {
-        var element = "#" + elem;
+    var changeDisplayOfElements = function(elem, state, classTrue) {
+        var modifier;
         
-        if(state === 'hide') {$(element).hide();}
-        else if(state === 'show') {$(element).show();}
+        if (classTrue) {modifier = ".";}
+        else {modifier = "#";}
+        var element = modifier + elem;
+        
+        if(state === 'hide') {$(element).hide(); console.log('hide ' + element);}
+        else if(state === 'show') {$(element).show(); console.log('show ' + element);}
         else {
             console.log("changeDisplayOfElements state or elem is incorrect");
             console.log(elem);
@@ -122,7 +141,7 @@ $(document).ready(function() {
     // ----Begin button----
     $('#begin-button').click(function() {
         changeDisplayOfElements('welcome', 'hide');
-        changeDisplayOfElements('nav-button', 'show');
+        changeDisplayOfElements('nav-button', 'show', true);
 
         if(questionNavIndex === 0) {
             changeDisplayOfElements('back-button', 'hide');
@@ -130,29 +149,31 @@ $(document).ready(function() {
 
         printQuizQuestions();
         changeDisplayOfElements('question-0', 'show');
-        changeDisplayOfElements('show-button', 'show');
+        changeDisplayOfElements('progress', 'show', true)
     });
 
     // ----Next button----
     $('#next-button').click(function() {
         navigateQuestions("next");
+        updateProgressBar();
+        
+        if(questionNavIndex >= 0) {
+            changeDisplayOfElements('back-button', 'show');
+         }
         
         if(questionNavIndex === allQuestionsArrayLength) {
-            changeDisplayOfElements('nav-button', 'hide');
+            changeDisplayOfElements('nav-button', 'hide', true);
             
             tallyScore();
             
             changeDisplayOfElements('score', 'show')
         }
-
-         if(questionNavIndex >= 0) {
-            changeDisplayOfElements('back-button', 'show');
-         }
     });
 
     // ----Back button----
     $('#back-button').click(function() {
         navigateQuestions("back");
+        updateProgressBar();
         
         if(questionNavIndex === 0) {
             changeDisplayOfElements('back-button', 'hide');
@@ -161,14 +182,16 @@ $(document).ready(function() {
 
     // ----Retake Quiz button----
     $('#retake-button').click(function() {
-        $('#quiz').children().remove();
+        $('.question-container').each(function () {
+            $(this).remove();
+        });
         questionNavIndex = 0
         previousQuizAttempts.push(numberOfCorrectAnswers);
         numberOfCorrectAnswers = 0;
+        updateProgressBar();
         changeDisplayOfElements('score', 'hide');
+        changeDisplayOfElements('progress', 'hide', true);
         changeDisplayOfElements('welcome', 'show');
-
-        console.log(previousQuizAttempts);
     });
     
     // ----Show Answers button----
@@ -198,3 +221,5 @@ $(document).ready(function() {
         }
     });
 });
+
+

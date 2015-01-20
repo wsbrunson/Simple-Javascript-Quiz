@@ -15,16 +15,14 @@ input {
     display: none;
 }
 
-.question {
+.question-container * {
     margin-left: 35%;
+}
+.question {
     width: 500px;
     font-weight: bold;
     font-size: 18px;
     color: #85144B;
-}
-
-.radio-label {
-    margin-left: 35%;
 }
 
 .page-header {
@@ -39,7 +37,7 @@ input {
     color: #FFFFFF;
 } 
 
-#nav-button {
+.nav-button {
     display: none;
 }
 
@@ -50,12 +48,24 @@ label {
 
 #begin-button {
     display: block;
-    margin: 0 auto;
+    margin: 1em auto;
 }
 
 #retake-button {
     display: block;
-    margin: 0 auto;
+    margin: 1em auto;
+}
+
+#next-button {
+    float: right;
+    margin-right: 30%;
+    margin-top: 5%;
+}
+
+#back-button {
+    float: left;
+    margin-left: 30%;
+    margin-top: 5%;
 }
 
 .jumbotron * {
@@ -87,4 +97,8 @@ table {
 
 .question-incorrect {
     background-color: #2ECC40;
+}
+
+.progress {
+    display: none;
 }
