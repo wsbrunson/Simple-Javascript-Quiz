@@ -1,0 +1,78 @@
+{"questions": [
+    {
+        "question": "Question 1: Grand Central Terminal, Park Avenue, New York is the world's",
+        "choices": [
+                        {"answer": "A: largest railway station"},
+                        {"answer": "B: highest railway station"},
+                        {"answer": "C: longest railway station"},
+                        {"answer": "D: None of the above"}
+                    ],
+        "correctAnswer": 0
+    },
+    
+    {
+        "question": "Question 2: Entomology is the science that studies",
+        "choices": [
+                        {"answer": "A: Behavior of human beings"},
+                        {"answer": "B: Insects"},
+                        {"answer": "C: The origin and history of technical and scientific terms"},
+                        {"answer": "D: The formation of rocks"}
+                    ],
+        "correctAnswer": 1
+    },
+    
+    {
+        "question": "Question 3: Friction can be reduced by changing from",
+        "choices": [
+                        {"answer": "A: sliding to rolling"},
+                        {"answer": "B: rolling to sliding"},
+                        {"answer": "C: potential energy to kinetic energy"},
+                        {"answer": "D: dynamic to static"}
+                    ],
+        "correctAnswer": 0
+    },
+    
+    {
+        "question": "Question 4: For seeing objects at the surface of water from a submarine under water, the instrument used is",
+        "choices": [
+                        {"answer": "A: kaleidoscope"},
+                        {"answer": "B: spectroscope"},
+                        {"answer": "C: periscope"}, 
+                        {"answer": "D: telescope"}
+                    ],
+        "correctAnswer": 2
+    },
+    
+    {
+        "question": "Question 5: Galileo was an Italian astronomer who",
+        "choices": [
+                        {"answer": "A: developed the telescope"},
+                        {"answer": "B: discovered four satellites of Jupiter"},
+                        {"answer": "C: discovered that the movement of pendulum produces a regular time measurement"},
+                        {"answer": "D: All of the above"}
+                    ],
+        "correctAnswer": 3
+    },
+    
+    {
+        "question": "Question 6: Habeas Corpus Act 1679",
+        "choices": [
+                        {"answer": "A: states that no one was to be imprisoned without a writ or warrant stating the charge against him"},
+                        {"answer": "B: provided facilities to a prisoner to obtain either speedy trial or release in bail"},
+                        {"answer": "C: safeguarded the personal liberties of the people against arbitrary imprisonment by the king's orders"},
+                        {"answer": "D: All of the above"}
+                    ],
+        "correctAnswer": 3
+    },
+    
+    {
+        "question": "Question 7: For galvanizing iron which of the following metals is used?",
+        "choices": [
+                        {"answer": "A: Aluminium"},
+                        {"answer": "B: Lead"},
+                        {"answer": "C: Zinc"},
+                        {"answer": "D: Copper"}
+                    ],
+        "correctAnswer": 2
+    }
+]}

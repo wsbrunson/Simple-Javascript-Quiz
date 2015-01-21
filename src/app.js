@@ -1,3 +1,4 @@
+/*
 var allQuestions = [{question: "Question 1: Grand Central Terminal, Park Avenue, New York is the world's",
                      choices: [{answer: "A: largest railway station"},
                                {answer: "B: highest railway station"},
@@ -48,42 +49,76 @@ var allQuestions = [{question: "Question 1: Grand Central Terminal, Park Avenue,
                      correctAnswer: 2
                     }
                     ];
-
-
-$(document).ready(function() {
-
-    var questionNavIndex = 0,
-        numberOfCorrectAnswers = 0,
-        previousQuizAttempts = [],
-        allQuestionsArrayLength = allQuestions.length;
+*/
+var printQuizQuestions = function() {
+        $.getJSON("src/questions.json", function(data) {
+        
+        allQuestionsArrayLength = data.questions.length;
     
-    // ----Print Questions Function ----
-    // Prints questions by adding tag IDs to the allQuestions array. Then uses Handlebars to
-    // add the questions, choices, and IDs to the DOM
-    
-    var printQuizQuestions = function() {
-        console.log(previousQuizAttempts == 0);
-        if(previousQuizAttempts == 0) {
-        for(var loopIndexQuestion = 0; loopIndexQuestion < allQuestionsArrayLength; loopIndexQuestion++) {
-            var pathToQuestions = allQuestions[loopIndexQuestion];
+        for(var loopIndexQuestion in data.questions) {
+            var pathToQuestions = data.questions[loopIndexQuestion];
                 
             pathToQuestions.questionsDivElementID = "question-" + loopIndexQuestion;
             pathToQuestions.questionID = "q"+ loopIndexQuestion;
 
-            for(var loopIndexChoices = 0, x = pathToQuestions.choices.length; loopIndexChoices < x; loopIndexChoices++) {
+            for(var loopIndexChoices in pathToQuestions.choices) {
                 var pathToChoices = pathToQuestions.choices[loopIndexChoices];
                 
                 pathToChoices.choiceID = "c" + loopIndexQuestion + "-" + loopIndexChoices;
                 pathToChoices.radioButtonGroup = "quiz-radio-button-" + loopIndexQuestion;
                 pathToChoices.radioID = "radio-" + pathToChoices.choiceID;
             }
-        }}
+        }
         
         var theTemplateScript = $("#quiz-template").html();
         var theTemplate = Handlebars.compile(theTemplateScript);
-        $(".quiz").append(theTemplate(allQuestions));
+        $(".quiz").append(theTemplate(data.questions));
+    
+        });
         
     };
+    
+printQuizQuestions();
+
+$(document).ready(function() {
+
+    var questionNavIndex = 0,
+        numberOfCorrectAnswers = 0,
+        previousQuizAttempts = [],
+        allQuestions = [],
+        allQuestionsArrayLength;
+    
+    // ----Print Questions Function ----
+    // Prints questions by adding tag IDs to the allQuestions array. Then uses Handlebars to
+    // add the questions, choices, and IDs to the DOM
+    
+    /*var printQuizQuestions = function() {
+        $.getJSON("src/questions.json", function(data) {
+        
+        allQuestionsArrayLength = data.questions.length;
+    
+        for(var loopIndexQuestion in data.questions) {
+            var pathToQuestions = data.questions[loopIndexQuestion];
+                
+            pathToQuestions.questionsDivElementID = "question-" + loopIndexQuestion;
+            pathToQuestions.questionID = "q"+ loopIndexQuestion;
+
+            for(var loopIndexChoices in pathToQuestions.choices) {
+                var pathToChoices = pathToQuestions.choices[loopIndexChoices];
+                
+                pathToChoices.choiceID = "c" + loopIndexQuestion + "-" + loopIndexChoices;
+                pathToChoices.radioButtonGroup = "quiz-radio-button-" + loopIndexQuestion;
+                pathToChoices.radioID = "radio-" + pathToChoices.choiceID;
+            }
+        }
+        
+        var theTemplateScript = $("#quiz-template").html();
+        var theTemplate = Handlebars.compile(theTemplateScript);
+        $(".quiz").append(theTemplate(data.questions));
+    
+        });
+        
+    }; */
     
     // ---- Tally Score ----
     // Creates the ID of the correct question for each radio-button-group, then finds out
@@ -147,7 +182,6 @@ $(document).ready(function() {
             changeDisplayOfElements('back-button', 'hide');
         }
 
-        printQuizQuestions();
         changeDisplayOfElements('question-0', 'show');
         changeDisplayOfElements('progress', 'show', true)
     });
