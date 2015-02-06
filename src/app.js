@@ -1,6 +1,4 @@
-var previousQuizAttempts = [],
-    arrayOfCorrectAnswers = [],
-    allQuestions = {};
+var allQuestions = {};
     
 $.ajax({
     url: "https://api.myjson.com/bins/2i86j",
@@ -11,35 +9,28 @@ $.ajax({
 	}
 });
 
-var arrayLoop = function(array, task) {
-    for(var i = 0; i < array.length; i++) {
-        task(array[i], i);
-    }
-};
-
-// ----Print Questions Function ----
-// Prints questions by adding tag IDs to the questions.json file. Then uses Handlebars to
-// add the questions, choices, and IDs to the DOM
-
-var printQuizQuestions = function() {
-    arrayLoop(allQuestions, function(question, questionIndex) {
-        arrayOfCorrectAnswers.push(question.correctAnswer);  //used to create the id of correct answers
-                
-        // --- The rest of this arrayLoop creates id properties for each question
-        // --- so that the Handlebars template can construct each question
+var pushIDsToAllQuestionsArray = function() {
+    allQuestions.forEach(function(question, questionIndex) {
         question.questionsDivElementID = "question-" + questionIndex;
         question.questionID = "q"+ questionIndex;
                 
-        arrayLoop(question.choices, function(choice, choiceIndex) {
+        question.choices.forEach(function(choice, choiceIndex) {
             choice.choiceID = "c" + questionIndex + "-" + choiceIndex;
             choice.radioButtonGroup = "quiz-radio-button-" + questionIndex;
             choice.radioID = "radio-" + choice.choiceID;
         });
     });
-        
+};
+
+var createHandlebarsTemplate = function() {
     var theTemplateScript = $("#quiz-template").html();
     var theTemplate = Handlebars.compile(theTemplateScript);
     $(".quiz").append(theTemplate(allQuestions));
+};
+
+var printQuizQuestions = function() {
+    pushIDsToAllQuestionsArray();
+    createHandlebarsTemplate();
 };
 
 
@@ -48,14 +39,14 @@ $(document).ready(function() {
     var questionNavIndex = 0,
         numberOfCorrectAnswers = 0,
         correctAnswerIDArray = [],
+        previousQuizAttempts = [],
         allQuestionsArrayLength = allQuestions.length;
 
     // ---- Tally Score ----
     // Creates the ID of the correct question for each radio-button-group, then finds out
     // if that radio button has been checked
-    
     var tallyScore = function() {
-        arrayLoop(allQuestions, function(question, questionIndex) {
+        allQuestions.forEach(function(question, questionIndex) {
             correctAnswerIDArray.push("radio-c" + questionIndex  + "-" + question.correctAnswer);
 
             if(document.getElementById(correctAnswerIDArray[questionIndex]).checked) {numberOfCorrectAnswers++;}
@@ -158,8 +149,8 @@ $(document).ready(function() {
     
     // ----Show Answers button----
     $('#show-button').click(function() {
-        arrayLoop(allQuestions, function(question, questionIndex) {
-            arrayLoop(question.choices, function(choice, choiceIndex) {
+        allQuestions.forEach(function(question, questionIndex) {
+            question.choices.forEach(function(choice, choiceIndex) {
                var hastageChoiceID = "#" + choice.choiceID;
                 
                 if(document.getElementById(choice.radioID).checked && correctAnswerIDArray[questionIndex] !== choice.radioID) {
@@ -173,7 +164,7 @@ $(document).ready(function() {
             });
         });
 
-        arrayLoop(allQuestions, function(question, questionIndex) {
+        allQuestions.forEach(function(question, questionIndex) {
             var element = 'question-' + questionIndex;
             showElement(element);
             $('label').children().hide();
@@ -182,5 +173,3 @@ $(document).ready(function() {
         hideElement('progress', true);
     });
 });
-
-
