@@ -33,8 +33,6 @@ var printQuizQuestions = function() {
     createHandlebarsTemplate();
 };
 
-
-
 $(document).ready(function() {
     var questionNavIndex = 0,
         numberOfCorrectAnswers = 0,
