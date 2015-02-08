@@ -61,13 +61,13 @@
 
 #next-button {
     float: right;
-    margin-right: 30%;
+    margin-right: 25%;
     margin-top: 5%;
 }
 
 #back-button {
     float: left;
-    margin-left: 30%;
+    margin-left: 25%;
     margin-top: 5%;
 }
 
@@ -88,7 +88,6 @@ label {
     padding-bottom: 15px;
     margin-bottom: 6px;
     display: none;
-    height: 30%;
 }
 
 .question-container * {
