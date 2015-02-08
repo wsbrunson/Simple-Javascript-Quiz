@@ -2,18 +2,22 @@
 <html>
 <head>
     <title>Quiz time!</title>
-
+    
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link href='https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
 
 <body>
     <div class="page-header">
-        <h1>Simple Quiz</h1>
+        <h1 class='header-text'>Simple Quiz</h1>
     </div>
-    <div id='welcome' class="jumbotron">
+    <div id='welcome' class='jumbotron'>
         <h1>Show your stuff!</h1>
         <p>Below you will find a 7 question quiz about anything and everything</p>
-        <input type='button' value='Begin' id='begin-button' class="btn btn-primary">
+        <button id='begin-button' class="btn ">Begin!</button>
     </div>
 
     <div id='score' class="jumbotron">
@@ -22,10 +26,10 @@
         <table>
             <tr>
                 <td>
-                    <input type='button' value='Retake Quiz' id='retake-button' class='btn btn-primary'>
+                    <button id='retake-button' class='btn'>Retake Quiz</button>
                 </td>
                 <td>
-                    <input type='button' value='Show Answers' id='show-button' class='btn btn-primary'>
+                    <button id='show-button' class='btn'>Show Answers</button>
                 </td>
             </tr>
         </table>
@@ -34,7 +38,7 @@
     
     
     <div class="quiz">
-        <span id='back-button' class="btn btn-default nav-button glyphicon glyphicon-chevron-left"></span>
+        <button class='btn nav-button' id='back-button'><span class="fa fa-arrow-left"></span></button>
         <script id='quiz-template' type='x-handelbars-template'>
             {{#each this}}
                 <div class='question-container' id="{{questionsDivElementID}}">
@@ -47,7 +51,7 @@
                 </div>
             {{/each}}
         </script>
-        <span id='next-button' class="btn btn-default nav-button glyphicon glyphicon-chevron-right"></span>
+        <button class='btn nav-button' id='next-button'><span class="fa fa-arrow-right"></span></button>
     </div>
     
     <div class="progress">
