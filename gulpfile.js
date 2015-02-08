@@ -3,7 +3,7 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     sass = require('gulp-ruby-sass'),
-    watch = require('gulp-watch'),
+    watch = require('gulp-watch');
 
 gulp.task('js', function(){
     // main app js file
