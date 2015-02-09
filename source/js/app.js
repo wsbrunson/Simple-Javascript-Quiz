@@ -1,4 +1,6 @@
-var allQuestions = {};
+var allQuestions = {},
+    notUsed,
+    alsoNotUsed;
     
 $.ajax({
     url: "https://api.myjson.com/bins/2i86j",

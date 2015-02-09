@@ -3,7 +3,9 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     sass = require('gulp-ruby-sass'),
-    watch = require('gulp-watch');
+    watch = require('gulp-watch'),
+    jshint = require('gulp-jshint'),
+    stylish = require('jshint-stylish');
 
 gulp.task('js', function(){
     // main app js file
@@ -19,6 +21,13 @@ gulp.task('js', function(){
     .pipe(gulp.dest('dist/js'))
 });
 
+gulp.task('lint', function() {
+    gulp.src('source/js/*.js')
+        .pipe(jshint('.jshintrc'))
+        .pipe(jshint.reporter('jshint-stylish'))
+        .pipe(jshint.reporter('fail'))
+});
+
 gulp.task('sass', function() {
     return sass('source/css/main.scss')
     .pipe(gulp.dest('dist/css/'))
@@ -32,8 +41,8 @@ gulp.task('watch', function() {
 
     //watch js files
     gulp.watch('source/js/*.js', function() {
-        gulp.run('js');
+        gulp.run(['lint', 'js']);
     });
 });
 
-gulp.task('default', ['js', 'sass', 'watch']);
+gulp.task('default', ['lint', 'js', 'sass', 'watch']);
