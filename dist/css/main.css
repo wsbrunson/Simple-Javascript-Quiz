@@ -1,3 +1,6 @@
+@viewport {
+  width: device-width;
+  zoom: 8; }
 body {
   margin: 0; }
 
@@ -68,10 +71,9 @@ label {
   font-family: lato; }
 
 .question-container {
-  margin: 0 auto;
+  margin: 0 28% 6px 28%;
   padding-top: 15px;
   padding-bottom: 15px;
-  margin-bottom: 6px;
   display: none; }
 
 .question-container * {

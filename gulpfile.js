@@ -5,7 +5,8 @@ var gulp = require('gulp'),
     sass = require('gulp-ruby-sass'),
     watch = require('gulp-watch'),
     jshint = require('gulp-jshint'),
-    stylish = require('jshint-stylish');
+    stylish = require('jshint-stylish'),
+    scsslint = require('gulp-scss-lint');
 
 gulp.task('js', function(){
     // main app js file
@@ -21,7 +22,7 @@ gulp.task('js', function(){
     .pipe(gulp.dest('dist/js'))
 });
 
-gulp.task('lint', function() {
+gulp.task('js-lint', function() {
     gulp.src('source/js/*.js')
         .pipe(jshint('.jshintrc'))
         .pipe(jshint.reporter('jshint-stylish'))
@@ -33,16 +34,18 @@ gulp.task('sass', function() {
     .pipe(gulp.dest('dist/css/'))
 });
 
-gulp.task('watch', function() {
-    // watch scss files
-    gulp.watch('source/css/main.scss', function() {
-        gulp.run('sass');
-    });
-
-    //watch js files
-    gulp.watch('source/js/*.js', function() {
-        gulp.run(['lint', 'js']);
-    });
+gulp.task('scss-lint', function() {
+    gulp.src('/scss/*.scss')
+        .pipe(scsslint())
+        .pipe(scsslint.failReporter());
 });
 
-gulp.task('default', ['lint', 'js', 'sass', 'watch']);
+gulp.task('watch', function() {
+    // watch scss files
+    gulp.watch('source/css/main.scss', ['scss-lint', 'sass']);
+
+    //watch js files
+    gulp.watch('source/js/*.js', ['js-lint', 'js']);
+});
+
+gulp.task('default', ['js-lint', 'js', 'scss-lint', 'sass', 'watch']);

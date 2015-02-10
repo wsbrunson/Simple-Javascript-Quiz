@@ -2,6 +2,8 @@ $main-color : #85144B;
 $second-color : #FFFFFF;
 $correct-color : #2ECC40;
 $incorrect-color : #FF4136;
+$nav-button-margin-sides: 25%;
+$nav-button-margin-top: 5%;
 
 @mixin user-select($select) {
     -webkit-user-select: $select;
@@ -32,6 +34,11 @@ $incorrect-color : #FF4136;
     -moz-box-shadow: $top $left $blur $color;
     box-shadow: $top $left $blur $color;
   }
+}
+
+@viewport {
+    width: device-width;
+    zoom: 8;
 }
 
 body { margin: 0 };
@@ -84,14 +91,14 @@ body { margin: 0 };
 
 #next-button {
     float: right;
-    margin-right: 25%;
-    margin-top: 5%;
+    margin-right: $nav-button-margin-sides;
+    margin-top: $nav-button-margin-top;
 }
 
 #back-button {
     float: left;
-    margin-left: 25%;
-    margin-top: 5%;
+    margin-left: $nav-button-margin-sides;
+    margin-top: $nav-button-margin-top;
 }
 
 .radio-label {
@@ -105,10 +112,9 @@ label {
 }
 
 .question-container {
-    margin: 0 auto;
+    margin: 0 28% 6px 28%;
     padding-top: 15px;
     padding-bottom: 15px;
-    margin-bottom: 6px;
     display: none;
 }
 
