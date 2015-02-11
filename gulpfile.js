@@ -35,14 +35,14 @@ gulp.task('sass', function() {
 });
 
 gulp.task('scss-lint', function() {
-    gulp.src('/scss/*.scss')
+    gulp.src('/source/css/*.scss')
         .pipe(scsslint())
         .pipe(scsslint.failReporter());
 });
 
 gulp.task('watch', function() {
     // watch scss files
-    gulp.watch('source/css/main.scss', ['scss-lint', 'sass']);
+    gulp.watch('source/css/*.scss', ['scss-lint', 'sass']);
 
     //watch js files
     gulp.watch('source/js/*.js', ['js-lint', 'js']);
