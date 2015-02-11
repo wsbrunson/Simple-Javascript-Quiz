@@ -48,4 +48,5 @@ gulp.task('watch', function() {
     gulp.watch('source/js/*.js', ['js-lint', 'js']);
 });
 
+gulp.task('build', ['js-lint', 'js', 'scss-lint', 'sass']);
 gulp.task('default', ['js-lint', 'js', 'scss-lint', 'sass', 'watch']);
