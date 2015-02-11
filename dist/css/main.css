@@ -1,6 +1,6 @@
 @viewport {
   width: device-width;
-  zoom: 8; }
+  zoom: 1; }
 body {
   margin: 0; }
 
@@ -40,6 +40,38 @@ body {
 
 .btn-text {
   font-family: open sans; }
+
+.navbar {
+  background-color: #85144B;
+  color: #FFFFFF;
+  margin: 0 auto;
+  width: auto;
+  height: 3em;
+  -webkit-box-shadow: 0px 0px 10px #666666;
+  -moz-box-shadow: 0px 0px 10px #666666;
+  box-shadow: 0px 0px 10px #666666; }
+  .navbar ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    font-family: Open Sans; }
+    .navbar ul li {
+      display: inline; }
+      .navbar ul li .header-text {
+        display: inline-block;
+        text-decoration: none;
+        color: #FFFFFF;
+        font-size: 22px;
+        float: left;
+        padding-left: 10%;
+        padding-top: .5%; }
+      .navbar ul li .nav-link {
+        display: inline-block;
+        text-decoration: none;
+        color: #FFFFFF;
+        float: right;
+        padding-right: 5%;
+        padding-top: .9%; }
 
 .nav-button {
   display: none; }
@@ -85,38 +117,6 @@ label {
   font-family: lato;
   font-size: 18px;
   color: #85144B; }
-
-.navbar {
-  background-color: #85144B;
-  color: #FFFFFF;
-  margin: 0 auto;
-  width: 100%;
-  height: 50px;
-  -webkit-box-shadow: 0px 0px 10px #666666;
-  -moz-box-shadow: 0px 0px 10px #666666;
-  box-shadow: 0px 0px 10px #666666; }
-  .navbar ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    font-family: Open Sans; }
-    .navbar ul li {
-      display: inline; }
-      .navbar ul li .header-text {
-        display: inline-block;
-        text-decoration: none;
-        color: #FFFFFF;
-        font-size: 22px;
-        float: left;
-        padding-left: 10%;
-        padding-top: .5%; }
-      .navbar ul li .nav-link {
-        display: inline-block;
-        text-decoration: none;
-        color: #FFFFFF;
-        float: right;
-        padding-right: 5%;
-        padding-top: .9%; }
 
 .jumbotron * {
   text-align: center;
