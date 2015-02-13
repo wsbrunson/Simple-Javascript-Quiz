@@ -55,11 +55,6 @@ $(document).ready(function() {
         $('#score-total').html(numberOfCorrectAnswers);
     };
     
-    var updateProgressBar = function() {
-        var value = 100 / (allQuestionsArrayLength / questionNavIndex);
-        $('.progress-bar').css('width', value+'%').attr('aria-valuenow', value);
-    };
-    
     // ----Hide & Show elements----
     var hideElement = function(elem, classTrue) {
         var modifier = classTrue ? "." : "#",
@@ -107,7 +102,6 @@ $(document).ready(function() {
     // ----Next button----
     $('#next-button').click(function() {
         navigateQuestions("next");
-        updateProgressBar();
         
         if(questionNavIndex >= 0) {
             showElement('back-button');
@@ -125,7 +119,6 @@ $(document).ready(function() {
     // ----Back button----
     $('#back-button').click(function() {
         navigateQuestions("back");
-        updateProgressBar();
         
         if(questionNavIndex === 0) {
             hideElement('back-button');
@@ -140,7 +133,6 @@ $(document).ready(function() {
         questionNavIndex = 0;
         previousQuizAttempts.push(numberOfCorrectAnswers);
         numberOfCorrectAnswers = 0;
-        updateProgressBar();
         hideElement('score');
         hideElement('progress', true);
         showElement('welcome');

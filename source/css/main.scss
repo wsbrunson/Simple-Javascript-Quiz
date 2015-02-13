@@ -1,10 +1,19 @@
+/*--------------------------
+        Variables
+--------------------------*/
 $main-color : #85144B;
 $second-color : #FFFFFF;
 $correct-color : #2ECC40;
 $incorrect-color : #FF4136;
+
 $nav-button-margin-sides: 25%;
 $nav-button-margin-top: 5%;
+$site-wrapper-percent: 27%;
 
+
+/*--------------------------
+        Mixins
+--------------------------*/
 @mixin user-select($select) {
     -webkit-user-select: $select;
     -moz-user-select: $select;
@@ -36,6 +45,10 @@ $nav-button-margin-top: 5%;
   }
 }
 
+
+/*--------------------------
+          Body
+--------------------------*/
 @viewport {
     width: device-width;
     zoom: 1;
@@ -43,40 +56,15 @@ $nav-button-margin-top: 5%;
 
 body { margin: 0 };
 
-@media all and (orientation: portrait) {}
-
-.btn {
-    display: block;
-    border: 0;
-    
-    font-family: Arial;
-    font-size: 30px;
-    color: $second-color;
-    text-align: center;
-    background: $main-color;
-    padding: 6px 20px 6px 20px;
-    text-decoration: none;
-
-    @include user-select(none);
-    @include border-radius(15px);
-    @include box-shadow(0px, 0px, 10px, #666666);
-    @include transition-duration(0.2s);
+.content-wrapper {
+  margin-left: $site-wrapper-percent;
+  margin-right: $site-wrapper-percent;
 }
 
-.btn:hover, .btn:focus {
-    background: #A22A65;
-    text-decoration: none;
-}
 
-.btn:active {
-    @include box-shadow(0, 1px, 4px, rgba(0, 0, 0, 0.6), true);
-    background: #670133;
-}
-
-.btn-text {
-    font-family: open sans;
-}
-
+/*--------------------------
+        Navbar
+--------------------------*/
 .navbar {
     background-color: $main-color;
     color: $second-color;
@@ -94,29 +82,37 @@ body { margin: 0 };
         
         li {
             display: inline;
-            
-            .header-text {
-                display: inline-block;
-                text-decoration: none;
-                color: $second-color;
-                font-size: 22px;
-                float: left;
-                padding-left: 10%;
-                padding-top: .5%;
-            }
-        
-            .nav-link {
-                display: inline-block;
-                text-decoration: none;
-                color: $second-color;
-                float: right;
-                padding-right: 5%;
-                padding-top: .9%;
-            }
         }
     }
 }
 
+.header-text {
+    display: inline-block;
+    text-decoration: none;
+    color: $second-color;
+    font-size: 2em;
+    float: left;
+    padding-top: .5%;
+}
+
+.nav-link {
+    display: inline-block;
+    text-decoration: none;
+    color: $second-color;
+    float: right;
+    padding-right: 3%;
+    padding-top: .9%;
+}
+
+.nav-wrapper {
+  margin-left: $site-wrapper-percent;
+  margin-right: $site-wrapper-percent;
+}
+
+
+/*--------------------------
+        Unsorted
+--------------------------*/
 .nav-button {
     display: none;
 }
@@ -196,6 +192,37 @@ table {
     border: 2px;
 }
 
-.progress {
-    display: none;
+/*--------------------------
+        Buttons
+--------------------------*/
+.btn {
+    display: block;
+    border: 0;
+    
+    font-family: Arial;
+    font-size: 30px;
+    color: $second-color;
+    text-align: center;
+    background: $main-color;
+    padding: 6px 20px 6px 20px;
+    text-decoration: none;
+
+    @include user-select(none);
+    @include border-radius(15px);
+    @include box-shadow(0px, 0px, 10px, #666666);
+    @include transition-duration(0.2s);
+}
+
+.btn:hover, .btn:focus {
+    background: #A22A65;
+    text-decoration: none;
+}
+
+.btn:active {
+    @include box-shadow(0, 1px, 4px, rgba(0, 0, 0, 0.6), true);
+    background: #670133;
+}
+
+.btn-text {
+    font-family: open sans;
 }
