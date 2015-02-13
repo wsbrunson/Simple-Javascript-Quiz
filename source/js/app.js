@@ -47,9 +47,11 @@ $(document).ready(function() {
     // if that radio button has been checked
     var tallyScore = function() {
         allQuestions.forEach(function(question, questionIndex) {
-            correctAnswerIDArray.push("radio-c" + questionIndex  + "-" + question.correctAnswer);
-
-            if(document.getElementById(correctAnswerIDArray[questionIndex]).checked) {numberOfCorrectAnswers++;}
+            var correctAnswerID = question.correctAnswer;
+            console.log(correctAnswerID);
+            console.log(document.getElementById(correctAnswerID).checked);
+            console.log(document.getElementById(correctAnswerID.checked));
+            //if(document.getElementById(correctAnswerID).checked) {numberOfCorrectAnswers++;}
         });
 
         $('#score-total').html(numberOfCorrectAnswers);
@@ -143,9 +145,11 @@ $(document).ready(function() {
     $('#show-button').click(function() {
         allQuestions.forEach(function(question, questionIndex) {
             question.choices.forEach(function(choice, choiceIndex) {
-               var hastageChoiceID = "#" + choice.choiceID;
+                var hastageChoiceID = "#" + choice.choiceID,
+                    radioIDChecked = document.getElementById(choice.radioID).checked,
+                    correctAnswerChecked = document.getElementById(question.correctAnswer.checked).checked;
                 
-                if(document.getElementById(choice.radioID).checked && correctAnswerIDArray[questionIndex] !== choice.radioID) {
+                if(radioIDChecked && correctAnswerChecked !== choice.radioID) {
                     $(hastageChoiceID).addClass('highlight-incorrect');
                     $(question.questionsDivElementID).addClass('question-incorrect');
                }
