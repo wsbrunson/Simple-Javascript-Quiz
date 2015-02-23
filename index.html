@@ -17,37 +17,26 @@
 
 <body>
     
-    <div class="navbar">
-        <div class="nav-wrapper">
-        <ul class="list-style">
-            <li><a class='header-text' href='/'>Simple Quiz</a></li>
-            <li><a class='nav-link' href='http://www.shane.paredmedia.com'>Blog</a></li>
-            <li><a class='nav-link' href='/pages/about'>About</a></li>
-        </ul>
-        </div>
-    </div>
-    
     <div class="content-wrapper">
     
-    <div id='welcome' class='jumbotron'>
-        <h1>Show your stuff!</h1>
-        <p>Below you will find a 7 question quiz about anything and everything</p>
+    <div class='welcome'>
+        <h1>Simple Quiz</h1>
+        <h3>Show your stuff! See how well you can answer <span id='number-questions'></span>, general knowledge questions.</h3>
         <button id='begin-button' class="btn ">Begin!</button>
     </div>
+    
+    <div class='info'>
+        
+    </div>
 
-    <div id='score' class="jumbotron">
+    <div class="score">
         <h1>Quiz Complete</h1>
         <p id='total'>Your total score is: <span id='score-total'></span></p>
-        <table>
-            <tr>
-                <td>
-                    <button id='retake-button' class='btn'>Retake Quiz</button>
-                </td>
-                <td>
-                    <button id='show-button' class='btn'>Show Answers</button>
-                </td>
-            </tr>
-        </table>
+        
+        <div class='end-div-buttons'>
+            <button id='retake-button' class='btn end-buttons'>Retake Quiz</button>
+            <button id='show-button' class='btn end-buttons'>Show Answers</button>
+        </div>
     </div>
     
     <div class="quiz">
@@ -58,7 +47,7 @@
                     <p class='question' id="{{questionID}}">{{question}}</p>
                     {{#each this.choices}}
                     <label class="radio-label" id="{{choiceID}}">
-                        <input type="radio" name="{{radioButtonGroup}}" id="{{radioID}}">{{answer}}
+                        <input type="radio" name="{{radioButtonGroup}}" id="{{radioID}}" {{checked}}>{{answer}}
                     </label>
                     {{/each}}
                 </div>

@@ -1,6 +1,4 @@
-var allQuestions = {},
-    notUsed,
-    alsoNotUsed;
+var allQuestions = {};
     
 $.ajax({
     url: "https://api.myjson.com/bins/2i86j",
@@ -15,11 +13,14 @@ var pushIDsToAllQuestionsArray = function() {
     allQuestions.forEach(function(question, questionIndex) {
         question.questionsDivElementID = "question-" + questionIndex;
         question.questionID = "q"+ questionIndex;
+        question.correctAnswer = "radio-c" + questionIndex + "-" + question.correctAnswer;
                 
         question.choices.forEach(function(choice, choiceIndex) {
             choice.choiceID = "c" + questionIndex + "-" + choiceIndex;
             choice.radioButtonGroup = "quiz-radio-button-" + questionIndex;
             choice.radioID = "radio-" + choice.choiceID;
+            // *---- Uncomment to select every correct answer by default ----*
+            if (question.correctAnswer === choice.radioID) { console.log('true'); choice.checked = 'checked'; }
         });
     });
 };
@@ -38,20 +39,18 @@ var printQuizQuestions = function() {
 $(document).ready(function() {
     var questionNavIndex = 0,
         numberOfCorrectAnswers = 0,
-        correctAnswerIDArray = [],
         previousQuizAttempts = [],
         allQuestionsArrayLength = allQuestions.length;
+
+    //Update Welcome copy to include the number of questions in the quiz
+    document.getElementById('number-questions').textContent=allQuestionsArrayLength;
 
     // ---- Tally Score ----
     // Creates the ID of the correct question for each radio-button-group, then finds out
     // if that radio button has been checked
     var tallyScore = function() {
-        allQuestions.forEach(function(question, questionIndex) {
-            var correctAnswerID = question.correctAnswer;
-            console.log(correctAnswerID);
-            console.log(document.getElementById(correctAnswerID).checked);
-            console.log(document.getElementById(correctAnswerID.checked));
-            //if(document.getElementById(correctAnswerID).checked) {numberOfCorrectAnswers++;}
+        allQuestions.forEach(function(question) {
+            if(document.getElementById(question.correctAnswer).checked) {numberOfCorrectAnswers++;}
         });
 
         $('#score-total').html(numberOfCorrectAnswers);
@@ -63,6 +62,7 @@ $(document).ready(function() {
             element = modifier + elem;
         
         $(element).hide();
+        
     };
     
     var showElement = function(elem, classTrue) {
@@ -90,7 +90,7 @@ $(document).ready(function() {
 
     // ----Begin button----
     $('#begin-button').click(function() {
-        hideElement('welcome');
+        hideElement('welcome', true);
         showElement('nav-button', true);
         printQuizQuestions();
         if(questionNavIndex === 0) {
@@ -114,7 +114,7 @@ $(document).ready(function() {
             
             tallyScore();
             
-            showElement('score');
+            showElement('score', true);
         }
     });
 
@@ -135,26 +135,24 @@ $(document).ready(function() {
         questionNavIndex = 0;
         previousQuizAttempts.push(numberOfCorrectAnswers);
         numberOfCorrectAnswers = 0;
-        hideElement('score');
+        hideElement('score', true);
         hideElement('progress', true);
-        showElement('welcome');
+        showElement('welcome', true);
         printQuizQuestions();
     });
     
     // ----Show Answers button----
     $('#show-button').click(function() {
-        allQuestions.forEach(function(question, questionIndex) {
-            question.choices.forEach(function(choice, choiceIndex) {
+        allQuestions.forEach(function(question) {
+            question.choices.forEach(function(choice) {
                 var hastageChoiceID = "#" + choice.choiceID,
-                    radioIDChecked = document.getElementById(choice.radioID).checked,
-                    correctAnswerChecked = document.getElementById(question.correctAnswer.checked).checked;
+                    radioIDChecked = document.getElementById(choice.radioID).checked;
                 
-                if(radioIDChecked && correctAnswerChecked !== choice.radioID) {
+                if (radioIDChecked && question.correctAnswer !== choice.radioID) {
                     $(hastageChoiceID).addClass('highlight-incorrect');
-                    $(question.questionsDivElementID).addClass('question-incorrect');
                }
                
-                else if(correctAnswerIDArray[questionIndex] === choice.radioID) {
+                else if(question.correctAnswer === choice.radioID) {
                     $(hastageChoiceID).addClass('highlight-correct');
                 }
             });
