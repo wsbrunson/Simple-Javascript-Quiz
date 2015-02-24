@@ -1,86 +1,12 @@
 /*--------------------------
+        Include
+--------------------------*/
+/*--------------------------
         Variables
 --------------------------*/
 /*--------------------------
         Mixins
 --------------------------*/
-/*--------------------------
-          Body
---------------------------*/
-@viewport {
-  width: device-width;
-  zoom: 1; }
-body {
-  margin: 0;
-  background-color: #001F3F;
-  text-align: center;
-  color: #01FF70;
-  font-family: lato; }
-
-.content-wrapper {
-  margin-left: 20%;
-  margin-right: 20%; }
-
-/*--------------------------
-       Welcome Heading
---------------------------*/
-.welcome {
-  margin-top: 15%; }
-
-.welcome h1 {
-  font-size: 400%; }
-
-/*--------------------------
-        Score Screen
---------------------------*/
-.score {
-  margin-top: 15%;
-  margin-bottom: 16px;
-  display: none; }
-
-/*--------------------------
-        Quiz Questions
---------------------------*/
-.question-container {
-  margin-top: 15%;
-  margin-left: 10%;
-  margin-right: 5%;
-  padding-top: 2%;
-  padding-bottom: 2%;
-  display: none; }
-
-.question-container * {
-  padding-left: 2%;
-  padding-right: 2%;
-  text-align: left; }
-
-.question {
-  width: auto;
-  font-weight: bold;
-  font-family: lato;
-  font-size: 200%;
-  color: #01FF70; }
-
-.radio-label {
-  display: block;
-  color: #FFFFFF; }
-
-label {
-  color: #111111;
-  width: 80%;
-  font-size: 125%;
-  font-family: lato; }
-
-.highlight-correct {
-  background-color: #01FF70;
-  color: #001F3F;
-  border: 1%; }
-
-.highlight-incorrect {
-  background-color: #FF4136;
-  color: #001F3F;
-  border: 2px; }
-
 /*--------------------------
         Buttons
 --------------------------*/
@@ -116,7 +42,130 @@ label {
   background: #2ECC40; }
 
 .btn-text {
-  font-family: open sans; }
+  font-family: open sans;
+  font-weight: bold; }
+
+/*--------------------------
+          Body
+--------------------------*/
+@viewport {
+  width: device-width;
+  zoom: 1; }
+body {
+  margin: 0;
+  background-color: #001F3F;
+  text-align: center;
+  color: #01FF70;
+  font-family: lato; }
+
+/* Smartphones (landscape & Portrait) ----------- */
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+  .content-wrapper {
+    width: auto;
+    margin: 0 auto; } }
+/* Desktop & Laptop ----------- */
+@media only screen and (min-width: 1224px) {
+  .content-wrapper {
+    width: 70%;
+    margin: 0 auto; } }
+/*--------------------------
+       Welcome Heading
+--------------------------*/
+/* Smartphones (landscape & Portrait) ----------- */
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+  .welcome {
+    margin-top: 5%; }
+
+  .welcome h1 {
+    font-size: 800%; }
+
+  .welcome h3 {
+    font-size: 400%; } }
+/* Desktop & Laptop ----------- */
+@media only screen and (min-width: 1224px) {
+  .welcome {
+    margin-top: 15%; }
+
+  .welcome h1 {
+    font-size: 400%; } }
+/*--------------------------
+        Score Screen
+--------------------------*/
+.score {
+  margin-top: 15%;
+  margin-bottom: 16px;
+  display: none; }
+
+/*--------------------------
+        Quiz Questions
+--------------------------*/
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .quiz {
+    margin-top: 5%; }
+
+  .question-container {
+    margin-left: 5%;
+    margin-right: 5%;
+    padding-top: 2%;
+    padding-bottom: 2%; }
+
+  .question-container * {
+    padding-left: 2%;
+    padding-right: 2%;
+    text-align: left; }
+
+  .question {
+    width: auto;
+    font-weight: bold;
+    font-family: lato;
+    font-size: 300%;
+    color: #01FF70; }
+
+  label {
+    color: #111111;
+    width: 80%;
+    font-size: 250%;
+    font-family: lato; } }
+/* Desktop & Laptop ----------- */
+@media only screen and (min-width: 1224px) {
+  .quiz {
+    margin-top: 15%; }
+
+  .question-container {
+    margin-left: 10%;
+    margin-right: 5%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    display: none; }
+
+  .question-container * {
+    padding-left: 2%;
+    padding-right: 2%;
+    text-align: left; }
+
+  .question {
+    width: auto;
+    font-weight: bold;
+    font-family: lato;
+    font-size: 200%;
+    color: #01FF70; }
+
+  label {
+    color: #111111;
+    width: 80%;
+    font-size: 125%;
+    font-family: lato; } }
+.radio-label {
+  display: block;
+  color: #FFFFFF; }
+
+.highlight-correct {
+  background-color: #01FF70;
+  color: #001F3F; }
+
+.highlight-incorrect {
+  background-color: #FF4136;
+  color: #001F3F; }
 
 /*--------------------------
         NAV Buttons

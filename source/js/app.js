@@ -54,6 +54,7 @@ $(document).ready(function() {
         });
 
         $('#score-total').html(numberOfCorrectAnswers);
+        console.log("talleyScore complete");
     };
     
     // ----Hide & Show elements----
@@ -103,6 +104,7 @@ $(document).ready(function() {
 
     // ----Next button----
     $('#next-button').click(function() {
+        console.log(questionNavIndex);
         navigateQuestions("next");
         
         if(questionNavIndex >= 0) {
@@ -110,6 +112,7 @@ $(document).ready(function() {
          }
         
         if(questionNavIndex === allQuestionsArrayLength) {
+            console.log('end quiz');
             hideElement('nav-button', true);
             
             tallyScore();

@@ -1,54 +1,8 @@
 /*--------------------------
-        Variables
+        Include
 --------------------------*/
-$main-color : #01FF70;
-$second-color : #001F3F;
-$background-color: #001F3F;
-$correct-color : #01FF70;
-$incorrect-color : #FF4136;
-
-$button-click-color: #2ECC40;
-$button-hover-color: #99FFC5;
-
-$nav-button-margin-sides: 5%;
-$nav-button-margin-top: 5%;
-$site-wrapper-percent: 20%;
-$margin-top-of-page: 15%;
-
-
-/*--------------------------
-        Mixins
---------------------------*/
-@mixin user-select($select) {
-    -webkit-user-select: $select;
-    -moz-user-select: $select;
-    -ms-user-select: $select;
-    user-select: $select;
-}
-
-@mixin border-radius($radius) {
-    -webkit-border-radius: $radius;
-    -moz-border-radius: $radius;
-    border-radius: $radius;
-}
-
-@mixin transition-duration($duration) {
-    -webkit-transition-duration: $duration;
-    -moz-transition-duration: $duration;
-    transition-duration: $duration;
-}
-
-@mixin box-shadow($top, $left, $blur, $color, $inset: false) {
-  @if $inset {
-    -webkit-box-shadow:inset $top $left $blur $color;
-    -moz-box-shadow:inset $top $left $blur $color;
-    box-shadow:inset $top $left $blur $color;
-  } @else {
-    -webkit-box-shadow: $top $left $blur $color;
-    -moz-box-shadow: $top $left $blur $color;
-    box-shadow: $top $left $blur $color;
-  }
-}
+@import '_base';
+@import '_style';
 
 
 /*--------------------------
@@ -67,21 +21,56 @@ body {
     font-family: lato;
 }
 
-.content-wrapper {
-  margin-left: $site-wrapper-percent;
-  margin-right: $site-wrapper-percent;
+/* Smartphones (landscape & Portrait) ----------- */
+@media only screen 
+and (min-width : 320px) 
+and (max-width : 480px) {
+    .content-wrapper {
+        width: auto;
+        margin: 0 auto;
+    }
+}
+
+/* Desktop & Laptop ----------- */
+@media only screen 
+and (min-width : 1224px) {
+    .content-wrapper {
+        width: 70%;
+        margin: 0 auto;
+    }
 }
 
 
 /*--------------------------
        Welcome Heading
 --------------------------*/
-.welcome {
-    margin-top: $margin-top-of-page;
+/* Smartphones (landscape & Portrait) ----------- */
+@media only screen 
+and (min-width : 320px) 
+and (max-width : 480px) {
+    .welcome {
+        margin-top: 5%;
+    }
+    
+    .welcome h1 {
+        font-size: 800%;    
+    }
+    
+    .welcome h3 {
+        font-size: 400%;    
+    }
 }
 
-.welcome h1 {
-    font-size: 400%;    
+/* Desktop & Laptop ----------- */
+@media only screen 
+and (min-width : 1224px) {
+    .welcome {
+        margin-top: $margin-top-of-page;
+    }
+    
+    .welcome h1 {
+        font-size: 400%;    
+    }
 }
 
 
@@ -98,85 +87,92 @@ body {
 /*--------------------------
         Quiz Questions
 --------------------------*/
-.question-container {
-    margin-top: $margin-top-of-page;
-    margin-left: 10%;
-    margin-right: $nav-button-margin-sides;
-    padding-top: 2%;
-    padding-bottom: 2%;
-    display: none;
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+    .quiz {
+        margin-top: 5%;
+    }
+
+    .question-container {
+        margin-left: 5%;
+        margin-right: 5%;
+        padding-top: 2%;
+        padding-bottom: 2%;
+    }
+
+    .question-container * {
+        padding-left: 2%;
+        padding-right: 2%;
+        text-align: left;
+    }
+
+    .question {
+        width: auto;
+        font-weight: bold;
+        font-family: lato;
+        font-size: 300%;
+        color: $main-color;
+    }
+    
+    label {
+        color: #111111;
+        width: 80%;
+        font-size: 250%;
+        font-family: lato;
+    }
 }
 
-.question-container * {
-    padding-left: 2%;
-    padding-right: 2%;
-    text-align: left;
+/* Desktop & Laptop ----------- */
+@media only screen 
+and (min-width : 1224px) {
+    .quiz {
+        margin-top: $margin-top-of-page;
+    }
+
+    .question-container {
+        margin-left: 10%;
+        margin-right: $nav-button-margin-sides;
+        padding-top: 2%;
+        padding-bottom: 2%;
+        display: none;
+    }
+
+    .question-container * {
+        padding-left: 2%;
+        padding-right: 2%;
+        text-align: left;
+    }
+
+    .question {
+        width: auto;
+        font-weight: bold;
+        font-family: lato;
+        font-size: 200%;
+        color: $main-color;
+    }
+    
+    label {
+        color: #111111;
+        width: 80%;
+        font-size: 125%;
+        font-family: lato;
+    }
 }
 
-.question {
-    width: auto;
-    font-weight: bold;
-    font-family: lato;
-    font-size: 200%;
-    color: $main-color;
-}
 .radio-label {
     display: block;
     color: #FFFFFF;
 }
 
-label {
-    color: #111111;
-    width: 80%;
-    font-size: 125%;
-    font-family: lato;
-}
-
 .highlight-correct { 
     background-color: $correct-color;
     color: $second-color;
-    border: 1%;
 }
 
 .highlight-incorrect { 
     background-color: #FF4136;
     color: $second-color;
-    border: 2px;
-}
-
-
-/*--------------------------
-        Buttons
---------------------------*/
-.btn {
-    display: block;
-    border: 0;
-    
-    font-family: Arial;
-    font-size: 30px;
-    color: $second-color;
-    text-align: center;
-    background: $main-color;
-    padding: 6px 20px 6px 20px;
-    text-decoration: none;
-
-    @include user-select(none);
-    @include border-radius(15px);
-    @include transition-duration(0.2s);
-}
-
-.btn:hover, .btn:focus {
-    background: $button-hover-color;
-    text-decoration: none;
-}
-
-.btn:active {
-    @include box-shadow(0, 1px, 4px, rgba(0, 0, 0, 0.6), true);
-    background: $button-click-color;
-}
-
-.btn-text {
-    font-family: open sans;
 }
 
 
