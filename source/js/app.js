@@ -1,4 +1,5 @@
-var allQuestions = {};
+var allQuestions = {},
+    data = new Firebase('https://popping-inferno-9822.firebaseio.com/#-JjfE_YBLfDBuZnhFTE3|a3a7c7e6f5017b0b551368ed4de8fbd4');
     
 $.ajax({
     url: "https://api.myjson.com/bins/2i86j",
