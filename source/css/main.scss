@@ -5,6 +5,14 @@
 @import '_style';
 
 
+//clearfix hack
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
 /*--------------------------
           Body
 --------------------------*/
@@ -135,7 +143,6 @@ and (min-width : 1224px) {
         margin-right: $nav-button-margin-sides;
         padding-top: 2%;
         padding-bottom: 2%;
-        display: none;
     }
 
     .question-container * {
@@ -179,15 +186,6 @@ and (min-width : 1224px) {
 /*--------------------------
         NAV Buttons
 --------------------------*/
-.nav-button {
-    display: none;
-}
-
-#begin-button {
-    display: block;
-    margin: 1em auto;
-}
-
 #next-button {
     float: right;
     margin-top: $nav-button-margin-top;

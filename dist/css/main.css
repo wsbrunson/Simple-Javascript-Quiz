@@ -45,6 +45,11 @@
   font-family: open sans;
   font-weight: bold; }
 
+.group:after {
+  content: "";
+  display: table;
+  clear: both; }
+
 /*--------------------------
           Body
 --------------------------*/
@@ -84,7 +89,7 @@ body {
 /* Desktop & Laptop ----------- */
 @media only screen and (min-width: 1224px) {
   .welcome {
-    margin-top: 15%; }
+    margin-top: 8%; }
 
   .welcome h1 {
     font-size: 400%; } }
@@ -92,7 +97,7 @@ body {
         Score Screen
 --------------------------*/
 .score {
-  margin-top: 15%;
+  margin-top: 8%;
   margin-bottom: 16px;
   display: none; }
 
@@ -129,14 +134,13 @@ body {
 /* Desktop & Laptop ----------- */
 @media only screen and (min-width: 1224px) {
   .quiz {
-    margin-top: 15%; }
+    margin-top: 8%; }
 
   .question-container {
     margin-left: 10%;
     margin-right: 5%;
     padding-top: 2%;
-    padding-bottom: 2%;
-    display: none; }
+    padding-bottom: 2%; }
 
   .question-container * {
     padding-left: 2%;
@@ -170,13 +174,6 @@ body {
 /*--------------------------
         NAV Buttons
 --------------------------*/
-.nav-button {
-  display: none; }
-
-#begin-button {
-  display: block;
-  margin: 1em auto; }
-
 #next-button {
   float: right;
   margin-top: 5%; }

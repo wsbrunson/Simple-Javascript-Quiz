@@ -1,14 +1,4 @@
-var allQuestions = {},
-    data = new Firebase('https://popping-inferno-9822.firebaseio.com/#-JjfE_YBLfDBuZnhFTE3|a3a7c7e6f5017b0b551368ed4de8fbd4');
-    
-$.ajax({
-    url: "https://api.myjson.com/bins/2i86j",
-    async: false,
-    dataType: 'json',
-	success: function(data) {
-		allQuestions = data.questions;
-	}
-});
+var allQuestions = [];
 
 var pushIDsToAllQuestionsArray = function() {
     allQuestions.forEach(function(question, questionIndex) {
@@ -26,25 +16,41 @@ var pushIDsToAllQuestionsArray = function() {
     });
 };
 
-var createHandlebarsTemplate = function() {
-    var theTemplateScript = $("#quiz-template").html();
-    var theTemplate = Handlebars.compile(theTemplateScript);
-    $(".quiz").append(theTemplate(allQuestions));
-};
+(function(){
+    var app = angular.module('quiz', []);
+    
+    app.controller('QuizController', ['$http', function($http){
+        var quiz = this;
+        this.allQuestions = [];
+        this.questionNavIndex = 0;
+        
+        $http.get('https://api.myjson.com/bins/2i86j').success(function(data) {
+            data.questions.forEach(function(element){
+                quiz.allQuestions.push(element);
+            });
 
-var printQuizQuestions = function() {
-    pushIDsToAllQuestionsArray();
-    createHandlebarsTemplate();
-};
+            allQuestions = quiz.allQuestions;
+            quiz.allQuestionsLength = quiz.allQuestions.length;
+            console.log('ajax complete');
+        });
+        
+        this.nextButton = function() {
+            this.questionNavIndex++;
+            console.log(this.questionNavIndex);
+        };
+        
+        this.backButton = function() {
+            this.questionNavIndex--;
+            console.log(this.questionNavIndex);
+        };
+    } ]);
+})();
 
 $(document).ready(function() {
     var questionNavIndex = 0,
         numberOfCorrectAnswers = 0,
         previousQuizAttempts = [],
         allQuestionsArrayLength = allQuestions.length;
-
-    //Update Welcome copy to include the number of questions in the quiz
-    document.getElementById('number-questions').textContent=allQuestionsArrayLength;
 
     // ---- Tally Score ----
     // Creates the ID of the correct question for each radio-button-group, then finds out
@@ -90,20 +96,20 @@ $(document).ready(function() {
         showElement(questionNavIDToShow);
     };
 
-    // ----Begin button----
+    /*// ----Begin button----
     $('#begin-button').click(function() {
+        pushIDsToAllQuestionsArray();
+        console.log("after ng", allQuestions);
+        
         hideElement('welcome', true);
         showElement('nav-button', true);
-        printQuizQuestions();
-        if(questionNavIndex === 0) {
-            hideElement('back-button');
-        }
 
         showElement('question-0');
         showElement('progress', true);
-    });
 
-    // ----Next button----
+    });*/
+
+    /*// ----Next button----
     $('#next-button').click(function() {
         console.log(questionNavIndex);
         navigateQuestions("next");
@@ -120,7 +126,7 @@ $(document).ready(function() {
             
             showElement('score', true);
         }
-    });
+    });*/
 
     // ----Back button----
     $('#back-button').click(function() {

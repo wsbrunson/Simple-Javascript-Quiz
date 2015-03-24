@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app='quiz'>
 <head>
     <title>Simple JavaScript Quiz</title>
     
@@ -16,18 +16,8 @@
 <meta name="viewport" content="user-scalable=yes">
 
 <body>
+    <div class="content-wrapper group">
     
-    <div class="content-wrapper">
-    
-    <div class='welcome'>
-        <h1>Simple Quiz</h1>
-        <h3>Show your stuff! See how well you can answer <span id='number-questions'></span>, general knowledge questions.</h3>
-        <button id='begin-button' class="btn ">Begin!</button>
-    </div>
-    
-    <div class='info'>
-        
-    </div>
 
     <div class="score">
         <h1>Quiz Complete</h1>
@@ -39,25 +29,24 @@
         </div>
     </div>
     
-    <div class="quiz">
-        <button class='btn nav-button' id='back-button'><span class="fa fa-arrow-left"></span></button>
-        <script id='quiz-template' type='x-handelbars-template'>
-            {{#each this}}
-                <div class='question-container' id="{{questionsDivElementID}}">
-                    <p class='question' id="{{questionID}}">{{question}}</p>
-                    {{#each this.choices}}
-                    <label class="radio-label" id="{{choiceID}}">
-                        <input type="radio" name="{{radioButtonGroup}}" id="{{radioID}}" {{checked}}>{{answer}}
-                    </label>
-                    {{/each}}
-                </div>
-            {{/each}}
-        </script>
-        <button class='btn nav-button' id='next-button'><span class="fa fa-arrow-right"></span></button>
+    <div class="quiz group" ng-controller='QuizController as quiz'>
+        
+        <div class='welcome' ng-hide='quiz.questionNavIndex > 0'>
+            <h1>Simple Quiz</h1>
+            <h3>Show your stuff! See how well you can answer some general knowledge questions.</h3>
+        </div>
+        
+        <button class='btn nav-button' ng-click='quiz.backButton()' ng-hide='quiz.questionNavIndex <= 0' id='back-button'><span class="fa fa-arrow-left"></span></button>
+            <div class='question-container'>
+                <p class='question'>{{quiz.allQuestions[quiz.questionNavIndex].question}}</p>
+                <label ng-repeat='choice in quiz.allQuestions[quiz.questionNavIndex].choices' class="radio-label">
+                    <input type="radio" name="{{quiz.questionNavIndex}}">{{choice.answer}}
+                </label>
+            </div>
+        <button class='btn nav-button' ng-click='quiz.nextButton()' ng-show='quiz.questionNavIndex < 8' id='next-button'><span class="fa fa-arrow-right"></span></button>
     </div>
     
     <script src="dist/js/vendor.js"></script>
-    <script src="https://cdn.firebase.com/js/client/2.2.2/firebase.js"></script>
     <script src="dist/js/app.min.js"></script>
 </body>
 
