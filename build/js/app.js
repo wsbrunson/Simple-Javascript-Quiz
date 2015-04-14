@@ -1,50 +1,21 @@
+var app = angular
+  .module('SimpleQuiz', ['ngRoute'])
+    .config(function($routeProvider) {
+      $routeProvider
+        .when('/', {
+          templateUrl: 'views/welcome.html',
+          controller: 'WelcomeController'
+        })
+        .when('/questions', {
+          templateUrl: 'views/questions.html',
+          controller: 'QuestionController'
+        })
+        .otherwise({
+          redirectTo: '/'
+        });
+});
+
 var allQuestions = [];
-
-var pushIDsToAllQuestionsArray = function() {
-    allQuestions.forEach(function(question, questionIndex) {
-        question.questionsDivElementID = "question-" + questionIndex;
-        question.questionID = "q"+ questionIndex;
-        question.correctAnswer = "radio-c" + questionIndex + "-" + question.correctAnswer;
-                
-        question.choices.forEach(function(choice, choiceIndex) {
-            choice.choiceID = "c" + questionIndex + "-" + choiceIndex;
-            choice.radioButtonGroup = "quiz-radio-button-" + questionIndex;
-            choice.radioID = "radio-" + choice.choiceID;
-            // *---- Uncomment to select every correct answer by default ----*
-            if (question.correctAnswer === choice.radioID) { console.log('true'); choice.checked = 'checked'; }
-        });
-    });
-};
-
-(function(){
-    var app = angular.module('quiz', []);
-    
-    app.controller('QuizController', ['$http', function($http){
-        var quiz = this;
-        this.allQuestions = [];
-        this.questionNavIndex = 0;
-        
-        $http.get('https://api.myjson.com/bins/2i86j').success(function(data) {
-            data.questions.forEach(function(element){
-                quiz.allQuestions.push(element);
-            });
-
-            allQuestions = quiz.allQuestions;
-            quiz.allQuestionsLength = quiz.allQuestions.length;
-            console.log('ajax complete');
-        });
-        
-        this.nextButton = function() {
-            this.questionNavIndex++;
-            console.log(this.questionNavIndex);
-        };
-        
-        this.backButton = function() {
-            this.questionNavIndex--;
-            console.log(this.questionNavIndex);
-        };
-    } ]);
-})();
 
 $(document).ready(function() {
     var questionNavIndex = 0,
@@ -176,4 +147,37 @@ $(document).ready(function() {
         
         hideElement('progress', true);
     });
+});
+
+app.controller('QuestionController', ['$http', function($http, $scope){
+        var quiz = this;
+        this.allQuestions = [];
+        this.questionNavIndex = 0;
+        
+        $http.get('https://api.myjson.com/bins/2i86j').success(function(data) {
+            data.questions.forEach(function(element){
+                quiz.allQuestions.push(element);
+            });
+
+            allQuestions = quiz.allQuestions;
+            quiz.allQuestionsLength = quiz.allQuestions.length;
+            console.log('ajax complete');
+        });
+        
+        this.nextButton = function() {
+            this.questionNavIndex++;
+            console.log(this.questionNavIndex);
+        };
+        
+        this.backButton = function() {
+            this.questionNavIndex--;
+            console.log(this.questionNavIndex);
+        };
+}]);
+
+app.controller('WelcomeController', function($scope, $location) {
+  
+  $scope.startQuiz = function() {
+    return $location.path('/questions');
+  };
 });

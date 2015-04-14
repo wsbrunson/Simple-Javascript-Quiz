@@ -1,51 +1,128 @@
-var gulp = require('gulp'),
-    gutil = require('gulp-util'),
-    concat = require('gulp-concat'),
-    uglify = require('gulp-uglify'),
-    sass = require('gulp-ruby-sass'),
-    watch = require('gulp-watch'),
-    jshint = require('gulp-jshint'),
-    stylish = require('jshint-stylish'),
-    scsslint = require('gulp-scss-lint');
+/* Install Command
 
-gulp.task('js', function(){
-    // main app js file
-    gulp.src('source/js/app.js')
-    .pipe(uglify())
-    .pipe(concat("app.min.js"))
-    .pipe(gulp.dest('dist/js/'))
+npm install --save-dev gulp-concat gulp-uglify gulp-sass gulp-jshint jshint-stylish gulp-scss-lint del gulp-shell gulp-filter
 
-    // create 1 vendor.js file from all vendor plugin code
-    gulp.src('lib/js/*.js')
-    .pipe(uglify())
-    .pipe(concat("vendor.js"))
-    .pipe(gulp.dest('dist/js'))
+*/
+
+var scsslint = require('gulp-scss-lint'),
+    stylish  = require('jshint-stylish'),
+    concat   = require('gulp-concat'),
+    uglify   = require('gulp-uglify'),
+    jshint   = require('gulp-jshint'),
+    filter   = require('gulp-filter'),
+    shell    = require('gulp-shell'),
+    gulp     = require('gulp'),
+    sass     = require('gulp-sass'),
+    del      = require('del');
+
+var source = {
+    scssReset: 'src/css/_reset.scss',
+    scssMain:  'src/css/main.scss',
+    extras:    ['crossdomain.xml', 'humans.txt', 'robots.txt', 'favicon.ico'],
+    images:    'img/**/*.*',
+    fonts:     'lib/fonts/*.*',
+    views:     'src/html/ng-views/*.html',
+    root:      'src/',
+    html:      'src/html/index.html',
+    scss:      'src/css/**/*.scss',
+    libs:      'src/js/vendor/*.js',
+    js:        'src/js/app/**/*.js'
+};
+
+var build = {
+    images: 'build/img/',
+    fonts:  'build/lib/fonts/',
+    views:  'build/views/',
+    root:   'build/',
+    css:    'build/css/',
+    js:     'build/js/'
+};
+
+var surge = {
+    assets: './build',
+    domain: 'shanelovesmaria.com'
+};
+
+gulp.task('clean', function() {
+    del(build.root);
+});
+
+gulp.task('copy', function() {
+    gulp.src(source.extras)
+        .pipe(gulp.dest(build.root));
+        
+    gulp.src(source.images)
+        .pipe(gulp.dest(build.images));
+
+    gulp.src(source.fonts)
+        .pipe(gulp.dest(build.fonts));
+});
+
+gulp.task('ng-views', function() {
+    gulp.src(source.views)
+        .pipe(gulp.dest(build.views));
+});
+
+gulp.task('html', function() {
+    gulp.src(source.html)
+        .pipe(gulp.dest(build.root));
+});
+
+gulp.task('js-min', function() {
+    gulp.src(source.js)
+        .pipe(uglify())
+        .pipe(concat("main.js"))
+        .pipe(gulp.dest(build.js));
+});
+
+gulp.task('js-vendor', function() {
+    gulp.src(source.libs)
+        .pipe(uglify())
+        .pipe(concat("vendor.js"))
+        .pipe(gulp.dest(build.js));
 });
 
 gulp.task('js-lint', function() {
-    gulp.src('source/js/*.js')
+    gulp.src(source.js)
         .pipe(jshint('.jshintrc'))
         .pipe(jshint.reporter('jshint-stylish'))
 });
 
+gulp.task('js-copy', function() {
+    gulp.src(source.js)
+    .pipe(concat('app.js'))
+    .pipe(gulp.dest(build.js));
+});
+
 gulp.task('sass', function() {
-    return sass('source/css/main.scss')
-    .pipe(gulp.dest('dist/css/'))
+    gulp.src(source.scssMain)
+        .pipe(sass())
+        .pipe(gulp.dest(build.css));
 });
 
 gulp.task('scss-lint', function() {
-    gulp.src('/source/css/*.scss')
-        .pipe(scsslint())
-        .pipe(scsslint.failReporter());
+    var scssFilter = filter(source.scssReset);
+    
+    gulp.src(source.scss)
+        .pipe(scssFilter)
+        .pipe(scsslint({'config': 'lint.yml'}));
 });
 
 gulp.task('watch', function() {
-    // watch scss files
-    gulp.watch('source/css/*.scss', ['scss-lint', 'sass']);
+    gulp.watch(source.scss, ['scss-lint', 'sass']);
 
-    //watch js files
-    gulp.watch('source/js/*.js', ['js-lint', 'js']);
+    gulp.watch(source.js, ['js-lint', 'js-copy']);
+
+    gulp.watch(source.html, ['html']);
+    
+    gulp.watch(source.views, ['ng-views']);
+    
 });
 
-gulp.task('build', ['js-lint', 'js', 'scss-lint', 'sass']);
-gulp.task('default', ['js-lint', 'js', 'scss-lint', 'sass', 'watch']);
+gulp.task('surge', shell.task([
+    'surge ' + surge.assets + ' ' + surge.domain
+]));
+
+gulp.task('build-dev', ['clean', 'copy', 'html', 'ng-views', 'js-lint', 'js-copy', 'js-vendor', 'scss-lint', 'sass']);
+gulp.task('build', ['clean', 'copy', 'html', 'ng-views', 'js-lint', 'js-min', 'js-vendor', 'scss-lint', 'sass']);
+gulp.task('default', ['build-dev', 'watch']);
