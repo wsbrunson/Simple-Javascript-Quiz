@@ -110,8 +110,6 @@ body {
   .quiz {
     margin-top: 5%; }
   .question-container {
-    margin-left: 5%;
-    margin-right: 5%;
     padding-top: 2%;
     padding-bottom: 2%; }
   .question-container * {
@@ -135,10 +133,9 @@ body {
   .quiz {
     margin-top: 8%; }
   .question-container {
-    margin-left: 10%;
-    margin-right: 5%;
     padding-top: 2%;
-    padding-bottom: 2%; }
+    padding-bottom: 2%;
+    display: inline; }
   .question-container * {
     padding-left: 2%;
     padding-right: 2%;

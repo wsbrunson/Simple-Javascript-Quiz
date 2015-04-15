@@ -103,8 +103,6 @@ and (max-device-width : 480px) {
     }
 
     .question-container {
-        margin-left: 5%;
-        margin-right: 5%;
         padding-top: 2%;
         padding-bottom: 2%;
     }
@@ -136,13 +134,13 @@ and (max-device-width : 480px) {
 and (min-width : 1224px) {
     .quiz {
         margin-top: $margin-top-of-page;
+
     }
 
     .question-container {
-        margin-left: 10%;
-        margin-right: $nav-button-margin-sides;
         padding-top: 2%;
         padding-bottom: 2%;
+        display: inline;
     }
 
     .question-container * {

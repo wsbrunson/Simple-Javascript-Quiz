@@ -1,25 +1,33 @@
-app.controller('QuestionController', ['$http', function($http, $scope){
-        var quiz = this;
-        this.allQuestions = [];
-        this.questionNavIndex = 0;
-        
-        $http.get('https://api.myjson.com/bins/2i86j').success(function(data) {
-            data.questions.forEach(function(element){
-                quiz.allQuestions.push(element);
-            });
+app.controller('QuestionController', ['$http', '$scope', function($http, $scope){
 
-            allQuestions = quiz.allQuestions;
-            quiz.allQuestionsLength = quiz.allQuestions.length;
-            console.log('ajax complete');
-        });
+  $scope.allQuestions = [];
+  $scope.questionNavIndex = 0;
+
+  $http.get('https://api.myjson.com/bins/2i86j').success(function(data) {
+    data.questions.forEach(function(element){
+      $scope.allQuestions.push(element);
+      console.log('Done');
+    });
+
+    $scope.allQuestionsLength = $scope.allQuestions.length;
+  });
         
-        this.nextButton = function() {
-            this.questionNavIndex++;
-            console.log(this.questionNavIndex);
-        };
+  $scope.nextButton = function() {
+    var radioButtonGroupName = 'input[name=' + $scope.questionNavIndex + ']'
+    var radioButtons = $(radioButtonGroupName);
+
+    if ( !radioButtons.filter(':checked').length ) {
+      alert("Please select an answer");
+    } 
+
+    else {
+      $scope.questionNavIndex++;
+    }
+
+    
+  };
         
-        this.backButton = function() {
-            this.questionNavIndex--;
-            console.log(this.questionNavIndex);
-        };
+  $scope.backButton = function() {
+    $scope.questionNavIndex--;
+  };
 }]);
