@@ -10,6 +10,10 @@ var app = angular
           templateUrl: 'views/questions.html',
           controller: 'QuestionController'
         })
+        .when('/score', {
+          templateUrl: 'views/score.html',
+          controller: 'ScoreController'
+        })
         .otherwise({
           redirectTo: '/'
         });

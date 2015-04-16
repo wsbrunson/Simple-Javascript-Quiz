@@ -53,10 +53,6 @@
 /*--------------------------
           Body
 --------------------------*/
-@viewport {
-  width: device-width;
-  zoom: 1; }
-
 body {
   margin: 0;
   background-color: #001F3F;
@@ -83,6 +79,8 @@ body {
 @media only screen and (min-width: 320px) and (max-width: 480px) {
   .welcome {
     margin-top: 5%; }
+  .welcome__button {
+    margin: 0 auto; }
   .welcome h1 {
     font-size: 800%; }
   .welcome h3 {
@@ -92,6 +90,8 @@ body {
 @media only screen and (min-width: 1224px) {
   .welcome {
     margin-top: 8%; }
+  .welcome__button {
+    margin: 0 auto; }
   .welcome h1 {
     font-size: 400%; } }
 
@@ -100,12 +100,14 @@ body {
 --------------------------*/
 .score {
   margin-top: 8%;
-  margin-bottom: 16px;
-  display: none; }
+  margin-bottom: 16px; }
 
 /*--------------------------
         Quiz Questions
 --------------------------*/
+.questions__selected {
+  color: red; }
+
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   .quiz {
     margin-top: 5%; }
