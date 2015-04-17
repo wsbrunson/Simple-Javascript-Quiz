@@ -17,13 +17,16 @@ app.controller('QuestionController', ['$http', '$scope', '$location', function($
   
   function _setPreviousAnswer() {
     if($scope.allQuestions[$scope.questionNavIndex].selectedAnswer) {
+      console.log("true");
       var choiceTag = '#' + $scope.allQuestions[$scope.questionNavIndex].selectedAnswer;
-      $(choiceTag).attr('checked');
+      console.log(choiceTag);
+      console.log($(choiceTag));
+      $(choiceTag).prop('checked', 'checked');
     }
   }
         
   $scope.nextButton = function() {
-    if($scope.questionNavIndex >= $scope.allQuestionsLength) {
+    if($scope.questionNavIndex === $scope.allQuestionsLength) {
       $location.path('/score');
     }
     

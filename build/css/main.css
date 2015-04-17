@@ -56,7 +56,6 @@
 body {
   margin: 0;
   background-color: #001F3F;
-  text-align: center;
   color: #01FF70;
   font-family: lato; }
 
@@ -69,7 +68,7 @@ body {
 /* Desktop & Laptop ----------- */
 @media only screen and (min-width: 1224px) {
   .content-wrapper {
-    width: 70%;
+    width: 95%;
     margin: 0 auto; } }
 
 /*--------------------------
@@ -108,12 +107,19 @@ body {
 .questions__selected {
   color: red; }
 
+.questions__nav-buttons-container {
+  margin-top: 1%;
+  padding-left: 2%; }
+
+.questions__nav-buttons {
+  display: inline; }
+
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   .quiz {
     margin-top: 5%; }
   .question-container {
     padding-top: 2%;
-    padding-bottom: 2%; }
+    padding-bottom: 1%; }
   .question-container * {
     padding-left: 2%;
     padding-right: 2%;
@@ -136,8 +142,8 @@ body {
     margin-top: 8%; }
   .question-container {
     padding-top: 2%;
-    padding-bottom: 2%;
-    display: inline; }
+    padding-bottom: 1%;
+    display: block; }
   .question-container * {
     padding-left: 2%;
     padding-right: 2%;
@@ -165,17 +171,6 @@ body {
 .highlight-incorrect {
   background-color: #FF4136;
   color: #001F3F; }
-
-/*--------------------------
-        NAV Buttons
---------------------------*/
-#next-button {
-  float: right;
-  margin-top: 5%; }
-
-#back-button {
-  float: left;
-  margin-top: 5%; }
 
 /*--------------------------
     Quiz Complete Buttons

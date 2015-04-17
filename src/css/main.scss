@@ -19,7 +19,6 @@
 body { 
     margin: 0;
     background-color: $background-color;
-    text-align: center;
     color: $main-color;
     font-family: lato;
 }
@@ -38,7 +37,7 @@ and (max-width : 480px) {
 @media only screen 
 and (min-width : 1224px) {
     .content-wrapper {
-        width: 70%;
+        width: 95%;
         margin: 0 auto;
     }
 }
@@ -100,6 +99,16 @@ and (min-width : 1224px) {
 .questions__selected {
     color: red;
 }
+
+.questions__nav-buttons-container {
+  margin-top: 1%;
+  padding-left: 2%;
+}
+
+.questions__nav-buttons {
+  display: inline;
+}
+
 @media only screen 
 and (min-device-width : 320px) 
 and (max-device-width : 480px) {
@@ -109,7 +118,7 @@ and (max-device-width : 480px) {
 
     .question-container {
         padding-top: 2%;
-        padding-bottom: 2%;
+        padding-bottom: 1%;
     }
 
     .question-container * {
@@ -144,8 +153,8 @@ and (min-width : 1224px) {
 
     .question-container {
         padding-top: 2%;
-        padding-bottom: 2%;
-        display: inline;
+        padding-bottom: 1%;
+        display: block;
     }
 
     .question-container * {
@@ -183,20 +192,6 @@ and (min-width : 1224px) {
 .highlight-incorrect { 
     background-color: #FF4136;
     color: $second-color;
-}
-
-
-/*--------------------------
-        NAV Buttons
---------------------------*/
-#next-button {
-    float: right;
-    margin-top: $nav-button-margin-top;
-}
-
-#back-button {
-    float: left;
-    margin-top: $nav-button-margin-top;
 }
 
 

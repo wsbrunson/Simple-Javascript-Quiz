@@ -1,20 +1,22 @@
 <div class="quiz group">
-    
-  <button id='back-button' class='btn nav-button' ng-click='backButton()' 
-          ng-hide='questionNavIndex <= 0' >
-    <span class="fa fa-arrow-left"></span>
-  </button>
-
-  <div class='question-container group'>
+  
+  <div class='question-container'>
     <p class='question'>{{ allQuestions[questionNavIndex].question }}</p>
     <label ng-repeat='choice in allQuestions[questionNavIndex].choices' class="radio-label">
       <input id='{{ $index }}' type="radio" name="group-{{ questionNavIndex }}" ng-click='isSelected()'>{{choice.answer}}
     </label>
   </div>
 
-  <button id='next-button' class='btn nav-button' ng-click='nextButton()' 
-          ng-show='questionNavIndex < 8' >
-    <span class="fa fa-arrow-right"></span>
-  </button>
+  <div class='questions__nav-buttons-container'>
+    <button class='btn questions__nav-buttons' ng-click='backButton()' 
+            ng-hide='questionNavIndex <= 0' >
+      <span class="fa fa-arrow-left"></span>
+    </button>
+
+    <button class='btn questions__nav-buttons' ng-click='nextButton()' 
+            ng-show='questionNavIndex < 8' >
+      <span class="fa fa-arrow-right"></span>
+    </button>
+  </div>
   
 </div>
