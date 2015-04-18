@@ -1,52 +1,68 @@
 app.controller('QuestionController', ['$http', '$scope', '$location', function($http, $scope, $location){
   
-  $scope.allQuestions = [];
-  $scope.questionNavIndex = 0;
+  var question = this;
+  question.allQuestions = [];
+  question.questionNavIndex = 0;
+
+  $scope.answersArray = [];
   
-  var radioButtonGroupName = 'input[name=group-' + $scope.questionNavIndex + ']';
+  var radioButtonGroupName = 'input[name=group-' + question.questionNavIndex + ']';
   var radioButtonGroup = $(radioButtonGroupName);
 
   $http.get('https://api.myjson.com/bins/2i86j').success(function(data) {
     data.questions.forEach(function(element){
-      $scope.allQuestions.push(element);
+      question.allQuestions.push(element);
       console.log('Done');
     });
 
-    $scope.allQuestionsLength = $scope.allQuestions.length;
+    question.allQuestionsLength = question.allQuestions.length;
   });
   
   function _setPreviousAnswer() {
-    if($scope.allQuestions[$scope.questionNavIndex].selectedAnswer) {
+    if(question.allQuestions[question.questionNavIndex].selectedAnswer) {
       console.log("true");
-      var choiceTag = '#' + $scope.allQuestions[$scope.questionNavIndex].selectedAnswer;
+      var choiceTag = '#' + question.allQuestions[question.questionNavIndex].selectedAnswer;
       console.log(choiceTag);
       console.log($(choiceTag));
       $(choiceTag).prop('checked', 'checked');
     }
   }
         
-  $scope.nextButton = function() {
-    if($scope.questionNavIndex === $scope.allQuestionsLength) {
+  question.nextButton = function() {
+    if(question.questionNavIndex === question.allQuestionsLength) {
       $location.path('/score');
     }
     
     else {
-    if ($scope.allQuestions[$scope.questionNavIndex].selectedAnswer || $scope.allQuestions[$scope.questionNavIndex].selectedAnswer === 0) {
-      $scope.questionNavIndex++;
-    } 
-/*
-    else {
-      alert("Please select an answer");
-    }*/
+      if (question.allQuestions[question.questionNavIndex].selectedAnswer || 
+          question.allQuestions[question.questionNavIndex].selectedAnswer === 0) {
+        question.questionNavIndex++;
+      } 
+      
+      else {
+        alert("Please select an answer");
+      }
+      
     }
   };
         
-  $scope.backButton = function() {
-    $scope.questionNavIndex--;
+  question.backButton = function() {
+    question.questionNavIndex--;
      _setPreviousAnswer();
   };
   
+  //Using this instead of $scope returns the controller instead of the element. I hope I can find a way to stop using $scope,
+  //but for now, this works. Sorry future me!
   $scope.isSelected = function() {
-    $scope.allQuestions[$scope.questionNavIndex].selectedAnswer = this.$index;
+    question.allQuestions[question.questionNavIndex].selectedAnswer = this.$index;
+    
+    if (question.questionNavIndex > -1) {
+      $scope.answersArray.splice(question.questionNavIndex, 1);
+      $scope.answersArray.push(question.allQuestions[question.questionNavIndex].selectedAnswer);
+    }
+    else {
+    $scope.answersArray.push(question.allQuestions[question.questionNavIndex].selectedAnswer);
+    }
+    console.log($scope.answersArray);
   };
 }]);

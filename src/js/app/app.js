@@ -8,7 +8,8 @@ var app = angular
         })
         .when('/questions', {
           templateUrl: 'views/questions.html',
-          controller: 'QuestionController'
+          controller: 'QuestionController',
+          controllerAs: 'question'
         })
         .when('/score', {
           templateUrl: 'views/score.html',
