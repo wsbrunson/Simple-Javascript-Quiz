@@ -4,7 +4,7 @@
     <p class='question'>{{ question.allQuestions[question.questionNavIndex].question }}</p>
     <label ng-repeat='choice in question.allQuestions[question.questionNavIndex].choices' class="radio-label">
       <input id='{{ $index }}' type="radio" name="group-{{ question.questionNavIndex }}" 
-             ng-click='isSelected()'>{{choice.answer}}
+             ng-click='question.isSelected($index)'>{{choice.answer}}
     </label>
   </div>
 

@@ -1,9 +1,9 @@
 <div class="score">
-  <h2>Quiz Complete</h2>
-    <p id='total'>Your total score is: <span id='score-total'>{{ totalScore }}</span></p>
+  <h2 class='score__title'>Quiz Complete!</h2>
+    <p class='score__total'>Your total score is: <span class='score--number'>{{ score.totalScore }}</span></p>
         
   <div class='end-div-buttons'>
-    <button id='retake-button' class='btn end-buttons'>Retake Quiz</button>
+    <button id='retake-button' class='btn end-buttons' ng-click='score.retakeQuiz()'>Retake Quiz</button>
     <button id='show-button' class='btn end-buttons'>Show Answers</button>
   </div>
 </div>

@@ -1,8 +1,9 @@
 /*--------------------------
         Include
 --------------------------*/
-@import '_base';
-@import '_style';
+@import 'reset';
+@import 'base';
+@import 'style';
 
 
 //clearfix hack
@@ -23,65 +24,33 @@ body {
     font-family: lato;
 }
 
-/* Smartphones (landscape & Portrait) ----------- */
-@media only screen 
-and (min-width : 320px) 
-and (max-width : 480px) {
-    .content-wrapper {
-        width: auto;
-        margin: 0 auto;
-    }
-}
-
-/* Desktop & Laptop ----------- */
-@media only screen 
-and (min-width : 1224px) {
-    .content-wrapper {
-        width: 95%;
-        margin: 0 auto;
-    }
+.content-wrapper {
+  width: 90%;
+  margin: 0 auto;
 }
 
 
 /*--------------------------
        Welcome Heading
 --------------------------*/
-/* Smartphones (landscape & Portrait) ----------- */
-@media only screen 
-and (min-width : 320px) 
-and (max-width : 480px) {
-    .welcome {
-        margin-top: 5%;
-    }
-    
-    .welcome__button {
-        margin: 0 auto;
-    }
-    
-    .welcome h1 {
-        font-size: 800%;    
-    }
-    
-    .welcome h3 {
-        font-size: 400%;    
-    }
+.welcome {
+  margin-top: $margin-top-of-page;
+  text-align: center;
 }
 
-/* Desktop & Laptop ----------- */
-@media only screen 
-and (min-width : 1224px) {
-    .welcome {
-        margin-top: $margin-top-of-page;
-    }
-    
-    .welcome__button {
-        margin: 0 auto;
-    }
-    
-    .welcome h1 {
-        font-size: 400%;    
-    }
-}
+  .welcome__title {
+    padding-bottom: 40px;
+    font-size: 400%;    
+  }
+  
+  .welcome__description {
+    padding-bottom: 40px;
+    font-size: 150%;
+  }
+
+  .welcome__button {
+    margin: 0 auto;
+  }
 
 
 /*--------------------------
@@ -90,7 +59,22 @@ and (min-width : 1224px) {
 .score {
     margin-top: $margin-top-of-page;
     margin-bottom: 16px;
+    text-align: center;
 }
+
+  .score__title {
+    font-size: 400%;
+    padding-bottom: 40px;
+  }
+  
+  .score__total {
+    font-size: 200%;
+    padding-bottom: 40px;
+  }
+  
+  .score--number {
+    border-bottom: solid $main-color 3px;
+  }
 
 
 /*--------------------------
@@ -109,47 +93,9 @@ and (min-width : 1224px) {
   display: inline;
 }
 
-@media only screen 
-and (min-device-width : 320px) 
-and (max-device-width : 480px) {
-    .quiz {
-        margin-top: 5%;
-    }
-
-    .question-container {
-        padding-top: 2%;
-        padding-bottom: 1%;
-    }
-
-    .question-container * {
-        padding-left: 2%;
-        padding-right: 2%;
-        text-align: left;
-    }
-
-    .question {
-        width: auto;
-        font-weight: bold;
-        font-family: lato;
-        font-size: 300%;
-        color: $main-color;
-    }
-    
-    label {
-        color: #111111;
-        width: 80%;
-        font-size: 250%;
-        font-family: lato;
-    }
+.quiz {
+  margin-top: $margin-top-of-page;
 }
-
-/* Desktop & Laptop ----------- */
-@media only screen 
-and (min-width : 1224px) {
-    .quiz {
-        margin-top: $margin-top-of-page;
-
-    }
 
     .question-container {
         padding-top: 2%;
@@ -177,7 +123,6 @@ and (min-width : 1224px) {
         font-size: 125%;
         font-family: lato;
     }
-}
 
 .radio-label {
     display: block;
