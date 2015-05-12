@@ -78,6 +78,7 @@ app.controller('QuestionController', ['$http', '$scope', '$location', function($
   };
   
   question.isSelected = function(index) {
+    console.log('click');
 
     question.allQuestions[question.questionNavIndex].selectedAnswer = index;
     

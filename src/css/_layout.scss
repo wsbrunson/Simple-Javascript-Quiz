@@ -1,0 +1,128 @@
+/*--------------------------
+          Body
+--------------------------*/
+body { 
+    margin: 0;
+    background-color: $background-color;
+    color: $main-color;
+    font-family: lato;
+}
+
+.outer-container {
+  @include outer-container(100%);
+}
+
+
+//--------------------------
+//     Welcome Heading
+//--------------------------
+.welcome {
+  margin-top: $margin-top-of-page;
+  text-align: center;
+}
+
+  .welcome__title {
+    padding-bottom: 40px;
+    font-size: 400%;    
+  }
+  
+  .welcome__description {
+    padding-bottom: 40px;
+    font-size: 150%;
+  }
+
+  .welcome__button {
+    margin: 0 auto;
+  }
+
+
+//--------------------------
+//      Score Screen
+//--------------------------
+.score {
+    margin-top: $margin-top-of-page;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+  .score__title {
+    font-size: 400%;
+    padding-bottom: 40px;
+  }
+  
+  .score__total {
+    font-size: 200%;
+    padding-bottom: 40px;
+  }
+  
+  .score--number {
+    border-bottom: solid $main-color 3px;
+  }
+  
+.end-div-buttons {
+    margin: 0 auto;
+}
+
+.end-buttons {
+    display: inline;
+}
+
+
+/*--------------------------
+        Quiz Questions
+--------------------------*/
+.quiz {
+  @include row();
+  margin-top: $margin-top-of-page;
+}
+
+    .quiz__question-container {
+        @include span-columns(8);
+        @include shift(2);
+        @include border-radius(15px);
+        
+        margin-bottom: 2%;
+        padding-left: 1%;
+        display: block;
+        border-bottom: solid 6px $button-click-color;
+        text-align: left;
+        background-color: $main-color;
+        
+    }
+
+    .quiz__question {
+        font-weight: bold;
+        font-family: lato;
+        font-size: 200%;
+        color: $second-color;
+    }
+    
+    label {
+        color: #111111;
+        width: 80%;
+        font-size: 125%;
+        font-family: lato;
+    }
+
+    .quiz__choice {
+      display: block;
+      color: $second-color;
+    }
+
+.highlight-correct { 
+    background-color: $correct-color;
+    color: $second-color;
+}
+
+.highlight-incorrect { 
+    background-color: #FF4136;
+    color: $second-color;
+}
+
+
+/*--------------------------
+        Utility
+--------------------------*/
+.hidden {
+    display: none;
+}

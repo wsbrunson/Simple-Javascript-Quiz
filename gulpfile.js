@@ -1,6 +1,6 @@
 /* Install Command
 
-npm install --save-dev gulp-concat gulp-uglify gulp-sass gulp-jshint jshint-stylish gulp-scss-lint del gulp-shell gulp-filter
+npm install --save-dev gulp-concat gulp-uglify gulp-sass gulp-jshint jshint-stylish gulp-scss-lint del gulp-shell
 
 */
 
@@ -16,7 +16,6 @@ var scsslint = require('gulp-scss-lint'),
     del      = require('del');
 
 var source = {
-    scssReset: 'src/css/_reset.scss',
     scssMain:  'src/css/main.scss',
     extras:    ['crossdomain.xml', 'humans.txt', 'robots.txt', 'favicon.ico'],
     images:    'img/**/*.*',
@@ -101,15 +100,12 @@ gulp.task('sass', function() {
 });
 
 gulp.task('scss-lint', function() {
-    var scssFilter = filter(source.scssReset);
-    
     gulp.src(source.scss)
-        .pipe(scssFilter)
-        .pipe(scsslint({'config': 'lint.yml'}));
+        .pipe(scsslint({'config': '/lint.yml'}));
 });
 
 gulp.task('watch', function() {
-    gulp.watch(source.scss, ['scss-lint', 'sass']);
+    gulp.watch(source.scss, ['sass']);
 
     gulp.watch(source.js, ['js-lint', 'js-copy']);
 
@@ -123,6 +119,6 @@ gulp.task('surge', shell.task([
     'surge ' + surge.assets + ' ' + surge.domain
 ]));
 
-gulp.task('build-dev', ['clean', 'copy', 'html', 'ng-views', 'js-lint', 'js-copy', 'js-vendor', 'scss-lint', 'sass']);
+gulp.task('build-dev', ['clean', 'copy', 'html', 'ng-views', 'js-lint', 'js-copy', 'js-vendor', 'sass']);
 gulp.task('build', ['clean', 'copy', 'html', 'ng-views', 'js-lint', 'js-min', 'js-vendor', 'scss-lint', 'sass']);
 gulp.task('default', ['build-dev', 'watch']);
