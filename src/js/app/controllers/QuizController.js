@@ -26,45 +26,6 @@ app.controller('QuizController', ['$http', '$scope', '$location', function($http
     
   });
   
-  function _setPreviousAnswer() {
-    
-    if(quiz.allQuestions[quiz.questionNavIndex].selectedAnswer) {
-      
-      var choiceTag = '#' + quiz.allQuestions[quiz.questionNavIndex]
-                              .selectedAnswer;
-      $(choiceTag).prop('checked', 'checked');
-      
-    }
-    
-  }
-        
-  quiz.nextButton = function() {
-    
-    if(quiz.questionNavIndex === quiz.allQuestionsLength - 1) {
-      $location.path('/score');
-    }
-    
-    else {
-      if (quiz.allQuestions[quiz.questionNavIndex].selectedAnswer || 
-          quiz.allQuestions[quiz.questionNavIndex].selectedAnswer === 0) {
-        quiz.questionNavIndex++;
-      } 
-      
-      else {
-        alert("Please select an answer");
-      }
-
-    }
-    
-  };
-        
-  quiz.backButton = function() {
-    
-    quiz.questionNavIndex--;
-     _setPreviousAnswer();
-     
-  };
-  
   quiz.isSelected = function(index) {
     console.log('click');
 
