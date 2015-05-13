@@ -1,26 +1,3 @@
-var app = angular
-  .module('SimpleQuiz', ['ngRoute'])
-    .config(function($routeProvider) {
-      $routeProvider
-        .when('/', {
-          templateUrl: 'views/welcome.html',
-          controller: 'WelcomeController'
-        })
-        .when('/quiz', {
-          templateUrl: 'views/quiz.html',
-          controller: 'QuizController',
-          controllerAs: 'quiz'
-        })
-        .when('/score', {
-          templateUrl: 'views/score.html',
-          controller: 'ScoreController',
-          controllerAs: 'score'
-        })
-        .otherwise({
-          redirectTo: '/'
-        });
-});
-
 app.controller('QuizController', ['$http', '$scope', '$location', function($http, $scope, $location){
   
   var quiz = this;
@@ -108,26 +85,3 @@ app.controller('QuizController', ['$http', '$scope', '$location', function($http
   };
   
 }]);
-
-app.controller('ScoreController', ['$scope', '$location', function($scope, $location) {
-  
-  var score = this;
-  
-  score.totalScore = 7;
-  
-  score.retakeQuiz = function() {
-    
-    console.log('click');
-    $scope.answersArray = [];
-    
-    $location.path('/');
-    
-  };
-  
-}]);
-app.controller('WelcomeController', function($scope, $location) {
-  
-  $scope.startQuiz = function() {
-    return $location.path('/quiz');
-  };
-});

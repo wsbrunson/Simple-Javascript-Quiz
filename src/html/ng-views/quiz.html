@@ -1,11 +1,10 @@
 <div class="quiz">
   <div class='outer-container'>
-  <div class='quiz__question-container' ng-repeat='question in question.allQuestions'>
+  <div class='quiz__question-container' ng-repeat='question in quiz.allQuestions'>
     <p class='quiz__question'>{{ question.question }}</p>
       <div ng-repeat='choice in question.choices'>
-        <input  id='{{ $index }}' type="radio" name='group-{{ question.correctAnswer }}' value='{{ question.correctAnswer + "-" + $index }}' 
-             ng-click='question.isSelected($index)'>
-        <label for='{{ question.correctAnswer + "-" + $index }}' class='quiz__choice'>{{ choice.answer }}</label>
+        <input  id='{{ question.questionNumber + "-" + $index }}' type="radio" name='group-{{ question.questionNumber }}'>
+        <label for='{{ question.questionNumber + "-" + $index }}' class='quiz__choice'>{{ choice.answer }}</label>
       </div>
   </div>
 

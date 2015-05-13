@@ -6,10 +6,10 @@ var app = angular
           templateUrl: 'views/welcome.html',
           controller: 'WelcomeController'
         })
-        .when('/questions', {
-          templateUrl: 'views/questions.html',
-          controller: 'QuestionController',
-          controllerAs: 'question'
+        .when('/quiz', {
+          templateUrl: 'views/quiz.html',
+          controller: 'QuizController',
+          controllerAs: 'quiz'
         })
         .when('/score', {
           templateUrl: 'views/score.html',
