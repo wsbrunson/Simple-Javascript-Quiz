@@ -2,6 +2,6 @@
 /node_modules/
 /npm-debug.log
 /.sass-cache/
-/build/
+
 
 .DS_Store
