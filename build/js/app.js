@@ -28,7 +28,7 @@ app.controller('QuizController', ['$http', '$scope', '$location', function($http
   quiz.allQuestions = [];
   quiz.questionNavIndex = 0;
 
-  $scope.answersArray = [];
+  $scope.quizScore = 0;
 
   //https://api.myjson.com/bins/3dgdd - array
   //https://api.myjson.com/bins/2i86j - object
@@ -72,7 +72,6 @@ app.controller('QuizController', ['$http', '$scope', '$location', function($http
   quiz.submitButton = function() {
     if(_validateQuiz()) {
       $scope.quizScore = _scoreQuiz();
-      console.log($scope.quizScore);
       $location.path('/score');
     }
 
