@@ -331,9 +331,6 @@ body {
 .end-buttons {
   display: inline; }
 
-/*--------------------------
-        Quiz Questions
---------------------------*/
 .quiz {
   display: block;
   margin-top: 8%; }
@@ -376,6 +373,28 @@ label {
   display: block;
   color: #001F3F; }
 
+.quiz__buttons-container {
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 31.76157%;
+  margin-left: 34.11922%;
+  margin-bottom: 10%;
+  margin-top: 3%;
+  text-align: center; }
+  .quiz__buttons-container:last-child {
+    margin-right: 0; }
+
+.quiz__button {
+  display: inline-block;
+  margin-right: 2%; }
+
+/*--------------------------
+        Utility
+--------------------------*/
+.hidden {
+  display: none; }
+
 .highlight-correct {
   background-color: #01FF70;
   color: #001F3F; }
@@ -383,9 +402,3 @@ label {
 .highlight-incorrect {
   background-color: #FF4136;
   color: #001F3F; }
-
-/*--------------------------
-        Utility
---------------------------*/
-.hidden {
-  display: none; }

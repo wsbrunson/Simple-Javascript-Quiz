@@ -14,7 +14,7 @@ body {
 
 
 //--------------------------
-//     Welcome Heading
+//        Welcome
 //--------------------------
 .welcome {
   margin-top: $margin-top-of-page;
@@ -68,9 +68,9 @@ body {
 }
 
 
-/*--------------------------
-        Quiz Questions
---------------------------*/
+//--------------------------
+//       Quiz Questions
+//--------------------------
 .quiz {
   @include row();
   margin-top: $margin-top-of-page;
@@ -109,6 +109,27 @@ body {
       color: $second-color;
     }
 
+    .quiz__buttons-container {
+      @include span-columns(4);
+      @include shift(4);
+      margin-bottom: 10%;
+      margin-top: 3%;
+      text-align: center;
+    }
+
+    .quiz__button {
+      display: inline-block;
+      margin-right: 2%;
+    }
+
+
+/*--------------------------
+        Utility
+--------------------------*/
+.hidden {
+    display: none;
+}
+
 .highlight-correct { 
     background-color: $correct-color;
     color: $second-color;
@@ -117,12 +138,4 @@ body {
 .highlight-incorrect { 
     background-color: #FF4136;
     color: $second-color;
-}
-
-
-/*--------------------------
-        Utility
---------------------------*/
-.hidden {
-    display: none;
 }

@@ -8,16 +8,9 @@
       </div>
   </div>
 
-  <div class='questions__nav-buttons-container'>
-    <button class='button questions__nav-buttons' ng-click='' 
-            ng-hide='question.questionNavIndex <= 0' >
-      <span class="fa fa-arrow-left"></span>
-    </button>
-
-    <button class='button questions__nav-buttons' ng-click='' 
-            ng-show='question.questionNavIndex < 8' >
-      <span class="fa fa-arrow-right"></span>
-    </button>
+  <div class='quiz__buttons-container'>
+    <button class='button quiz__button' ng-click=''>Not Sure</button>
+    <button class='button quiz__button' ng-click='quiz.submitButton()'>Submit</button>
   </div>
   </div>
 </div>

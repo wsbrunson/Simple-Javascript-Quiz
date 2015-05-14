@@ -17,32 +17,44 @@ app.controller('QuizController', ['$http', '$scope', '$location', function($http
     });
 
     quiz.allQuestionsLength = quiz.allQuestions.length;
-    
-    var i = 0;
-    while(i < 8) {
-      console.log(quiz.allQuestions[i]);
-      i++;
-    }
-    
   });
-  
-  quiz.isSelected = function(index) {
-    console.log('click');
 
-    quiz.allQuestions[quiz.questionNavIndex].selectedAnswer = index;
-    
-    if (quiz.questionNavIndex > -1) {
-      $scope.answersArray
-        .splice(quiz.questionNavIndex, 
-                1, 
-                quiz.allQuestions[quiz.questionNavIndex].selectedAnswer);
+  var _validateQuiz = function() {
+    for(var i = 0; i < quiz.allQuestionsLength; i++) {
+      var group = 'input[name=group-' + i + ']:checked';
+
+      if ($(group).length === 0) {
+        return false;
+      }
     }
-    
-    else {
-      $scope.answersArray
-        .push(quiz.allQuestions[quiz.questionNavIndex].selectedAnswer);
-    }
-    
+
+    return true;
   };
-  
+
+  var _scoreQuiz = function() {
+    var numberOfCorrectAnswers = 0;
+
+    for(var i = 0; i < quiz.allQuestionsLength; i++) {
+      var answer = quiz.allQuestions[i].correctAnswer;
+      var answerToCheck = '#' + i + '-' + answer + ':checked';
+
+      if($(answerToCheck).length > 0) {
+        numberOfCorrectAnswers++;
+      }
+    }
+
+    return numberOfCorrectAnswers;
+  };
+
+  quiz.submitButton = function() {
+    if(_validateQuiz()) {
+      $scope.quizScore = _scoreQuiz();
+      console.log($scope.quizScore);
+      $location.path('/score');
+    }
+
+    else {
+      alert('Please answer all questions before conintuing');
+    }
+  };
 }]);

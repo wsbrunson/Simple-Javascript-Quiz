@@ -2,8 +2,6 @@ app.controller('ScoreController', ['$scope', '$location', function($scope, $loca
   
   var score = this;
   
-  score.totalScore = 7;
-  
   score.retakeQuiz = function() {
     
     console.log('click');
