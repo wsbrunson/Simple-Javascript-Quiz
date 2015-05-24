@@ -3,16 +3,17 @@ var app = angular
     .config(function($routeProvider) {
       $routeProvider
         .when('/', {
-          templateUrl: 'views/welcome.html',
-          controller: 'WelcomeController'
+          templateUrl: 'src/js/app/views/welcome.html',
+          controller: 'WelcomeController',
+          controllerAs: 'welcome'
         })
         .when('/quiz', {
-          templateUrl: 'views/quiz.html',
+          templateUrl: 'src/js/app/views/quiz.html',
           controller: 'QuizController',
           controllerAs: 'quiz'
         })
         .when('/score', {
-          templateUrl: 'views/score.html',
+          templateUrl: 'src/js/app/views/score.html',
           controller: 'ScoreController',
           controllerAs: 'score'
         })
@@ -24,7 +25,7 @@ var app = angular
 app.controller('QuizController', ['$http', '$scope', '$location', function($http, $scope, $location){
   
   var quiz = this;
-  
+  console.log($location.$$path);
   quiz.allQuestions = [];
   quiz.questionNavIndex = 0;
 
@@ -72,6 +73,7 @@ app.controller('QuizController', ['$http', '$scope', '$location', function($http
   quiz.submitButton = function() {
     if(_validateQuiz()) {
       $scope.quizScore = _scoreQuiz();
+      console.log($scope.quizScore);
       $location.path('/score');
     }
 
@@ -95,9 +97,11 @@ app.controller('ScoreController', ['$scope', '$location', function($scope, $loca
   };
   
 }]);
-app.controller('WelcomeController', function($scope, $location) {
+app.controller('WelcomeController', function($location) {
   
-  $scope.startQuiz = function() {
-    return $location.path('/quiz');
+  var welcome = this;
+
+  this.startQuiz = function() {
+    $location.path('/quiz');
   };
 });

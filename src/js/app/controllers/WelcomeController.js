@@ -1,6 +1,8 @@
-app.controller('WelcomeController', function($scope, $location) {
+app.controller('WelcomeController', function($location) {
   
-  $scope.startQuiz = function() {
-    return $location.path('/quiz');
+  var welcome = this;
+
+  this.startQuiz = function() {
+    $location.path('/quiz');
   };
 });

@@ -1,7 +1,7 @@
 app.controller('QuizController', ['$http', '$scope', '$location', function($http, $scope, $location){
   
   var quiz = this;
-  
+  console.log($location.$$path);
   quiz.allQuestions = [];
   quiz.questionNavIndex = 0;
 
@@ -49,6 +49,7 @@ app.controller('QuizController', ['$http', '$scope', '$location', function($http
   quiz.submitButton = function() {
     if(_validateQuiz()) {
       $scope.quizScore = _scoreQuiz();
+      console.log($scope.quizScore);
       $location.path('/score');
     }
 
