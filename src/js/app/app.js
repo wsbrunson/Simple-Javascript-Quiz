@@ -1,6 +1,22 @@
-var app = angular
-  .module('SimpleQuiz', ['ngRoute'])
-    .config(function($routeProvider) {
+'use strict';
+
+//3rd Party Packages
+var angular      = require('angular');
+var angularRoute = require('angular-route');
+var jQuery       = require('../vendor/jquery.min.js');
+
+//Controllers
+var QuizCtrl    = require('./controllers/QuizController.js');
+var ScoreCtrl   = require('./controllers/ScoreController.js');
+var WelcomeCtrl = require('./controllers/WelcomeController.js');
+
+var app = angular.module('SimpleQuiz', ['ngRoute']);
+
+app.controller('QuizController', ['$http', '$scope', '$location', QuizCtrl]);
+app.controller('ScoreController', ['$scope', '$location', ScoreCtrl]);
+app.controller('WelcomeController', ['$location', WelcomeCtrl]);
+
+app.config(function($routeProvider) {
       $routeProvider
         .when('/', {
           templateUrl: 'src/js/app/views/welcome.html',

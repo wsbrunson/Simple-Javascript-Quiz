@@ -1,3 +1,14 @@
+'use strict';
+
+//Angular packages
+var angular   = require('angular');
+var angularUi = require('angular-ui-router');
+
+//Controllers
+var QuizCtrl = require('./controllers/QuizController.js');
+var ScoreCtrl = require('./controllers/ScoreController.js');
+var WelcomeCtrl = require('./controllers/WelcomeController.js');
+
 var app = angular
   .module('SimpleQuiz', ['ngRoute'])
     .config(function($routeProvider) {
@@ -22,8 +33,13 @@ var app = angular
         });
 });
 
-app.controller('QuizController', ['$http', '$scope', '$location', function($http, $scope, $location){
-  
+app.controller('QuizController', ['$http', '$scope', '$location', QuizCtrl]);
+app.controller('ScoreController', ['$scope', '$location', ScoreCtrl]);
+app.controller('WelcomeController', ['$location', WelcomeCtrl]);
+
+'use strict';
+
+var QuizCtrl = function($http, $scope, $location){
   var quiz = this;
   console.log($location.$$path);
   quiz.allQuestions = [];
@@ -81,10 +97,11 @@ app.controller('QuizController', ['$http', '$scope', '$location', function($http
       alert('Please answer all questions before conintuing');
     }
   };
-}]);
+};
 
-app.controller('ScoreController', ['$scope', '$location', function($scope, $location) {
-  
+module.exports = QuizCtrl;
+
+var ScoreCtrl = function($scope, $location) {
   var score = this;
   
   score.retakeQuiz = function() {
@@ -95,13 +112,14 @@ app.controller('ScoreController', ['$scope', '$location', function($scope, $loca
     $location.path('/');
     
   };
-  
-}]);
-app.controller('WelcomeController', function($location) {
-  
+};
+
+module.exports = ScoreCtrl;
+
+var WelcomeCtrl = function($location) {
   var welcome = this;
 
   this.startQuiz = function() {
     $location.path('/quiz');
   };
-});
+};

@@ -1,6 +1,5 @@
 #{$all-button-inputs},
 button {
-  @include border-radius(15px);
   @include transition-duration(0.2s);
   @include appearance(none);
   
@@ -8,6 +7,7 @@ button {
   background-color: $main-color;
   border: none;
   border-bottom: solid 6px $button-click-color;
+  border-radius: 15px;
   color: $second-color;
   cursor: pointer;
   display: block;
@@ -28,7 +28,7 @@ button {
   }
   
   &:active {
-    @include box-shadow(0, 1px, 4px, rgba(0, 0, 0, 0.6), true);
+    box-shadow: 0, 1px, 4px, rgba(0, 0, 0, 0.6), inset;
     background: $button-click-color;
     border-bottom: solid 6px #001c0c;
   }

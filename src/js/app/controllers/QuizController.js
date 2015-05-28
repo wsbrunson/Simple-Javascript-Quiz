@@ -1,7 +1,7 @@
-app.controller('QuizController', ['$http', '$scope', '$location', function($http, $scope, $location){
-  
+'use strict';
+
+var QuizCtrl = function($http, $scope, $location){
   var quiz = this;
-  console.log($location.$$path);
   quiz.allQuestions = [];
   quiz.questionNavIndex = 0;
 
@@ -57,4 +57,6 @@ app.controller('QuizController', ['$http', '$scope', '$location', function($http
       alert('Please answer all questions before conintuing');
     }
   };
-}]);
+};
+
+module.exports = QuizCtrl;

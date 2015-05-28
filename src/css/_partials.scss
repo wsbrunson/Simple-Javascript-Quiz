@@ -1,44 +1,17 @@
-/*--------------------------
-        Variables
---------------------------*/
-$main-color : #01FF70;
-$second-color : #001F3F;
-$background-color: #001F3F;
-$correct-color : #01FF70;
-$incorrect-color : #FF4136;
+//--------------------------
+//      Variables
+//--------------------------
+$main-color : #01ff70;
+$second-color : #001f3f;
+$background-color: #001f3f;
+$correct-color : #01ff70;
+$incorrect-color : #ff4136;
+$radio-button-color: #111;
 
 $button-click-color: #00b44e;
-$button-hover-color: #99FFC5;
+$button-hover-color: #99ffc5;
 
 $nav-button-margin-sides: 5%;
 $nav-button-margin-top: 5%;
 $site-wrapper-percent: 20%;
 $margin-top-of-page: 8%;
-
-
-/*--------------------------
-        Mixins
---------------------------*/
-@mixin border-radius($radius) {
-    -webkit-border-radius: $radius;
-    -moz-border-radius: $radius;
-    border-radius: $radius;
-}
-
-@mixin transition-duration($duration) {
-    -webkit-transition-duration: $duration;
-    -moz-transition-duration: $duration;
-    transition-duration: $duration;
-}
-
-@mixin box-shadow($top, $left, $blur, $color, $inset: false) {
-  @if $inset {
-    -webkit-box-shadow:inset $top $left $blur $color;
-    -moz-box-shadow:inset $top $left $blur $color;
-    box-shadow:inset $top $left $blur $color;
-  } @else {
-    -webkit-box-shadow: $top $left $blur $color;
-    -moz-box-shadow: $top $left $blur $color;
-    box-shadow: $top $left $blur $color;
-  }
-}

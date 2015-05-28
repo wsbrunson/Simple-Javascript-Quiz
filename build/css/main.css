@@ -1,9 +1,3 @@
-/*--------------------------
-        Variables
---------------------------*/
-/*--------------------------
-        Mixins
---------------------------*/
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -64,9 +58,6 @@ html {
 
 button, input[type="button"], input[type="reset"], input[type="submit"],
 button {
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  border-radius: 15px;
   -webkit-transition-duration: 0.2s;
   -moz-transition-duration: 0.2s;
   transition-duration: 0.2s;
@@ -76,10 +67,11 @@ button {
   -o-appearance: none;
   appearance: none;
   -webkit-font-smoothing: antialiased;
-  background-color: #01FF70;
+  background-color: #01ff70;
   border: none;
   border-bottom: solid 6px #00b44e;
-  color: #001F3F;
+  border-radius: 15px;
+  color: #001f3f;
   cursor: pointer;
   display: block;
   font-family: "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
@@ -94,13 +86,11 @@ button {
   button:hover, button:focus, input[type="button"]:hover, input[type="button"]:focus, input[type="reset"]:hover, input[type="reset"]:focus, input[type="submit"]:hover, input[type="submit"]:focus,
   button:hover,
   button:focus {
-    background-color: #99FFC5;
+    background-color: #99ffc5;
     border-bottom: solid 6px #00682d; }
   button:active, input[type="button"]:active, input[type="reset"]:active, input[type="submit"]:active,
   button:active {
-    -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    box-shadow: 0, 1px, 4px, rgba(0, 0, 0, 0.6), inset;
     background: #00b44e;
     border-bottom: solid 6px #001c0c; }
   button:disabled, input[type="button"]:disabled, input[type="reset"]:disabled, input[type="submit"]:disabled,
@@ -190,7 +180,7 @@ input[type="radio"] + label span {
   cursor: pointer;
   -moz-border-radius: 50%;
   border-radius: 50%;
-  background-color: #001F3F; }
+  background-color: #001f3f; }
 
 input[type="radio"]:checked + label span {
   background-color: #FFF; }
@@ -313,14 +303,11 @@ picture {
   margin: 0;
   max-width: 100%; }
 
-/*--------------------------
-          Body
---------------------------*/
 body {
-  margin: 0;
-  background-color: #001F3F;
-  color: #01FF70;
-  font-family: lato; }
+  background-color: #001f3f;
+  color: #01ff70;
+  font-family: lato;
+  margin: 0; }
 
 .outer-container {
   max-width: 100%;
@@ -336,19 +323,19 @@ body {
   text-align: center; }
 
 .welcome__title {
-  padding-bottom: 40px;
-  font-size: 400%; }
+  font-size: 400%;
+  padding-bottom: 40px; }
 
 .welcome__description {
-  padding-bottom: 40px;
-  font-size: 150%; }
+  font-size: 150%;
+  padding-bottom: 40px; }
 
 .welcome__button {
   margin: 0 auto; }
 
 .score {
-  margin-top: 8%;
   margin-bottom: 16px;
+  margin-top: 8%;
   text-align: center; }
 
 .score__title {
@@ -360,7 +347,7 @@ body {
   padding-bottom: 40px; }
 
 .score--number {
-  border-bottom: solid #01FF70 3px; }
+  border-bottom: solid #01ff70 3px; }
 
 .end-div-buttons {
   margin: 0 auto; }
@@ -382,33 +369,31 @@ body {
   margin-right: 2.35765%;
   width: 65.88078%;
   margin-left: 17.05961%;
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
+  background-color: #01ff70;
+  border-bottom: solid 6px #00b44e;
   border-radius: 15px;
+  display: block;
   margin-bottom: 2%;
   padding-left: 1%;
-  display: block;
-  border-bottom: solid 6px #00b44e;
-  text-align: left;
-  background-color: #01FF70; }
+  text-align: left; }
   .quiz__question-container:last-child {
     margin-right: 0; }
 
 .quiz__question {
-  font-weight: bold;
+  color: #001f3f;
   font-family: lato;
   font-size: 200%;
-  color: #001F3F; }
+  font-weight: bold; }
 
 label {
-  color: #111111;
-  width: 80%;
+  color: #111;
+  font-family: lato;
   font-size: 125%;
-  font-family: lato; }
+  width: 80%; }
 
 .quiz__choice {
-  display: block;
-  color: #001F3F; }
+  color: #001f3f;
+  display: block; }
 
 .quiz__buttons-container {
   float: left;
@@ -425,17 +410,3 @@ label {
 .quiz__button {
   display: inline-block;
   margin-right: 2%; }
-
-/*--------------------------
-        Utility
---------------------------*/
-.hidden {
-  display: none; }
-
-.highlight-correct {
-  background-color: #01FF70;
-  color: #001F3F; }
-
-.highlight-incorrect {
-  background-color: #FF4136;
-  color: #001F3F; }

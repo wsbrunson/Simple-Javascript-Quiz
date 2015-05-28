@@ -1,27 +1,19 @@
-/* Install Command
-
-npm install --save-dev browser-sync del run-sequence gulp gulp-concat gulp-uglify gulp-ruby-sass gulp-jshint jshint-stylish gulp-scss-lint gulp-shell gulp-filter
-
-*/
-
-var runSequence = require('run-sequence');
-    browserSync = require('browser-sync').create();
-    scsslint    = require('gulp-scss-lint'),
-    stylish     = require('jshint-stylish'),
-    concat      = require('gulp-concat'),
-    reload      = browserSync.reload,
-    uglify      = require('gulp-uglify'),
-    jshint      = require('gulp-jshint'),
-    filter      = require('gulp-filter'),
-    shell       = require('gulp-shell'),
-    gulp        = require('gulp'),
-    sass        = require('gulp-ruby-sass'),
-    del         = require('del');
+var browserify  = require('gulp-browserify');
+var browserSync = require('browser-sync').create();
+var concat      = require('gulp-concat');
+var del         = require('del');
+var gulp        = require('gulp');
+var jshint      = require('gulp-jshint');
+var reload      = browserSync.reload;
+var sass        = require('gulp-ruby-sass');
+var scsslint    = require('gulp-scss-lint');
+var stylish     = require('jshint-stylish');
+var uglify      = require('gulp-uglify');
 
 var source = {
     controllers: 'src/js/app/controllers/*.js',
-    scssReset: 'src/css/_reset.scss',
     scssMain:  'src/css/main.scss',
+    scssLint:  'src/css//*.scss',
     root:      'src/',
     scss:      'src/css/**/*.scss',
     libs:      'src/js/vendor/*.js',
@@ -35,11 +27,6 @@ var build = {
     js:     'build/js/'
 };
 
-var surge = {
-    assets: './build',
-    domain: 'shanelovesmaria.com'
-};
-
 gulp.task('clean', function() {
   del(build.root);
 })
@@ -50,6 +37,16 @@ gulp.task('clean', function() {
      baseDir: './' 
     }
   });
+})
+
+.task('browserify', function() {
+  return gulp.src('src/js/app/app.js')
+    .pipe(browserify({
+      insertGlobals: true,
+      debug: true
+    }))
+    .pipe(concat('bundle.js'))
+    .pipe(gulp.dest('build/js'));
 })
 
 .task('js', function() {
@@ -86,11 +83,12 @@ gulp.task('clean', function() {
 })
 
 .task('sass:lint', function() {
-  var scssFilter = filter(source.scssReset);
-    
-  return gulp.src(source.scss)
-    .pipe(scssFilter)
-    .pipe(scsslint({'config': 'lint.yml'}));
+  return gulp.src('src/css/*.scss')
+    .pipe(scsslint(
+        {
+        'config': 'lint.yml'
+        }
+    ));
 })
 
 .task('serve', ['clean', 'js:lint', 'js:vendor', 'js', 'sass:lint', 'sass', 'server'], function() {
@@ -98,17 +96,6 @@ gulp.task('clean', function() {
     [source.js, source.scss], 
     ['js:lint', 'js', 'sass:lint', 'sass', reload]
   );
-});
-
-gulp.task('surge', shell.task([
-    'surge ' + surge.assets + ' ' + surge.domain
-]));
-
-gulp.task('build', function(callback) {
-  runSequence('clean', 
-              ['js:lint', 'js:vendor', 'js:min', 'sass:lint', 'sass'],
-              'surge',
-              callback);
 });
 
 gulp.task('default', ['build-dev', 'watch']);

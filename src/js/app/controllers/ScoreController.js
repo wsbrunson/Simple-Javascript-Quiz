@@ -1,5 +1,4 @@
-app.controller('ScoreController', ['$scope', '$location', function($scope, $location) {
-  
+var ScoreCtrl = function($scope, $location) {
   var score = this;
   
   score.retakeQuiz = function() {
@@ -10,5 +9,6 @@ app.controller('ScoreController', ['$scope', '$location', function($scope, $loca
     $location.path('/');
     
   };
-  
-}]);
+};
+
+module.exports = ScoreCtrl;
