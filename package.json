@@ -6,13 +6,16 @@
   "author": "Shane Brunson <brunson.ws@gmail.com>",
   "main": "src/js/app.js",
   
+  "browser": {
+    "jquery": ".src/js/vendor/jquery.min.js"
+  },
+  
   "browserify-shim": {
-    "plugin": {
-      "exports": "plugin",
-        "depends": [
-          "jquery:$"
-        ]
-    }
+    "jquery": "$"
+  },
+  
+  "browserify": {
+    "transform": [ "browserify-shim" ]
   },
   
   "devDependencies": {

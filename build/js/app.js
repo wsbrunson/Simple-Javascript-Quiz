@@ -1,17 +1,22 @@
 'use strict';
 
-//Angular packages
-var angular   = require('angular');
-var angularUi = require('angular-ui-router');
+//3rd Party Packages
+var angular      = require('angular');
+var angularRoute = require('angular-route');
+var $            = require('jquery');
 
 //Controllers
-var QuizCtrl = require('./controllers/QuizController.js');
-var ScoreCtrl = require('./controllers/ScoreController.js');
+var QuizCtrl    = require('./controllers/QuizController.js');
+var ScoreCtrl   = require('./controllers/ScoreController.js');
 var WelcomeCtrl = require('./controllers/WelcomeController.js');
 
-var app = angular
-  .module('SimpleQuiz', ['ngRoute'])
-    .config(function($routeProvider) {
+var app = angular.module('SimpleQuiz', ['ngRoute']);
+
+app.controller('QuizController', ['$http', '$scope', '$location', QuizCtrl]);
+app.controller('ScoreController', ['$scope', '$location', ScoreCtrl]);
+app.controller('WelcomeController', ['$location', WelcomeCtrl]);
+
+app.config(function($routeProvider) {
       $routeProvider
         .when('/', {
           templateUrl: 'src/js/app/views/welcome.html',
@@ -33,15 +38,10 @@ var app = angular
         });
 });
 
-app.controller('QuizController', ['$http', '$scope', '$location', QuizCtrl]);
-app.controller('ScoreController', ['$scope', '$location', ScoreCtrl]);
-app.controller('WelcomeController', ['$location', WelcomeCtrl]);
-
 'use strict';
 
 var QuizCtrl = function($http, $scope, $location){
   var quiz = this;
-  console.log($location.$$path);
   quiz.allQuestions = [];
   quiz.questionNavIndex = 0;
 
@@ -123,3 +123,5 @@ var WelcomeCtrl = function($location) {
     $location.path('/quiz');
   };
 };
+
+module.exports = WelcomeCtrl;

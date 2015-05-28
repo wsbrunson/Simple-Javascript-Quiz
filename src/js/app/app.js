@@ -3,7 +3,7 @@
 //3rd Party Packages
 var angular      = require('angular');
 var angularRoute = require('angular-route');
-var jQuery       = require('../vendor/jquery.min.js');
+var $            = require('jquery');
 
 //Controllers
 var QuizCtrl    = require('./controllers/QuizController.js');
