@@ -1,4 +1,4 @@
-var browserify  = require('gulp-browserify');
+var browserify  = require('browserify');
 var browserSync = require('browser-sync').create();
 var concat      = require('gulp-concat');
 var del         = require('del');
@@ -7,8 +7,10 @@ var jshint      = require('gulp-jshint');
 var reload      = browserSync.reload;
 var sass        = require('gulp-ruby-sass');
 var scsslint    = require('gulp-scss-lint');
+var source      = require('vinyl-source-stream');
 var stylish     = require('jshint-stylish');
 var uglify      = require('gulp-uglify');
+var watchify    = require('watchify');
 
 var source = {
     controllers: 'src/js/app/controllers/*.js',
@@ -29,72 +31,69 @@ var build = {
 
 gulp.task('clean', function() {
   del(build.root);
-})
+});
 
-.task('server', function() {
+gulp.task('server', function() {
   browserSync.init({
     server: {
      baseDir: './' 
     }
   });
-})
+});
 
-.task('browserify', function() {
-  return gulp.src('src/js/app/app.js')
-    .pipe(browserify({
-      insertGlobals: true,
-      debug: true
-    }))
-    .pipe(concat('bundle.js'))
-    .pipe(gulp.dest('build/js'));
-})
+gulp.task('browserify', function() {
+  return browserify('./src/js/app/app.js')
+    .bundle()
+    .pipe(source('bundle.js'))
+    .pipe(gulp.dest('./build/js/'));
+});
 
-.task('js', function() {
+gulp.task('js', function() {
   return gulp.src([source.js, source.controllers])
     .pipe(concat('app.js'))
     .pipe(gulp.dest(build.js));
-})
+});
 
-.task('js:min', function() {
+gulp.task('js:min', function() {
   return gulp.src([source.js, source.controllers])
     .pipe(uglify())
     .pipe(concat("app.js"))
     .pipe(gulp.dest(build.js));
-})
+});
 
-.task('js:vendor', function() {
+gulp.task('js:vendor', function() {
   return gulp.src(source.libs)
     .pipe(concat("vendor.js"))
     .pipe(gulp.dest(build.js));
-})
+});
 
-.task('js:lint', function() {
+gulp.task('js:lint', function() {
   return gulp.src([source.js, source.controllers])
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('jshint-stylish'));
-})
+});
 
-.task('sass', function() {
+gulp.task('sass', function() {
   return sass(source.scssMain) 
     .on('error', function (err) {
       console.error('Error!', err.message);
     })
     .pipe(gulp.dest(build.css));
-})
+});
 
-.task('sass:lint', function() {
+gulp.task('sass:lint', function() {
   return gulp.src('src/css/*.scss')
     .pipe(scsslint(
         {
         'config': 'lint.yml'
         }
     ));
-})
+});
 
-.task('serve', ['clean', 'js:lint', 'js:vendor', 'js', 'sass:lint', 'sass', 'server'], function() {
+gulp.task('serve', ['clean', 'js:lint', 'browserify', 'sass:lint', 'sass', 'server'], function() {
   return gulp.watch(
     [source.js, source.scss], 
-    ['js:lint', 'js', 'sass:lint', 'sass', reload]
+    ['js:lint', 'browserify', 'sass:lint', 'sass', reload]
   );
 });
 
