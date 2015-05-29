@@ -1,100 +1,62 @@
-var browserify  = require('browserify');
-var browserSync = require('browser-sync').create();
-var concat      = require('gulp-concat');
-var del         = require('del');
-var gulp        = require('gulp');
-var jshint      = require('gulp-jshint');
-var reload      = browserSync.reload;
-var sass        = require('gulp-ruby-sass');
-var scsslint    = require('gulp-scss-lint');
-var source      = require('vinyl-source-stream');
-var stylish     = require('jshint-stylish');
-var uglify      = require('gulp-uglify');
-var watchify    = require('watchify');
-
-var source = {
-    controllers: 'src/js/app/controllers/*.js',
-    scssMain:  'src/css/main.scss',
-    scssLint:  'src/css//*.scss',
-    root:      'src/',
-    scss:      'src/css/**/*.scss',
-    libs:      'src/js/vendor/*.js',
-    js:        'src/js/app/app.js'
-};
-
-var build = {
-    clean:  'build/**/*',
-    root:   'build/',
-    css:    'build/css/',
-    js:     'build/js/'
-};
+var del        = require('del');
+var browserify = require('browserify');
+var gulp       = require('gulp');
+var jshint     = require('gulp-jshint');
+var sass       = require('gulp-ruby-sass');
+var scsslint   = require('gulp-scss-lint');
+var source     = require('vinyl-source-stream');
+var watchify   = require('watchify');
 
 gulp.task('clean', function() {
-  del(build.root);
-});
-
-gulp.task('server', function() {
-  browserSync.init({
-    server: {
-     baseDir: './' 
-    }
-  });
-});
-
-gulp.task('browserify', function() {
+  del('./build/');
+})
+ 
+gulp.task('browserify:build', function() {
   return browserify('./src/js/app/app.js')
     .bundle()
+    //Pass desired output filename to vinyl-source-stream
     .pipe(source('bundle.js'))
+    // Start piping stream to tasks!
     .pipe(gulp.dest('./build/js/'));
 });
 
-gulp.task('js', function() {
-  return gulp.src([source.js, source.controllers])
-    .pipe(concat('app.js'))
-    .pipe(gulp.dest(build.js));
+gulp.task('browserify:serve', function() {
+  function serveBundle() {
+    return
+  }
+  return watchify(browserify('./src/js/app/app.js'))
+    .bundle()
+    //Pass desired output filename to vinyl-source-stream
+    .pipe(source('bundle.js'))
+    // Start piping stream to tasks!
+    .pipe(gulp.dest('./build/js/'));
 });
 
-gulp.task('js:min', function() {
-  return gulp.src([source.js, source.controllers])
-    .pipe(uglify())
-    .pipe(concat("app.js"))
-    .pipe(gulp.dest(build.js));
-});
-
-gulp.task('js:vendor', function() {
-  return gulp.src(source.libs)
-    .pipe(concat("vendor.js"))
-    .pipe(gulp.dest(build.js));
-});
-
-gulp.task('js:lint', function() {
-  return gulp.src([source.js, source.controllers])
+gulp.task('lint:js', function() {
+  return gulp.src(['./src/js/app/app.js', './src/js/app/controllers/*.js', './src/js/app/services/*.js'])
     .pipe(jshint('.jshintrc'))
-    .pipe(jshint.reporter('jshint-stylish'));
+    .pipe(jshint.reporter('default'));
 });
 
-gulp.task('sass', function() {
-  return sass(source.scssMain) 
-    .on('error', function (err) {
+gulp.task('css', function() {
+  return sass('./src/css/main.scss')
+    .on('error', function(err) {
       console.error('Error!', err.message);
     })
-    .pipe(gulp.dest(build.css));
+    .pipe(gulp.dest('./build/css'));
 });
 
-gulp.task('sass:lint', function() {
-  return gulp.src('src/css/*.scss')
-    .pipe(scsslint(
-        {
-        'config': 'lint.yml'
-        }
-    ));
+gulp.task('lint:css', function() {
+  return gulp.src('./src/css/*.scss')
+    .pipe(scsslint({'config': 'lint.yml'}));
 });
 
-gulp.task('serve', ['clean', 'js:lint', 'browserify', 'sass:lint', 'sass', 'server'], function() {
-  return gulp.watch(
-    [source.js, source.scss], 
-    ['js:lint', 'browserify', 'sass:lint', 'sass', reload]
-  );
+gulp.task('serve', ['browserify:serve'], function() {
+  gulp.watch('./src/css/main.scss', ['lint:css', 'css']);
 });
 
-gulp.task('default', ['build-dev', 'watch']);
+gulp.task('build', ['clean', 'lint:js', 'browserify', 'lint:css', 'css']);
+
+gulp.task('default', function() {
+    console.log("gulped");
+});

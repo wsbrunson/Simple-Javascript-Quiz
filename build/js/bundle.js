@@ -10,47 +10,16 @@ var QuizCtrl    = require('./controllers/QuizController.js');
 var ScoreCtrl   = require('./controllers/ScoreController.js');
 var WelcomeCtrl = require('./controllers/WelcomeController.js');
 
+//Services
+var QuizFactory = require('./services/QuizFactory.js');
+
 var app = angular.module('SimpleQuiz', ['ngRoute']);
 
 app.controller('QuizController', ['$http', '$scope', '$location', '$routeParams', QuizCtrl]);
 app.controller('ScoreController', ['$scope', '$location', ScoreCtrl]);
 app.controller('WelcomeController', ['$location', WelcomeCtrl]);
 
-app.factory('quizFactory', function($http, $q) {
-  var service   = {};
-  var baseUrl   = 'https://api.myjson.com/bins/'
-  var _quizCode = '';
-  var _finalUrl = '';
-
-  function makeUrl() {
-    _finalUrl = baseUrl + _quizCode;
-    return _finalUrl;
-  }
-
-  service.setQuizCode = function(quizCode) {
-    _quizCode = quizCode;
-    console.log('Quiz Code from Factory: ', _quizCode);
-  }
-
-  service.getQuizCode = function() {
-    return _quizCode;
-  }
-  
-  service.callJson = function() {
-    makeUrl();
-    var deferred = $q.defer();
-    $http({
-      method: 'JSONP',
-      url: _finalUrl
-    }).success(function(data){
-      deferred.resolve(data);
-    }).error(function(){
-      deferred.reject('There was an error')
-    })
-  }
-
-  return service;
-});
+app.factory('QuizFactory', ['$http', '$q', QuizFactory]);
 
 app.config(function($routeProvider) {
       $routeProvider
@@ -74,7 +43,7 @@ app.config(function($routeProvider) {
         });
 });
 
-},{"./controllers/QuizController.js":7,"./controllers/ScoreController.js":8,"./controllers/WelcomeController.js":9,"angular":5,"angular-route":3}],2:[function(require,module,exports){
+},{"./controllers/QuizController.js":7,"./controllers/ScoreController.js":8,"./controllers/WelcomeController.js":9,"./services/QuizFactory.js":10,"angular":5,"angular-route":3}],2:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.0
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -38429,10 +38398,10 @@ var QuizCtrl = function ($http, $scope, $location, $routeParams, quizFactory) {
   var quiz = this;
   quiz.allQuestions = [];
   quiz.questionNavIndex = 0;
-
+/*
   function _giveQuizCode() {
     var quizCode = $routeParams.quizId;
-    quizFactory.setQuizCode(quizCode);
+    QuizFactory.setQuizCode(quizCode);
     console.log(quizCode);
     console.log(quizFactory.getQuizCode());
   }
@@ -38441,7 +38410,7 @@ var QuizCtrl = function ($http, $scope, $location, $routeParams, quizFactory) {
 
   function _getQuizData() {
     _giveQuizCode();
-    quizFactory.callJson()
+    QuizFactory.callJson()
       .then(function (data) {
         data.forEach(function (element, index) {
           element.questionNumber = index;
@@ -38450,13 +38419,13 @@ var QuizCtrl = function ($http, $scope, $location, $routeParams, quizFactory) {
       });
   }
 
-  //_getQuizData();
-
+  _getQuizData();
+*/
   $scope.quizScore = 0;
 
   //https://api.myjson.com/bins/3dgdd - array
   //https://api.myjson.com/bins/2i86j - object
-/*
+
   $http.get('https://api.myjson.com/bins/3dgdd').success(function(data) {
     data.forEach(function(element, index){
       element.questionNumber = index;
@@ -38465,7 +38434,7 @@ var QuizCtrl = function ($http, $scope, $location, $routeParams, quizFactory) {
 
     quiz.allQuestionsLength = quiz.allQuestions.length;
   });
-*/
+
   function _validateQuiz() {
     for (var i = 0; i < quiz.allQuestionsLength; i++) {
       var group = 'input[name=group-' + i + ']:checked';
@@ -38529,10 +38498,49 @@ var WelcomeCtrl = function($location) {
   var welcome = this;
 
   this.startQuiz = function() {
-    $location.path('/quiz');
+    $location.path('/quiz/3dgdd');
   };
 };
 
 module.exports = WelcomeCtrl;
+
+},{}],10:[function(require,module,exports){
+var QuizFactory = function($http, $q) {
+  var service   = {};
+  var baseUrl   = 'https://api.myjson.com/bins/'
+  var _quizCode = '';
+  var _finalUrl = '';
+
+  function makeUrl() {
+    _finalUrl = baseUrl + _quizCode;
+    return _finalUrl;
+  }
+
+  service.setQuizCode = function(quizCode) {
+    _quizCode = quizCode;
+    console.log('Quiz Code from Factory: ', _quizCode);
+  }
+
+  service.getQuizCode = function() {
+    return _quizCode;
+  }
+  
+  service.callJson = function() {
+    makeUrl();
+    var deferred = $q.defer();
+    $http({
+      method: 'JSONP',
+      url: _finalUrl
+    }).success(function(data){
+      deferred.resolve(data);
+    }).error(function(){
+      deferred.reject('There was an error')
+    })
+  }
+
+  return service;
+};
+
+module.exports = QuizFactory;
 
 },{}]},{},[1]);

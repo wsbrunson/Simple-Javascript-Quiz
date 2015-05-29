@@ -5,7 +5,7 @@ var QuizCtrl = function ($http, $scope, $location, $routeParams, quizFactory) {
   var quiz = this;
   quiz.allQuestions = [];
   quiz.questionNavIndex = 0;
-
+/*
   function _giveQuizCode() {
     var quizCode = $routeParams.quizId;
     QuizFactory.setQuizCode(quizCode);
@@ -26,13 +26,13 @@ var QuizCtrl = function ($http, $scope, $location, $routeParams, quizFactory) {
       });
   }
 
-  //_getQuizData();
-
+  _getQuizData();
+*/
   $scope.quizScore = 0;
 
   //https://api.myjson.com/bins/3dgdd - array
   //https://api.myjson.com/bins/2i86j - object
-/*
+
   $http.get('https://api.myjson.com/bins/3dgdd').success(function(data) {
     data.forEach(function(element, index){
       element.questionNumber = index;
@@ -41,7 +41,7 @@ var QuizCtrl = function ($http, $scope, $location, $routeParams, quizFactory) {
 
     quiz.allQuestionsLength = quiz.allQuestions.length;
   });
-*/
+
   function _validateQuiz() {
     for (var i = 0; i < quiz.allQuestionsLength; i++) {
       var group = 'input[name=group-' + i + ']:checked';
