@@ -74,7 +74,7 @@ function QuizCtrl($http, $scope, $location, $routeParams, QuizFactory) {
     }
 
     else {
-      alert('Please answer all questions before conintuing');
+      alert('Please answer all questions before continuing');
     }
   };
 }
