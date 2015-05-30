@@ -91,7 +91,7 @@ input[type="radio"] + label span {
     cursor:pointer;
     -moz-border-radius:  50%;
     border-radius:  50%;
-    background-color: $second-color;
+    background-color: $color-secondary;
 }
 
 input[type="radio"]:checked + label span{
@@ -115,10 +115,10 @@ label:before {
     @include border-radius(8px);
     content: "";
     display: inline-block;
- 
+
     width: 16px;
     height: 16px;
- 
+
     margin-right: 10px;
     position: relative;
     background-color: $second-color;

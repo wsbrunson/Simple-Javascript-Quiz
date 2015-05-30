@@ -2,13 +2,13 @@
 button {
   @include transition-duration(0.2s);
   @include appearance(none);
-  
+
   -webkit-font-smoothing: antialiased;
-  background-color: $main-color;
+  background-color: $color-primary;
   border: none;
-  border-bottom: solid 6px $button-click-color;
+  border-bottom: solid 6px $color-button-click;
   border-radius: 15px;
-  color: $second-color;
+  color: $color-secondary;
   cursor: pointer;
   display: block;
   font-family: $base-font-family;
@@ -23,13 +23,13 @@ button {
 
   &:hover,
   &:focus {
-    background-color: $button-hover-color;
+    background-color: $color-button-hover;
     border-bottom: solid 6px #00682d;
   }
-  
+
   &:active {
     box-shadow: 0, 1px, 4px, rgba(0, 0, 0, 0.6), inset;
-    background: $button-click-color;
+    background: $color-button-click;
     border-bottom: solid 6px #001c0c;
   }
 

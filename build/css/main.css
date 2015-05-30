@@ -201,10 +201,10 @@ label:before {
     @include border-radius(8px);
     content: "";
     display: inline-block;
- 
+
     width: 16px;
     height: 16px;
- 
+
     margin-right: 10px;
     position: relative;
     background-color: $second-color;
@@ -277,7 +277,7 @@ h6 {
   font-family: "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
   font-size: 1em;
   line-height: 1.2;
-  margin: 0 0 0.75em; }
+  margin: 0; }
 
 p {
   margin: 0 0 0.75em; }
@@ -323,12 +323,18 @@ body {
   text-align: center; }
 
 .welcome__title {
-  font-size: 400%;
-  padding-bottom: 40px; }
+  font-family: "Helvetica", "Open Sans", sans-serif;
+  font-size: 600%;
+  font-weight: 700;
+  padding-bottom: 5%; }
 
 .welcome__description {
   font-size: 150%;
   padding-bottom: 40px; }
+
+.welcome__id-input {
+  width: 30px;
+  color: #111; }
 
 .welcome__button {
   margin: 0 auto; }

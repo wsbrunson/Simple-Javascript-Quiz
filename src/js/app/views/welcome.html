@@ -1,5 +1,7 @@
 <div class='welcome'>
   <h1 class='welcome__title'>Simple Quiz</h1>
   <h3 class='welcome__description'>Show your stuff! See how well you can answer some general knowledge questions.</h3>
-  <button class="welcome__button button" ng-click="welcome.startQuiz()">Start Quiz!</button>
+  <label>Enter the ID of the quiz you would like to take</label>
+  <input type='text' class='welcome__id-input'>
+  <button class="button welcome__button" ng-click="welcome.startQuiz()">Start Quiz!</button>
 </div>

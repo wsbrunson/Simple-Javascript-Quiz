@@ -8,8 +8,9 @@ var source     = require('vinyl-source-stream');
 var watchify   = require('watchify');
 
 var src = {
-  css: './src/css/main.scss',
-   js: './src/js/app/app.js'
+      css: './src/css/**/*',
+  cssMain: './src/css/main.scss',
+       js: './src/js/app/app.js'
 };
 
 var build = {
@@ -73,7 +74,7 @@ gulp.task('lint:css', function() {
 });
 
 gulp.task('serve', ['clean', 'browserify:serve', 'lint:css', 'css'], function() {
-  gulp.watch('./src/css/main.scss', ['lint:css', 'css']);
+  gulp.watch(src.css, ['lint:css', 'css']);
 });
 
 gulp.task('build', ['clean', 'lint:js', 'browserify', 'lint:css', 'css']);

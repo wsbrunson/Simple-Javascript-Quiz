@@ -1,9 +1,9 @@
 //--------------------------
 //         Body
 //--------------------------
-body { 
-  background-color: $background-color;
-  color: $main-color;
+body {
+  background-color: $color-background;
+  color: $color-primary;
   font-family: lato;
   margin: 0;
 }
@@ -22,13 +22,20 @@ body {
 }
 
   .welcome__title {
-    font-size: 400%;
-    padding-bottom: 40px;
+    font-family: $font-heading;
+    font-size: 600%;
+    font-weight: $font-heading-weight;
+    padding-bottom: 5%;
   }
-  
+
   .welcome__description {
     font-size: 150%;
     padding-bottom: 40px;
+  }
+
+  .welcome__id-input {
+    width: 30px;
+    color: #111;
   }
 
   .welcome__button {
@@ -49,16 +56,16 @@ body {
     font-size: 400%;
     padding-bottom: 40px;
   }
-  
+
   .score__total {
     font-size: 200%;
     padding-bottom: 40px;
   }
-  
+
   .score--number {
-    border-bottom: solid $main-color 3px;
+    border-bottom: solid $color-primary 3px;
   }
-  
+
 .end-div-buttons {
   margin: 0 auto;
 }
@@ -79,9 +86,9 @@ body {
   .quiz__question-container {
     @include span-columns(8);
     @include shift(2);
-    
-    background-color: $main-color;
-    border-bottom: solid 6px $button-click-color;
+
+    background-color: $color-primary;
+    border-bottom: solid 6px $color-button-click;
     border-radius: 15px;
     display: block;
     margin-bottom: 2%;
@@ -90,28 +97,28 @@ body {
   }
 
   .quiz__question {
-    color: $second-color;
+    color: $color-secondary;
     font-family: lato;
     font-size: 200%;
     font-weight: bold;
   }
-    
+
   label {
-    color: $radio-button-color;
+    color: $color-radio-button;
     font-family: lato;
     font-size: 125%;
     width: 80%;
   }
 
   .quiz__choice {
-    color: $second-color;
+    color: $color-secondary;
     display: block;
   }
 
   .quiz__buttons-container {
     @include span-columns(4);
     @include shift(4);
-    
+
     margin-bottom: 10%;
     margin-top: 3%;
     text-align: center;
