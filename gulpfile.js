@@ -77,7 +77,7 @@ gulp.task('serve', ['clean', 'browserify:serve', 'lint:css', 'css'], function() 
   gulp.watch(src.css, ['lint:css', 'css']);
 });
 
-gulp.task('build', ['clean', 'lint:js', 'browserify', 'lint:css', 'css']);
+gulp.task('build', ['clean', 'lint:js', 'browserify:build', 'lint:css', 'css']);
 
 gulp.task('default', function() {
     console.log("gulped");
