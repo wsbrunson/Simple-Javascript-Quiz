@@ -1,5 +1,3 @@
-'use strict';
-
 //3rd Party Packages
 var angular      = require('angular');
 var angularRoute = require('angular-route');
@@ -12,32 +10,15 @@ var WelcomeCtrl = require('./controllers/WelcomeController.js');
 //Services
 var QuizFactory = require('./services/QuizFactory.js');
 
+//Route
+var quizRoutes = require('./routes/route.js');
+
 var app = angular.module('SimpleQuiz', ['ngRoute']);
 
-app.controller('QuizController', ['$http', '$scope', '$location', '$routeParams', QuizCtrl]);
+app.controller('QuizController', ['$http', '$scope', '$location', '$routeParams', 'QuizFactory', QuizCtrl]);
 app.controller('ScoreController', ['$scope', '$location', ScoreCtrl]);
 app.controller('WelcomeController', ['$location', WelcomeCtrl]);
 
 app.factory('QuizFactory', ['$http', '$q', QuizFactory]);
 
-app.config(function($routeProvider) {
-      $routeProvider
-        .when('/', {
-          templateUrl: 'src/js/app/views/welcome.html',
-          controller: 'WelcomeController',
-          controllerAs: 'welcome'
-        })
-        .when('/quiz/:quizId', {
-          templateUrl: 'src/js/app/views/quiz.html',
-          controller: 'QuizController',
-          controllerAs: 'quiz'
-        })
-        .when('/score', {
-          templateUrl: 'src/js/app/views/score.html',
-          controller: 'ScoreController',
-          controllerAs: 'score'
-        })
-        .otherwise({
-          redirectTo: '/'
-        });
-});
+app.config(quizRoutes);

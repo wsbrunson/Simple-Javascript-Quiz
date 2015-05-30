@@ -1,6 +1,4 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-'use strict';
-
 //3rd Party Packages
 var angular      = require('angular');
 var angularRoute = require('angular-route');
@@ -13,37 +11,20 @@ var WelcomeCtrl = require('./controllers/WelcomeController.js');
 //Services
 var QuizFactory = require('./services/QuizFactory.js');
 
+//Route
+var quizRoutes = require('./routes/route.js');
+
 var app = angular.module('SimpleQuiz', ['ngRoute']);
 
-app.controller('QuizController', ['$http', '$scope', '$location', '$routeParams', QuizCtrl]);
+app.controller('QuizController', ['$http', '$scope', '$location', '$routeParams', 'QuizFactory', QuizCtrl]);
 app.controller('ScoreController', ['$scope', '$location', ScoreCtrl]);
 app.controller('WelcomeController', ['$location', WelcomeCtrl]);
 
 app.factory('QuizFactory', ['$http', '$q', QuizFactory]);
 
-app.config(function($routeProvider) {
-      $routeProvider
-        .when('/', {
-          templateUrl: 'src/js/app/views/welcome.html',
-          controller: 'WelcomeController',
-          controllerAs: 'welcome'
-        })
-        .when('/quiz/:quizId', {
-          templateUrl: 'src/js/app/views/quiz.html',
-          controller: 'QuizController',
-          controllerAs: 'quiz'
-        })
-        .when('/score', {
-          templateUrl: 'src/js/app/views/score.html',
-          controller: 'ScoreController',
-          controllerAs: 'score'
-        })
-        .otherwise({
-          redirectTo: '/'
-        });
-});
+app.config(quizRoutes);
 
-},{"./controllers/QuizController.js":7,"./controllers/ScoreController.js":8,"./controllers/WelcomeController.js":9,"./services/QuizFactory.js":10,"angular":5,"angular-route":3}],2:[function(require,module,exports){
+},{"./controllers/QuizController.js":7,"./controllers/ScoreController.js":8,"./controllers/WelcomeController.js":9,"./routes/route.js":10,"./services/QuizFactory.js":11,"angular":5,"angular-route":3}],2:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.0
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -38391,41 +38372,38 @@ return jQuery;
 }));
 
 },{}],7:[function(require,module,exports){
-'use strict';
+function QuizCtrl($http, $scope, $location, $routeParams, QuizFactory) {
+  'use strict';
 
-var QuizCtrl = function ($http, $scope, $location, $routeParams, quizFactory) {
   var $ = require('jquery');
   var quiz = this;
   quiz.allQuestions = [];
   quiz.questionNavIndex = 0;
-/*
-  function _giveQuizCode() {
+
+  var _giveQuizCode = function () {
     var quizCode = $routeParams.quizId;
     QuizFactory.setQuizCode(quizCode);
-    console.log(quizCode);
-    console.log(quizFactory.getQuizCode());
-  }
-
-  _giveQuizCode();
+  };
 
   function _getQuizData() {
     _giveQuizCode();
     QuizFactory.callJson()
       .then(function (data) {
-        data.forEach(function (element, index) {
-          element.questionNumber = index;
+        console.log('data from QuizFactory: ', data);
+        data.forEach(function (element) {
           quiz.allQuestions.push(element);
         });
+        console.log('quiz.allQuestions', quiz.allQuestions);
       });
   }
 
   _getQuizData();
-*/
+
   $scope.quizScore = 0;
 
   //https://api.myjson.com/bins/3dgdd - array
   //https://api.myjson.com/bins/2i86j - object
-
+/*
   $http.get('https://api.myjson.com/bins/3dgdd').success(function(data) {
     data.forEach(function(element, index){
       element.questionNumber = index;
@@ -38434,7 +38412,7 @@ var QuizCtrl = function ($http, $scope, $location, $routeParams, quizFactory) {
 
     quiz.allQuestionsLength = quiz.allQuestions.length;
   });
-
+*/
   function _validateQuiz() {
     for (var i = 0; i < quiz.allQuestionsLength; i++) {
       var group = 'input[name=group-' + i + ']:checked';
@@ -38445,7 +38423,7 @@ var QuizCtrl = function ($http, $scope, $location, $routeParams, quizFactory) {
     }
 
     return true;
-  };
+  }
 
   function _scoreQuiz() {
     var numberOfCorrectAnswers = 0;
@@ -38460,7 +38438,7 @@ var QuizCtrl = function ($http, $scope, $location, $routeParams, quizFactory) {
     }
 
     return numberOfCorrectAnswers;
-  };
+  }
 
   quiz.submitButton = function() {
     if(_validateQuiz()) {
@@ -38473,41 +38451,73 @@ var QuizCtrl = function ($http, $scope, $location, $routeParams, quizFactory) {
       alert('Please answer all questions before conintuing');
     }
   };
-};
+}
 
 module.exports = QuizCtrl;
 
 },{"jquery":6}],8:[function(require,module,exports){
-var ScoreCtrl = function($scope, $location) {
+function ScoreCtrl ($scope, $location) {
+  'use strict';
   var score = this;
-  
+
   score.retakeQuiz = function() {
-    
+
     console.log('click');
     $scope.answersArray = [];
-    
+
     $location.path('/');
-    
+
   };
-};
+}
 
 module.exports = ScoreCtrl;
 
 },{}],9:[function(require,module,exports){
-var WelcomeCtrl = function($location) {
+function WelcomeCtrl ($location) {
+  'use strict';
+
   var welcome = this;
 
-  this.startQuiz = function() {
+  welcome.startQuiz = function() {
     $location.path('/quiz/3dgdd');
   };
-};
+}
 
 module.exports = WelcomeCtrl;
 
 },{}],10:[function(require,module,exports){
-var QuizFactory = function($http, $q) {
+function quizRoutes ($routeProvider) {
+  'use strict';
+
+  $routeProvider
+    .when('/', {
+      templateUrl: 'src/js/app/views/welcome.html',
+      controller: 'WelcomeController',
+      controllerAs: 'welcome'
+    })
+    .when('/quiz/:quizId', {
+      templateUrl: 'src/js/app/views/quiz.html',
+      controller: 'QuizController',
+      controllerAs: 'quiz'
+    })
+    .when('/score', {
+      templateUrl: 'src/js/app/views/score.html',
+      controller: 'ScoreController',
+      controllerAs: 'score'
+    })
+    .otherwise({
+      redirectTo: '/'
+    });
+}
+
+module.exports = quizRoutes;
+
+},{}],11:[function(require,module,exports){
+function QuizFactory ($http, $q) {
+  'use strict';
+
   var service   = {};
-  var baseUrl   = 'https://api.myjson.com/bins/'
+  var baseUrl   = 'https://api.myjson.com/bins/';
   var _quizCode = '';
   var _finalUrl = '';
 
@@ -38519,27 +38529,36 @@ var QuizFactory = function($http, $q) {
   service.setQuizCode = function(quizCode) {
     _quizCode = quizCode;
     console.log('Quiz Code from Factory: ', _quizCode);
-  }
+  };
 
   service.getQuizCode = function() {
     return _quizCode;
-  }
-  
+  };
+
   service.callJson = function() {
     makeUrl();
+    console.log('callJson url: ', _finalUrl);
+
     var deferred = $q.defer();
+
     $http({
-      method: 'JSONP',
+      method: 'GET',
       url: _finalUrl
-    }).success(function(data){
-      deferred.resolve(data);
-    }).error(function(){
-      deferred.reject('There was an error')
     })
-  }
+    .success(function(data) {
+      data.forEach(function(element, index){
+        element.questionNumber = index;
+      });
+      deferred.resolve(data);
+    })
+    .error(function () {
+      deferred.reject('There was an error');
+    });
+    return deferred.promise;
+  };
 
   return service;
-};
+}
 
 module.exports = QuizFactory;
 

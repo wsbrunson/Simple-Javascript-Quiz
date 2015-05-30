@@ -7,29 +7,50 @@ var scsslint   = require('gulp-scss-lint');
 var source     = require('vinyl-source-stream');
 var watchify   = require('watchify');
 
+var src = {
+  css: './src/css/main.scss',
+   js: './src/js/app/app.js'
+};
+
+var build = {
+   css: './build/css/',
+    js: './build/js/',
+  root: './build/'
+};
+
+function handleError(err) {
+  console.log(err.toString());
+  this.emit('end');
+}
+
 gulp.task('clean', function() {
-  del('./build/');
-})
- 
+  del(build.root);
+});
+
+function browserifyHelper(watch) {
+  var bundler = browserify('./src/js/app/app.js', watchify.args);
+
+  if(watch) {
+    bundler = watchify(bundler);
+  }
+
+  rebundle = function() {
+    var stream = bundler.bundle();
+    //stream.on('error', handleError('Browserify'));
+    stream = stream.pipe(source('bundle.js'));
+    return stream.pipe(gulp.dest(build.js));
+  };
+
+  bundler.on('update', rebundle);
+  return rebundle();
+}
+
 gulp.task('browserify:build', function() {
-  return browserify('./src/js/app/app.js')
-    .bundle()
-    //Pass desired output filename to vinyl-source-stream
-    .pipe(source('bundle.js'))
-    // Start piping stream to tasks!
-    .pipe(gulp.dest('./build/js/'));
+  return browserifyHelper(false);
 });
 
 gulp.task('browserify:serve', function() {
-  function serveBundle() {
-    return
-  }
-  return watchify(browserify('./src/js/app/app.js'))
-    .bundle()
-    //Pass desired output filename to vinyl-source-stream
-    .pipe(source('bundle.js'))
-    // Start piping stream to tasks!
-    .pipe(gulp.dest('./build/js/'));
+  return browserifyHelper(true);
 });
 
 gulp.task('lint:js', function() {
@@ -51,7 +72,7 @@ gulp.task('lint:css', function() {
     .pipe(scsslint({'config': 'lint.yml'}));
 });
 
-gulp.task('serve', ['browserify:serve'], function() {
+gulp.task('serve', ['clean', 'browserify:serve', 'lint:css', 'css'], function() {
   gulp.watch('./src/css/main.scss', ['lint:css', 'css']);
 });
 

@@ -1,9 +1,11 @@
-var WelcomeCtrl = function($location) {
+function WelcomeCtrl ($location) {
+  'use strict';
+
   var welcome = this;
 
-  this.startQuiz = function() {
+  welcome.startQuiz = function() {
     $location.path('/quiz/3dgdd');
   };
-};
+}
 
 module.exports = WelcomeCtrl;

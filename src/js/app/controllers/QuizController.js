@@ -1,38 +1,35 @@
-'use strict';
+function QuizCtrl($http, $scope, $location, $routeParams, QuizFactory) {
+  'use strict';
 
-var QuizCtrl = function ($http, $scope, $location, $routeParams, quizFactory) {
   var $ = require('jquery');
   var quiz = this;
   quiz.allQuestions = [];
   quiz.questionNavIndex = 0;
-/*
-  function _giveQuizCode() {
+
+  var _giveQuizCode = function () {
     var quizCode = $routeParams.quizId;
     QuizFactory.setQuizCode(quizCode);
-    console.log(quizCode);
-    console.log(quizFactory.getQuizCode());
-  }
-
-  _giveQuizCode();
+  };
 
   function _getQuizData() {
     _giveQuizCode();
     QuizFactory.callJson()
       .then(function (data) {
-        data.forEach(function (element, index) {
-          element.questionNumber = index;
+        console.log('data from QuizFactory: ', data);
+        data.forEach(function (element) {
           quiz.allQuestions.push(element);
         });
+        console.log('quiz.allQuestions', quiz.allQuestions);
       });
   }
 
   _getQuizData();
-*/
+
   $scope.quizScore = 0;
 
   //https://api.myjson.com/bins/3dgdd - array
   //https://api.myjson.com/bins/2i86j - object
-
+/*
   $http.get('https://api.myjson.com/bins/3dgdd').success(function(data) {
     data.forEach(function(element, index){
       element.questionNumber = index;
@@ -41,7 +38,7 @@ var QuizCtrl = function ($http, $scope, $location, $routeParams, quizFactory) {
 
     quiz.allQuestionsLength = quiz.allQuestions.length;
   });
-
+*/
   function _validateQuiz() {
     for (var i = 0; i < quiz.allQuestionsLength; i++) {
       var group = 'input[name=group-' + i + ']:checked';
@@ -52,7 +49,7 @@ var QuizCtrl = function ($http, $scope, $location, $routeParams, quizFactory) {
     }
 
     return true;
-  };
+  }
 
   function _scoreQuiz() {
     var numberOfCorrectAnswers = 0;
@@ -67,7 +64,7 @@ var QuizCtrl = function ($http, $scope, $location, $routeParams, quizFactory) {
     }
 
     return numberOfCorrectAnswers;
-  };
+  }
 
   quiz.submitButton = function() {
     if(_validateQuiz()) {
@@ -80,6 +77,6 @@ var QuizCtrl = function ($http, $scope, $location, $routeParams, quizFactory) {
       alert('Please answer all questions before conintuing');
     }
   };
-};
+}
 
 module.exports = QuizCtrl;
