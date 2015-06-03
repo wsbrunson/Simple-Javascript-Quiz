@@ -1,4 +1,7 @@
 function QuizFactory ($http, $q) {
+  //https://api.myjson.com/bins/3dgdd - array
+  //https://api.myjson.com/bins/2i86j - object
+  
   'use strict';
 
   var service   = {};

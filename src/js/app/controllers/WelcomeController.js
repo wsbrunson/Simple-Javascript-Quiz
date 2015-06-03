@@ -4,7 +4,7 @@ function WelcomeCtrl ($location) {
   var welcome = this;
 
   welcome.startQuiz = function() {
-    $location.path('/quiz/3dgdd');
+    $location.path('/quiz/5clco');
   };
 }
 

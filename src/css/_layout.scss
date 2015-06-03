@@ -17,6 +17,8 @@ body {
 //        Welcome
 //--------------------------
 .welcome {
+  @include row();
+
   margin-top: $margin-top-of-page;
   text-align: center;
 }
@@ -33,13 +35,36 @@ body {
     padding-bottom: 40px;
   }
 
-  .welcome__id-input {
+  .welcome__take-quiz {
+    @include span-columns(4 of 12);
+    @include shift(1);
+
+    background-color: $color-primary;
+    border-radius: 15px;
+  }
+
+  .welcome__container-title {
+    color: $color-secondary;
+    font-family: $font-heading;
+    font-size: 200%;
+    font-weight: $font-heading-weight;
+  }
+
+  .welcome__take-input {
     width: 30px;
     color: #111;
   }
 
   .welcome__button {
     margin: 0 auto;
+  }
+
+  .welcome__create-quiz {
+    @include span-columns(4 of 12);
+    @include shift(2);
+
+    background-color: $color-primary;
+    border-radius: 15px;
   }
 
 
@@ -97,8 +122,21 @@ body {
   }
 
   .quiz__question {
+    background-color: $color-button-click;
+    border-bottom: solid 4px $color-secondary;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    color: $color-question;
+    font-family: $font-heading;
+    font-size: 250%;
+    font-weight: $font-heading-weight;
+    padding-left: 1%;
+    margin-left: -1.6%;
+  }
+
+  .quiz__question-copy {
     color: $color-secondary;
-    font-family: lato;
+    font-family: $font-heading;
     font-size: 200%;
     font-weight: bold;
   }
@@ -112,6 +150,7 @@ body {
 
   .quiz__choice {
     color: $color-secondary;
+    font-family: $font-heading;
     display: block;
   }
 
