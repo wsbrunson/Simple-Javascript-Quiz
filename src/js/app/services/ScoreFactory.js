@@ -1,35 +1,45 @@
-function ScoreFactory () {
+function ScoreFactory() {
   'use strict';
 
-  var $ = require('jquery');
   var service = {};
+  var numberOfCorrectAnswers = 0;
 
-  function _validateQuiz() {
-    for (var i = 0; i < quiz.allQuestionsLength; i++) {
+  service.validateQuiz = function() {
+    for (var i = 0; i < 7; i++) {
       var group = 'input[name=group-' + i + ']:checked';
+      console.log(group);
 
       if ($(group).length === 0) {
+        console.log(false);
         return false;
       }
     }
 
     return true;
-  }
+  };
 
-  function _scoreQuiz() {
-    var numberOfCorrectAnswers = 0;
+  service.test = 300;
 
-    for(var i = 0; i < quiz.allQuestionsLength; i++) {
+  service.getScore = function() {
+    return numberOfCorrectAnswers;
+  };
+
+  service.resetScore = function() {
+    numberOfCorrectAnswers = 0;
+  };
+
+  service.scoreQuiz = function() {
+    for (var i = 0; i < quiz.allQuestionsLength; i++) {
       var answer = quiz.allQuestions[i].correctAnswer;
       var answerToCheck = '#' + i + '-' + answer + ':checked';
 
-      if($(answerToCheck).length > 0) {
+      if ($(answerToCheck).length > 0) {
         numberOfCorrectAnswers++;
       }
     }
+  };
 
-    return numberOfCorrectAnswers;
-  }
+  return service;
 }
 
 module.exports = ScoreFactory;

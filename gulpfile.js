@@ -1,11 +1,14 @@
-var del        = require('del');
-var browserify = require('browserify');
-var gulp       = require('gulp');
-var jshint     = require('gulp-jshint');
-var sass       = require('gulp-ruby-sass');
-var scsslint   = require('gulp-scss-lint');
-var source     = require('vinyl-source-stream');
-var watchify   = require('watchify');
+var autoprefixer = require('gulp-autoprefixer');
+var del          = require('del');
+var browserify   = require('browserify');
+var gulp         = require('gulp');
+var jshint       = require('gulp-jshint');
+var karma        = require('gulp-karma');
+var sass         = require('gulp-ruby-sass');
+var scsslint     = require('gulp-scss-lint');
+var source       = require('vinyl-source-stream');
+var watchify     = require('watchify');
+var webserver    = require('gulp-webserver');
 
 var src = {
       css: './src/css/**/*',
@@ -23,6 +26,18 @@ function handleError(err) {
   console.log(err.toString());
   this.emit('end');
 }
+
+gulp.task('test:js', function() {
+  return gulp.src('./foobar')
+    .pipe(karma({
+      configFile: 'karma.conf.js',
+      action: 'run'
+    }))
+    .on('error', function(err) {
+      console.log(err);
+      this.emit('end');
+    });
+});
 
 gulp.task('clean', function() {
   del(build.root);
@@ -55,7 +70,9 @@ gulp.task('browserify:serve', function() {
 });
 
 gulp.task('lint:js', function() {
-  return gulp.src(['./src/js/app/app.js', './src/js/app/controllers/*.js', './src/js/app/services/*.js'])
+  return gulp.src(['./src/js/app/app.js',
+                   './src/js/app/controllers/*.js',
+                   './src/js/app/services/*.js'])
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('default'));
 });
@@ -65,6 +82,7 @@ gulp.task('css', function() {
     .on('error', function(err) {
       console.error('Error!', err.message);
     })
+    .pipe(autoprefixer({browsers: ['last 2 versions']}))
     .pipe(gulp.dest('./build/css'));
 });
 
@@ -73,7 +91,16 @@ gulp.task('lint:css', function() {
     .pipe(scsslint({'config': 'lint.yml'}));
 });
 
-gulp.task('serve', ['clean', 'browserify:serve', 'lint:css', 'css'], function() {
+gulp.task('webserver', function() {
+  gulp.src('.')
+    .pipe(webserver({
+      livereload: true,
+      directoryListing: true,
+      open: "http://localhost:8000/index.html"
+    }));
+});
+
+gulp.task('serve', ['clean', 'browserify:serve', 'lint:css', 'css', 'webserver'], function() {
   gulp.watch(src.css, ['lint:css', 'css']);
 });
 

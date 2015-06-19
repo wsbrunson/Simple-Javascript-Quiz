@@ -1,4 +1,4 @@
-function QuizCtrl($http, $scope, $location, $routeParams, QuizFactory) {
+function QuizCtrl($http, $scope, $location, $routeParams, QuizFactory, ScoreFactory) {
   'use strict';
 
   var quiz = this;
@@ -6,27 +6,28 @@ function QuizCtrl($http, $scope, $location, $routeParams, QuizFactory) {
   quiz.allQuestions = [];
   quiz.questionNavIndex = 0;
 
-  var _giveQuizCode = function () {
-    var quizCode = $routeParams.quizId;
-    QuizFactory.setQuizCode(quizCode);
-  };
+  QuizFactory.setQuizCode($routeParams.quizId);
 
-  function _getQuizData() {
-    _giveQuizCode();
-    QuizFactory.callJson()
-      .then(function (data) {
-        console.log('data from QuizFactory: ', data);
-        data.forEach(function (element) {
-          quiz.allQuestions.push(element);
-        });
-        console.log('quiz.allQuestions', quiz.allQuestions);
+  QuizFactory.callJson()
+    .then(function(data) {
+      console.log('data from QuizFactory: ', data);
+      data.forEach(function(element) {
+        quiz.allQuestions.push(element);
       });
-  }
-
-  _getQuizData();
+      console.log('quiz.allQuestions', quiz.allQuestions);
+    });
 
   quiz.submitButton = function() {
-    $location.path('/score');
+    var pass = ScoreFactory.validateQuiz();
+
+    console.log("pass", pass);
+    if (pass) {
+      ScoreFactory.scoreQuiz();
+      console.log("quiz score: ", ScoreFactory.getScore);
+      $location.path('/score');
+    } else {
+      alert("Please anwer all questions before moving on");
+    }
   };
 }
 

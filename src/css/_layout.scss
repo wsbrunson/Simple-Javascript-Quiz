@@ -3,7 +3,6 @@
 //--------------------------
 body {
   background-color: $color-background;
-  color: $color-primary;
   font-family: lato;
   margin: 0;
 }
@@ -24,6 +23,7 @@ body {
 }
 
   .welcome__title {
+    color: $color-primary;
     font-family: $font-heading;
     font-size: 600%;
     font-weight: $font-heading-weight;
@@ -31,6 +31,7 @@ body {
   }
 
   .welcome__description {
+    color: $color-primary;
     font-size: 150%;
     padding-bottom: 40px;
   }
