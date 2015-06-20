@@ -4,10 +4,12 @@ function QuizFactory ($http, $q) {
 
   'use strict';
 
-  var service   = {};
-  var baseUrl   = 'https://api.myjson.com/bins/';
-  var _quizCode = '';
-  var _finalUrl = '';
+  var service    = {};
+  var baseUrl    = 'https://api.myjson.com/bins/';
+  var _quizCode  = '';
+  var _finalUrl  = '';
+  var quizLength = 0;
+  var quiz       =[];
 
   function makeUrl() {
     _finalUrl = baseUrl + _quizCode;
@@ -16,16 +18,24 @@ function QuizFactory ($http, $q) {
 
   service.setQuizCode = function(quizCode) {
     _quizCode = quizCode;
-    console.log('Quiz Code from Factory: ', _quizCode);
+    //console.log('Quiz Code from Factory: ', _quizCode);
   };
 
   service.getQuizCode = function() {
     return _quizCode;
   };
 
+  service.getQuizLength = function() {
+    return quizLength;
+  };
+
+  service.getCorrectAnswer = function(number) {
+    return quiz[number].correctAnswer;
+  };
+
   service.callJson = function() {
     makeUrl();
-    console.log('callJson url: ', _finalUrl);
+    //console.log('callJson url: ', _finalUrl);
 
     var deferred = $q.defer();
 
@@ -37,6 +47,8 @@ function QuizFactory ($http, $q) {
       data.forEach(function(element, index){
         element.questionNumber = index;
       });
+      quiz = data;
+      quizLength = data.length;
       deferred.resolve(data);
     })
     .error(function () {

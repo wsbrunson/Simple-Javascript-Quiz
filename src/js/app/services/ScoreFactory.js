@@ -1,42 +1,84 @@
-function ScoreFactory() {
+function ScoreFactory(QuizFactory) {
   'use strict';
 
   var service = {};
-  var numberOfCorrectAnswers = 0;
+  var score   = 0;
 
-  service.validateQuiz = function() {
-    for (var i = 0; i < 7; i++) {
-      var group = 'input[name=group-' + i + ']:checked';
-      console.log(group);
+  function getInputGroup(length) {
+    var groupArray = [];
 
-      if ($(group).length === 0) {
-        console.log(false);
-        return false;
+    for(var i = 0; i < length; i++) {
+      var groupName = "group-" + i;
+      var groupOfInputs = document.getElementsByName(groupName);
+      var inputArray = [];
+
+      for(var j = 0; j < groupOfInputs.length; j++) {
+        var input = groupOfInputs[j];
+        inputArray.push(input);
       }
+
+      groupArray.push(inputArray);
     }
 
-    return true;
+    return groupArray;
+  }
+
+  function checkRadioButtons(array) {
+    var quizValidated = false;
+
+    array.forEach(function(group) {
+      var radioChecked = 0;
+
+      group.some(function(input) {
+        if(input.checked === true) {
+          //console.log('Input ', input.id, ' is checked');
+          radioChecked++;
+          return true;
+        }
+
+      });
+
+      if(radioChecked === 0) {
+        quizValidated = false;
+      }
+
+      else {
+        radioChecked = 0;
+        quizValidated = true;
+      }
+    });
+    return quizValidated;
+  }
+
+  function scoreQuiz(array) {
+    array.forEach(function(group, index) {
+      var correctAnswer = QuizFactory.getCorrectAnswer(index);
+      //console.log("correct answer: ", correctAnswer);
+      group.forEach(function(input, answer) {
+        if (input.checked && answer === correctAnswer) {
+          //console.log('The input ', input.id, ' was correctly selected');
+          score++;
+          //console.log('Current score: ', score);
+        }
+      });
+    });
+    //console.log("Final score: ", score);
+  }
+
+  service.runScoreQuiz = function() {
+    scoreQuiz(getInputGroup(QuizFactory.getQuizLength()));
   };
 
-  service.test = 300;
+  service.validateQuiz = function() {
+    return checkRadioButtons(getInputGroup(QuizFactory.getQuizLength()));
+  };
 
   service.getScore = function() {
-    return numberOfCorrectAnswers;
+    return score;
   };
 
   service.resetScore = function() {
-    numberOfCorrectAnswers = 0;
-  };
-
-  service.scoreQuiz = function() {
-    for (var i = 0; i < quiz.allQuestionsLength; i++) {
-      var answer = quiz.allQuestions[i].correctAnswer;
-      var answerToCheck = '#' + i + '-' + answer + ':checked';
-
-      if ($(answerToCheck).length > 0) {
-        numberOfCorrectAnswers++;
-      }
-    }
+    score = 0;
   };
 
   return service;

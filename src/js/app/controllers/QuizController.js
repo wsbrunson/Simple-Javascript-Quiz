@@ -10,23 +10,25 @@ function QuizCtrl($http, $scope, $location, $routeParams, QuizFactory, ScoreFact
 
   QuizFactory.callJson()
     .then(function(data) {
-      console.log('data from QuizFactory: ', data);
+      //console.log('data from QuizFactory: ', data);
       data.forEach(function(element) {
         quiz.allQuestions.push(element);
       });
-      console.log('quiz.allQuestions', quiz.allQuestions);
+      //console.log('quiz.allQuestions', quiz.allQuestions);
+
     });
 
   quiz.submitButton = function() {
+    //console.log("The quiz is validated: ", ScoreFactory.validateQuiz());
     var pass = ScoreFactory.validateQuiz();
 
-    console.log("pass", pass);
-    if (pass) {
-      ScoreFactory.scoreQuiz();
-      console.log("quiz score: ", ScoreFactory.getScore);
+    if(pass) {
+      ScoreFactory.runScoreQuiz();
       $location.path('/score');
-    } else {
-      alert("Please anwer all questions before moving on");
+    }
+
+    else {
+      alert('Please answer all questions before continuing');
     }
   };
 }

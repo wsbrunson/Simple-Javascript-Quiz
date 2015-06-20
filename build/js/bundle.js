@@ -19,11 +19,11 @@ var quizRoutes = require('./routes/route.js');
 var app = angular.module('SimpleQuiz', ['ngRoute']);
 
 app.controller('QuizController', ['$http', '$scope', '$location', '$routeParams', 'QuizFactory', 'ScoreFactory', QuizCtrl]);
-app.controller('ScoreController', ['$scope', '$location', ScoreCtrl]);
+app.controller('ScoreController', ['$scope', '$location', 'ScoreFactory', ScoreCtrl]);
 app.controller('WelcomeController', ['$location', WelcomeCtrl]);
 
 app.factory('QuizFactory', ['$http', '$q', QuizFactory]);
-app.factory('ScoreFactory', [ScoreFactory]);
+app.factory('ScoreFactory', ['QuizFactory', ScoreFactory]);
 
 app.config(['$routeProvider', quizRoutes]);
 
@@ -38387,23 +38387,25 @@ function QuizCtrl($http, $scope, $location, $routeParams, QuizFactory, ScoreFact
 
   QuizFactory.callJson()
     .then(function(data) {
-      console.log('data from QuizFactory: ', data);
+      //console.log('data from QuizFactory: ', data);
       data.forEach(function(element) {
         quiz.allQuestions.push(element);
       });
-      console.log('quiz.allQuestions', quiz.allQuestions);
+      //console.log('quiz.allQuestions', quiz.allQuestions);
+
     });
 
   quiz.submitButton = function() {
+    //console.log("The quiz is validated: ", ScoreFactory.validateQuiz());
     var pass = ScoreFactory.validateQuiz();
 
-    console.log("pass", pass);
-    if (pass) {
-      ScoreFactory.scoreQuiz();
-      console.log("quiz score: ", ScoreFactory.getScore);
+    if(pass) {
+      ScoreFactory.runScoreQuiz();
       $location.path('/score');
-    } else {
-      alert("Please anwer all questions before moving on");
+    }
+
+    else {
+      alert('Please answer all questions before continuing');
     }
   };
 }
@@ -38411,17 +38413,13 @@ function QuizCtrl($http, $scope, $location, $routeParams, QuizFactory, ScoreFact
 module.exports = QuizCtrl;
 
 },{}],8:[function(require,module,exports){
-function ScoreCtrl ($scope, $location) {
+function ScoreCtrl ($scope, $location, ScoreFactory) {
   'use strict';
-  var score = this;
+  this.score = ScoreFactory.getScore();
 
-  score.retakeQuiz = function() {
-
-    console.log('click');
-    $scope.answersArray = [];
-
+  this.retakeQuiz = function() {
+    ScoreFactory.resetScore();
     $location.path('/');
-
   };
 }
 
@@ -38458,7 +38456,7 @@ function quizRoutes ($routeProvider) {
     .when('/score', {
       templateUrl: 'src/js/app/views/score.html',
       controller: 'ScoreController',
-      controllerAs: 'score'
+      controllerAs: 'scoreCtrl'
     })
     .otherwise({
       redirectTo: '/'
@@ -38474,10 +38472,12 @@ function QuizFactory ($http, $q) {
 
   'use strict';
 
-  var service   = {};
-  var baseUrl   = 'https://api.myjson.com/bins/';
-  var _quizCode = '';
-  var _finalUrl = '';
+  var service    = {};
+  var baseUrl    = 'https://api.myjson.com/bins/';
+  var _quizCode  = '';
+  var _finalUrl  = '';
+  var quizLength = 0;
+  var quiz       =[];
 
   function makeUrl() {
     _finalUrl = baseUrl + _quizCode;
@@ -38486,16 +38486,24 @@ function QuizFactory ($http, $q) {
 
   service.setQuizCode = function(quizCode) {
     _quizCode = quizCode;
-    console.log('Quiz Code from Factory: ', _quizCode);
+    //console.log('Quiz Code from Factory: ', _quizCode);
   };
 
   service.getQuizCode = function() {
     return _quizCode;
   };
 
+  service.getQuizLength = function() {
+    return quizLength;
+  };
+
+  service.getCorrectAnswer = function(number) {
+    return quiz[number].correctAnswer;
+  };
+
   service.callJson = function() {
     makeUrl();
-    console.log('callJson url: ', _finalUrl);
+    //console.log('callJson url: ', _finalUrl);
 
     var deferred = $q.defer();
 
@@ -38507,6 +38515,8 @@ function QuizFactory ($http, $q) {
       data.forEach(function(element, index){
         element.questionNumber = index;
       });
+      quiz = data;
+      quizLength = data.length;
       deferred.resolve(data);
     })
     .error(function () {
@@ -38521,45 +38531,87 @@ function QuizFactory ($http, $q) {
 module.exports = QuizFactory;
 
 },{}],12:[function(require,module,exports){
-function ScoreFactory() {
+function ScoreFactory(QuizFactory) {
   'use strict';
 
   var service = {};
-  var numberOfCorrectAnswers = 0;
+  var score   = 0;
 
-  service.validateQuiz = function() {
-    for (var i = 0; i < 7; i++) {
-      var group = 'input[name=group-' + i + ']:checked';
-      console.log(group);
+  function getInputGroup(length) {
+    var groupArray = [];
 
-      if ($(group).length === 0) {
-        console.log(false);
-        return false;
+    for(var i = 0; i < length; i++) {
+      var groupName = "group-" + i;
+      var groupOfInputs = document.getElementsByName(groupName);
+      var inputArray = [];
+
+      for(var j = 0; j < groupOfInputs.length; j++) {
+        var input = groupOfInputs[j];
+        inputArray.push(input);
       }
+
+      groupArray.push(inputArray);
     }
 
-    return true;
+    return groupArray;
+  }
+
+  function checkRadioButtons(array) {
+    var quizValidated = false;
+
+    array.forEach(function(group) {
+      var radioChecked = 0;
+
+      group.some(function(input) {
+        if(input.checked === true) {
+          //console.log('Input ', input.id, ' is checked');
+          radioChecked++;
+          return true;
+        }
+
+      });
+
+      if(radioChecked === 0) {
+        quizValidated = false;
+      }
+
+      else {
+        radioChecked = 0;
+        quizValidated = true;
+      }
+    });
+    return quizValidated;
+  }
+
+  function scoreQuiz(array) {
+    array.forEach(function(group, index) {
+      var correctAnswer = QuizFactory.getCorrectAnswer(index);
+      //console.log("correct answer: ", correctAnswer);
+      group.forEach(function(input, answer) {
+        if (input.checked && answer === correctAnswer) {
+          //console.log('The input ', input.id, ' was correctly selected');
+          score++;
+          //console.log('Current score: ', score);
+        }
+      });
+    });
+    //console.log("Final score: ", score);
+  }
+
+  service.runScoreQuiz = function() {
+    scoreQuiz(getInputGroup(QuizFactory.getQuizLength()));
   };
 
-  service.test = 300;
+  service.validateQuiz = function() {
+    return checkRadioButtons(getInputGroup(QuizFactory.getQuizLength()));
+  };
 
   service.getScore = function() {
-    return numberOfCorrectAnswers;
+    return score;
   };
 
   service.resetScore = function() {
-    numberOfCorrectAnswers = 0;
-  };
-
-  service.scoreQuiz = function() {
-    for (var i = 0; i < quiz.allQuestionsLength; i++) {
-      var answer = quiz.allQuestions[i].correctAnswer;
-      var answerToCheck = '#' + i + '-' + answer + ':checked';
-
-      if ($(answerToCheck).length > 0) {
-        numberOfCorrectAnswers++;
-      }
-    }
+    score = 0;
   };
 
   return service;

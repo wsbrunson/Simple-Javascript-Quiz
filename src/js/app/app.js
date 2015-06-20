@@ -18,10 +18,10 @@ var quizRoutes = require('./routes/route.js');
 var app = angular.module('SimpleQuiz', ['ngRoute']);
 
 app.controller('QuizController', ['$http', '$scope', '$location', '$routeParams', 'QuizFactory', 'ScoreFactory', QuizCtrl]);
-app.controller('ScoreController', ['$scope', '$location', ScoreCtrl]);
+app.controller('ScoreController', ['$scope', '$location', 'ScoreFactory', ScoreCtrl]);
 app.controller('WelcomeController', ['$location', WelcomeCtrl]);
 
 app.factory('QuizFactory', ['$http', '$q', QuizFactory]);
-app.factory('ScoreFactory', [ScoreFactory]);
+app.factory('ScoreFactory', ['QuizFactory', ScoreFactory]);
 
 app.config(['$routeProvider', quizRoutes]);

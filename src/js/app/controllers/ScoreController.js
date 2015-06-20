@@ -1,14 +1,10 @@
-function ScoreCtrl ($scope, $location) {
+function ScoreCtrl ($scope, $location, ScoreFactory) {
   'use strict';
-  var score = this;
+  this.score = ScoreFactory.getScore();
 
-  score.retakeQuiz = function() {
-
-    console.log('click');
-    $scope.answersArray = [];
-
+  this.retakeQuiz = function() {
+    ScoreFactory.resetScore();
     $location.path('/');
-
   };
 }
 

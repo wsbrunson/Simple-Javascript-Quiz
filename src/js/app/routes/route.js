@@ -15,7 +15,7 @@ function quizRoutes ($routeProvider) {
     .when('/score', {
       templateUrl: 'src/js/app/views/score.html',
       controller: 'ScoreController',
-      controllerAs: 'score'
+      controllerAs: 'scoreCtrl'
     })
     .otherwise({
       redirectTo: '/'
