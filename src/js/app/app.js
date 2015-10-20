@@ -1,27 +1,31 @@
 //3rd Party Packages
-var angular      = require('angular');
-var angularRoute = require('angular-route');
-var $ = require('jquery');
+var angular = require('angular');
+var uiRouter = require('angular-ui-router');
 
-//Controllers
-var QuizCtrl    = require('./controllers/QuizController.js');
-var ScoreCtrl   = require('./controllers/ScoreController.js');
-var WelcomeCtrl = require('./controllers/WelcomeController.js');
+var app = angular.module('SimpleQuiz', ['ui.router']);
 
-//Services
-var QuizFactory  = require('./services/QuizFactory.js');
-var ScoreFactory = require('./services/ScoreFactory.js');
+require('./services');
+require('./components');
+require('./views');
 
-//Route
-var quizRoutes = require('./routes/route.js');
+app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+	$stateProvider
+    .state('home', {
+			url: '/',
+      template: '<home></home>'
+    })
+    .state('quiz', {
+			url: '/quiz/:quizId',
+      template: '<quiz></quiz>'
+    })
+    .state('score', {
+			url: '/score',
+      template: '<score></score>'
+    });
 
-var app = angular.module('SimpleQuiz', ['ngRoute']);
+	$urlRouterProvider.when('', 'home');
+	$urlRouterProvider.when('index.html/', 'home');
+	$urlRouterProvider.when('/', 'home');
 
-app.controller('QuizController', ['$http', '$scope', '$location', '$routeParams', 'QuizFactory', 'ScoreFactory', QuizCtrl]);
-app.controller('ScoreController', ['$scope', '$location', 'ScoreFactory', ScoreCtrl]);
-app.controller('WelcomeController', ['$location', WelcomeCtrl]);
-
-app.factory('QuizFactory', ['$http', '$q', QuizFactory]);
-app.factory('ScoreFactory', ['QuizFactory', ScoreFactory]);
-
-app.config(['$routeProvider', quizRoutes]);
+	$urlRouterProvider.otherwise('/');
+}]);

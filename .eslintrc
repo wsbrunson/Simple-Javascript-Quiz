@@ -1,0 +1,18 @@
+{
+	"extends": "eslint:recommended",
+	"globals": {
+		"module": false,
+		"alert": false,
+		"require": false
+	},
+	"ecmaFeatures": {
+		"arrowFunctions": true,
+		"blockBindings": true,
+		"templateStrings": true,
+		"modules": true
+	},
+  "rules": {
+      "semi": [2, "always"],
+      "quotes": [2, "single"],
+  }
+}

@@ -1,0 +1,16 @@
+<div class="quiz">
+  <div class='outer-container'>
+		<div class="quiz__question-container" ng-repeat="questionItem in vm.allQuestions track by $index">
+			<h3 class="quiz__question">Question <span>{{ $index + 1 }}</h3>
+				<p class="quiz__question-copy">{{ questionItem.question }}</p>
+				<div ng-repeat="choice in questionItem.choices track by $index">
+					<input id="{{ $index + '-' + $parent.$index }}" type="radio" name="group-{{ $parent.$index }}">
+					<label for="{{ $index + '-' + $parent.$index }}" class="quiz__choice"><span></span>{{ $index + 1 }}. {{ choice }}</label>
+				</div>
+		</div>
+  </div>
+  <div class='quiz__buttons-container'>
+    <button class='button quiz__button' ng-click=''>Not Sure</button>
+    <button class='button quiz__button' ng-click='vm.submitButton()'>Submit</button>
+  </div>
+</div>
