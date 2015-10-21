@@ -1,5 +1,11 @@
-function ScoreService() {
-  'use strict';
-}
+(() => {
+	'use strict';
+	angular.module('SimpleQuiz')
+		.service('ScoreService', ScoreService);
 
-module.exports = ScoreService;
+		function ScoreService() {
+			return {
+				test: true
+			};
+		}
+})();

@@ -1,31 +1,24 @@
-//3rd Party Packages
-var angular = require('angular');
-var uiRouter = require('angular-ui-router');
+angular.module('SimpleQuiz', ['ui.router']);
 
-var app = angular.module('SimpleQuiz', ['ui.router']);
+angular.module('SimpleQuiz')
+	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+		$stateProvider
+			.state('home', {
+				url: '/',
+				template: '<home></home>'
+			})
+			.state('quiz', {
+				url: '/quiz/:quizId',
+				template: '<quiz></quiz>'
+			})
+			.state('score', {
+				url: '/score',
+				template: '<score></score>'
+			});
 
-require('./services');
-require('./components');
-require('./views');
+		$urlRouterProvider.when('', 'home');
+		$urlRouterProvider.when('index.html/', 'home');
+		$urlRouterProvider.when('/', 'home');
 
-app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-	$stateProvider
-    .state('home', {
-			url: '/',
-      template: '<home></home>'
-    })
-    .state('quiz', {
-			url: '/quiz/:quizId',
-      template: '<quiz></quiz>'
-    })
-    .state('score', {
-			url: '/score',
-      template: '<score></score>'
-    });
-
-	$urlRouterProvider.when('', 'home');
-	$urlRouterProvider.when('index.html/', 'home');
-	$urlRouterProvider.when('/', 'home');
-
-	$urlRouterProvider.otherwise('/');
+		$urlRouterProvider.otherwise('/');
 }]);

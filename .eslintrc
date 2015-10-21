@@ -1,9 +1,10 @@
 {
 	"extends": "eslint:recommended",
 	"globals": {
-		"module": false,
+		"angular": false,
 		"alert": false,
-		"require": false
+		"require": false,
+		"console": false
 	},
 	"ecmaFeatures": {
 		"arrowFunctions": true,
@@ -13,6 +14,5 @@
 	},
   "rules": {
       "semi": [2, "always"],
-      "quotes": [2, "single"],
-  }
+      "quotes": [2, "single"]  }
 }
