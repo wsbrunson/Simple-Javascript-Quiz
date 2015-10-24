@@ -1,46 +1,42 @@
-import del from 'del';
-//import browserSyncSetup from 'browser-sync';
-import gulp from 'gulp';
-import plugin from 'gulp-load-plugins';
-
 var browserSync = require('browser-sync').create();
+var del = require('del');
+var gulp = require('gulp');
+var plugins = require('gulp-load-plugins')();
 
-const plugins = plugin();
-
-const src = {
+var src = {
       css: './src/css/**/*',
   cssMain: './src/css/main.scss',
        js: './src/js/app/app.js'
 };
 
-const appSrc = [
+var appSrc = [
 	'./src/js/app/app.js',
 	'./src/js/app/components/**/*Component.js',
 	'./src/js/app/services/**/*Service.js',
 	'./src/js/app/views/**/*View.js'
 ];
 
-const build = {
+var build = {
    css: './build/css/',
     js: './build/js/',
   root: './build/'
 };
 
-const vendor = [
+var vendor = [
 	'./node_modules/angular/angular.min.js',
 	'./node_modules/angular-ui-router/build/angular-ui-router.min.js'
 ];
 
-const watch = [
+var watch = [
 	appSrc,
 	src.css
 ];
 
-gulp.task('clean', () => {
+gulp.task('clean', function() {
   return del(build.root);
 });
 
-gulp.task('webserver', () => {
+gulp.task('webserver', function() {
     browserSync.init({
         server: {
             baseDir: './'
@@ -48,13 +44,13 @@ gulp.task('webserver', () => {
     });
 });
 
-gulp.task('js:vendor', ['clean'], () => {
+gulp.task('js:vendor', ['clean'], function() {
 	return gulp.src(vendor)
 		.pipe(plugins.concat('vendor.js'))
 		.pipe(gulp.dest(build.js));
 });
 
-gulp.task('js', ['clean'], () => {
+gulp.task('js', ['clean'], function() {
 	return gulp.src(appSrc)
 		.pipe(plugins.sourcemaps.init())
 			.pipe(plugins.babel())
@@ -64,17 +60,17 @@ gulp.task('js', ['clean'], () => {
 		//.pipe(browserSync.stream());
 });
 
-gulp.task('css', ['clean'], () => {
+gulp.task('css', ['clean'], function() {
 	return gulp.src('./src/css/main.scss')
 		.pipe(plugins.sourcemaps.init())
 			.pipe(plugins.sass())
 		.pipe(plugins.sourcemaps.write({sourceRoot: './src/css'}))
-    .pipe(gulp.dest('./build/css'));
+    .pipe(gulp.dest(build.css));
 		//.pipe(browserSync.stream());
 });
 
 gulp.task('build', ['js:vendor', 'js', 'css']);
 
-gulp.task('serve', ['build', 'webserver'], () => {
+gulp.task('serve', ['build', 'webserver'], function() {
   gulp.watch(watch, ['build']);
 });
