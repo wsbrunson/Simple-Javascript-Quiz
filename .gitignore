@@ -3,6 +3,8 @@
 /npm-debug.log
 /.sass-cache/
 /build/
+/.vscode/
+/typings/
 
 
 .DS_Store

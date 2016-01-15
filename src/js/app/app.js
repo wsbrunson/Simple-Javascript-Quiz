@@ -1,24 +1,12 @@
-angular.module('SimpleQuiz', ['ui.router']);
+import angular from 'angular';
+import uiRouter from 'angular-ui-router';
 
-angular.module('SimpleQuiz')
-	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-		$stateProvider
-			.state('home', {
-				url: '/',
-				template: '<home></home>'
-			})
-			.state('quiz', {
-				url: '/quiz/:quizId',
-				template: '<quiz></quiz>'
-			})
-			.state('score', {
-				url: '/score',
-				template: '<score></score>'
-			});
+import routing from './app.config';
+import home from './modules/home';
+import takeQuiz from './modules/takeQuiz';
+import createQuiz from './modules/createQuiz';
 
-		$urlRouterProvider.when('', 'home');
-		$urlRouterProvider.when('index.html/', 'home');
-		$urlRouterProvider.when('/', 'home');
+import services from './services';
 
-		$urlRouterProvider.otherwise('/');
-}]);
+angular.module('SimpleQuiz', [uiRouter, services, home, takeQuiz, createQuiz])
+	.config(routing);
