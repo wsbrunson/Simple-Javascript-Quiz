@@ -2,7 +2,7 @@
 // Generated on Tue Oct 27 2015 18:27:26 GMT-0400 (EDT)
 
 /*eslint-disable */
-var webpackConfig = require('./webpack.config.js');
+var webpackConfig = require('./webpack.config.dev.js');
 webpackConfig.entry = {};
 
 module.exports = function(config) {
@@ -86,4 +86,4 @@ module.exports = function(config) {
     // how many browser should be started simultanous
     concurrency: Infinity
   })
-}
+};

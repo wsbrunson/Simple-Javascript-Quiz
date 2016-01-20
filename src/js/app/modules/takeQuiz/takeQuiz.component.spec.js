@@ -6,6 +6,17 @@ describe('takeQuiz Component', function() {
 	var rootScope;
 	var ValidateAndScoreQuiz;
 
+	const questionOne = {
+		'question': 'Grand Central Terminal, Park Avenue, New York is the world\'s',
+		'choices': [{'answer': 'largest railway station'},
+			{'answer': 'highest railway station'},
+			{'answer': 'longest railway station'},
+			{'answer': 'None of the above'}],
+		'correctAnswer': 0
+	};
+	
+	const quizData = [questionOne];
+
 	beforeEach(module('SimpleQuiz'));
 
 	beforeEach(inject(function($rootScope, $compile, $state, _ValidateAndScoreQuiz_) {
@@ -13,6 +24,8 @@ describe('takeQuiz Component', function() {
 		rootScope = $rootScope;
 		state = $state;
 		scope = rootScope.$new();
+
+		scope.$parent.quizData = quizData;
 
 		element = $compile('<take-quiz>')(scope);
 		scope.$apply();

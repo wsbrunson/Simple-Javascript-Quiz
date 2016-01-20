@@ -1,5 +1,4 @@
-ValidateAndScoreQuiz.$inject = ['QuizService'];
-function ValidateAndScoreQuiz (QuizService) {
+function ValidateAndScoreQuiz () {
 	'use strict';
 
 	return {
@@ -18,9 +17,8 @@ function ValidateAndScoreQuiz (QuizService) {
 		return array;
 	}
 
-	function scoreQuiz(quizAttempt) {
+	function scoreQuiz(quizAttempt, correctAnswers) {
 		const answers = _getAnswersFromObject(quizAttempt);
-		const correctAnswers = QuizService.getAnswers();
 		let score = 0;
 		
 		for(let i = 0; i < answers.length; i++) {
@@ -30,16 +28,8 @@ function ValidateAndScoreQuiz (QuizService) {
 		return score;
 	}
 
-	function validateQuiz(attemptToValidate) {
-		const quizSize = QuizService.getLengthOfQuiz();
-
-		if(!attemptToValidate) {
-			return false;
-		} else if (quizSize === attemptToValidate) {
-			return true;
-		} else {
-			return false;
-		}
+	function validateQuiz(attemptToValidate, actualQuizLength) {
+		return attemptToValidate && actualQuizLength === attemptToValidate;
 	}
 }
 

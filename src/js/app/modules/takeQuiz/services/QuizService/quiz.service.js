@@ -6,41 +6,46 @@ function QuizService ($http) {
 	//https://api.myjson.com/bins/2i86j - object
 
 	const BASEURL = 'https://api.myjson.com/bins/';
-	let quizData = [];
+
+	let currentQuizId = null;
+	let quizScore = 0;
 
 	return {
 		getQuiz: getQuiz,
-		getAnswers: getAnswers,
-		getLengthOfQuiz: getLengthOfQuiz,
-		getQuizData: getQuizData
+		getQuizId: getQuizId,
+		getQuizScore: getQuizScore,
+		setQuizScore: setQuizScore
 	};
-
-	function getAnswers() {
-		return quizData.map(item => item.correctAnswer);
-	}
 
 	function getQuiz(quizId) {
 		const url = BASEURL + quizId;
+
+		currentQuizId = quizId;
 
 		return $http.get(url)
 			.then(getQuizComplete)
 			.catch(getQuizFailed);
 
 			function getQuizComplete(response) {
-				quizData = response.data;
 				return response.data;
 			}
 
-			function getQuizFailed() {}
+			function getQuizFailed(error) {
+				console.error(`getQuiz failed: ${error}`);
+			}
 		}
 
-		function getQuizData() {
-			return quizData;
-		}
+	function getQuizId() {
+		return currentQuizId;
+	}
 
-		function getLengthOfQuiz() {
-			return quizData.length;
-		}
+	function getQuizScore() {
+		return quizScore;
+	}
+
+	function setQuizScore(newQuizScore) {
+		quizScore = newQuizScore;
+	}
 }
 
 export default QuizService;

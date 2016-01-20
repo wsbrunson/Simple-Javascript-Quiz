@@ -8,7 +8,7 @@
 	"scripts": {
     "dev": "gulp serve",
     "build": "gulp build:prod",
-		"test": "karma start"
+	"test": "karma start"
   },
   "devDependencies": {
     "babel-core": "^6.1.4",

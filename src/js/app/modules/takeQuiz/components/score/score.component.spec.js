@@ -1,4 +1,4 @@
-describe('questionsComponent', function() {
+describe('Score Component: ', function() {
 	var dirController;
 	var element;
 	var scope;
@@ -16,25 +16,19 @@ describe('questionsComponent', function() {
 
 	beforeEach(module('SimpleQuiz'));
 
-	beforeEach(inject(function($rootScope, $compile, _QuizModel_) {
+	beforeEach(inject(function($rootScope, $compile) {
 		scope = $rootScope.$new();
-		scope.inputData = new _QuizModel_(quizData);
+		scope.inputData = quizData;
 
-		element = $compile('<questions input-data="inputData"></questions>')(scope);
+		element = $compile('<score></score>')(scope);
 
 		scope.$apply();
 
-		dirController = element.controller('questions');
+		dirController = element.controller('score');
 	}));
 
 	it('Should compile without error', function() {
 		expect(element).toBeTruthy();
 		expect(dirController).toBeTruthy();
-	});
-
-	it('Should receive input data', function() {
-		expect(dirController.questions).toBeTruthy();
-
-		expect(dirController.questions[0].correctAnswer).toBe(0);
 	});
 });
