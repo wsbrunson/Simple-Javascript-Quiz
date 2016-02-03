@@ -8,66 +8,7 @@ body {
 }
 
 .outer-container {
-  @include outer-container(100%);
 }
-
-
-//--------------------------
-//        Welcome
-//--------------------------
-.welcome {
-  @include row();
-
-  margin-top: $margin-top-of-page;
-  text-align: center;
-}
-
-  .welcome__title {
-    color: $color-primary;
-    font-family: $font-heading;
-    font-size: 600%;
-    font-weight: $font-heading-weight;
-    padding-bottom: 5%;
-  }
-
-  .welcome__description {
-    color: $color-primary;
-    font-size: 150%;
-    padding-bottom: 40px;
-  }
-
-  .welcome__take-quiz {
-    @include span-columns(4 of 12);
-    @include shift(1);
-
-    background-color: $color-primary;
-    border-radius: 15px;
-  }
-
-  .welcome__container-title {
-    color: $color-secondary;
-    font-family: $font-heading;
-    font-size: 200%;
-    font-weight: $font-heading-weight;
-  }
-
-  .welcome__take-input {
-    width: 30px;
-    color: #111;
-  }
-
-  .welcome__button {
-    margin: 0 auto;
-  }
-
-  .welcome__create-quiz {
-    @include span-columns(4 of 12);
-    @include shift(2);
-
-    background-color: $color-primary;
-    border-radius: 15px;
-  }
-
 
 //--------------------------
 //      Score Screen
@@ -105,13 +46,10 @@ body {
 //       Quiz Questions
 //--------------------------
 .quiz {
-  @include row();
   margin-top: $margin-top-of-page;
 }
 
   .quiz__question-container {
-    @include span-columns(8);
-    @include shift(2);
 
     background-color: $color-primary;
     border-bottom: solid 6px $color-button-click;
@@ -156,8 +94,6 @@ body {
   }
 
   .quiz__buttons-container {
-    @include span-columns(4);
-    @include shift(4);
 
     margin-bottom: 10%;
     margin-top: 3%;

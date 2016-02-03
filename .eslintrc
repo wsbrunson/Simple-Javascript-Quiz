@@ -1,6 +1,6 @@
 {
 	"extends": ["standard", "standard-react"],
-
+	"parser": "babel-eslint",
 	"globals": {
 		"angular": false,
 		"module": false,
@@ -21,6 +21,7 @@
 		"modules": true
 	},
   "rules": {
+			"react/prop-types": 0,
       "semi": [2, "always"],
       "quotes": [2, "single"],
 			"no-console": [0],

@@ -1,10 +1,11 @@
-//---- 3rd Party Components ---- 
+//---- 3rd Party Components ----
 @import 'lib/reset';
 @import 'lib/bourbon/bourbon';
-@import 'base/grid-settings';
-@import 'lib/neat/neat';
 
 @import 'partials';
 @import 'base/base';
 
 @import 'layout';
+
+@import 'components/home/home';
+@import 'components/home/quiz-navigation-box';
