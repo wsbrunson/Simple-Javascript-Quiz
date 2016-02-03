@@ -1,5 +1,6 @@
 {
-	"extends": "eslint:recommended",
+	"extends": ["standard", "standard-react"],
+
 	"globals": {
 		"angular": false,
 		"module": false,
@@ -22,6 +23,8 @@
   "rules": {
       "semi": [2, "always"],
       "quotes": [2, "single"],
-			"no-console": [0]
+			"no-console": [0],
+			"space-before-function-paren": [2, "never"],
+			"indent": [2, "tab"]
 		}
 }
