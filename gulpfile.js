@@ -19,7 +19,7 @@ var reload = browserSync.reload;
 var historyApiFallback = require('connect-history-api-fallback');
 
 var src = {
-	css: './src/css/**/*',
+	css: './src/css/**/*.scss',
 	cssMain: './src/css/main.scss',
 	js: './src/js/app/app.js'
 };
@@ -44,7 +44,7 @@ gulp.task('css', function() {
 			}))
 		.pipe(sourcemaps.write({sourceRoot: '/src/css'}))
 		.pipe(gulp.dest(build.css))
-		.pipe(reload({stream: true}));
+		.pipe(browserSync.stream());
 });
 
 /*
@@ -63,7 +63,8 @@ gulp.task('browser-sync', function() {
 		// we need to disable clicks and forms for when we test multiple rooms
 		server: {},
 		middleware: [ historyApiFallback() ],
-		ghostMode: false
+		ghostMode: false,
+		browser: 'google chrome'
 	});
 });
 
@@ -118,6 +119,6 @@ gulp.task('scripts', function() {
 
 // run 'scripts' task first, then watch for future changes
 gulp.task('default', ['images', 'css', 'scripts', 'browser-sync'], function() {
-	gulp.watch(src.cssMain, ['css']); // gulp watch for stylus changes
+	gulp.watch(src.css, ['css']); // gulp watch for stylus changes
 	return buildScript('main.js', true); // browserify watch for JS changes
 });

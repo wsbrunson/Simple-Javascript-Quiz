@@ -11,7 +11,7 @@ const quizNavigationInformation = {
 	takeQuiz: {
 		title: 'Take a Quiz!',
 		buttonText: 'Start Quiz!',
-		url: '/take-quiz/'
+		url: '/take-quiz/example-quiz'
 	}
 };
 

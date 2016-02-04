@@ -10,15 +10,15 @@ function score() {
 
 	scoreViewController.$inject = ['$state', 'QuizService'];
 	function scoreViewController($state, QuizService) {
-			const vm = this;
+		const vm = this;
 
-			vm.score = QuizService.getQuizScore();
-			vm.retakeQuiz = retakeQuiz;
+		vm.score = QuizService.getQuizScore();
+		vm.retakeQuiz = retakeQuiz;
 
-			function retakeQuiz() {
-				QuizService.setQuizScore(0);
-				$state.go('quiz', {quizId: QuizService.getQuizId()});
-			}
+		function retakeQuiz() {
+			QuizService.setQuizScore(0);
+			$state.go('quiz', {quizId: QuizService.getQuizId()});
+		}
 	}
 
 	return directiveConfig;

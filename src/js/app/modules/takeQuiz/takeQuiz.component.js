@@ -24,7 +24,7 @@ function takeQuiz() {
 		function submitButton() {
 			const pass = ValidateAndScoreQuiz.validateQuiz(PrepareQuizAnswers.getSelectionsLength(), vm.quiz.length);
 
-			if(pass) {
+			if (pass) {
 				QuizService.setQuizScore(ValidateAndScoreQuiz.scoreQuiz(PrepareQuizAnswers.getSelections(), vm.quiz.correctAnswers));
 
 				$state.go('score');
