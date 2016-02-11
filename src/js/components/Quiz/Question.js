@@ -25,6 +25,9 @@ class Question extends React.Component {
 	}
 
 	render() {
+		if (this.props.selection) {
+			console.log(true);
+		}
 		return (
 			<div className='question'>
 				<h3 className='question-title'>{`Question ${this.props.questionNumber}`}</h3>

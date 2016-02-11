@@ -4,7 +4,7 @@ import autobind from 'autobind-decorator';
 import Rebase from 're-base';
 const base = Rebase.createClass('https://quiz-simply.firebaseio.com/');
 
-import Question from './Question';
+import Quiz from '../Quiz/Quiz';
 import Score from './Score';
 
 @autobind
@@ -18,19 +18,6 @@ class TakeQuiz extends React.Component {
 			questions: {},
 			isSubmitted: false
 		};
-	}
-
-	renderQuestions(key) {
-		var question = this.state.questions[key];
-		return (
-			<Question
-				key={key}
-				questionNumber={parseInt(key, 10) + 1}
-				questionTitle={question.question}
-				choices={question.choices}
-				selectAnswer={this.selectAnswer}
-				/>
-		);
 	}
 
 	retakeQuiz() {
@@ -89,11 +76,15 @@ class TakeQuiz extends React.Component {
 		} else {
 			return (
 				<div className='take-quiz'>
-				<div className='take-quiz-button-container'>
-					<button className='button' onClick={this.submitQuiz}>Submit</button>
-					<button className='button' onClick={this.setAnswerSelections}>Set Answers</button>
-				</div>
-					{Object.keys(this.state.questions).map(this.renderQuestions)}
+					<div className='take-quiz-button-container'>
+						<button className='button' onClick={this.submitQuiz}>Submit</button>
+						<button className='button' onClick={this.setAnswerSelections}>Set Answers</button>
+					</div>
+					<Quiz
+						questions={this.state.questions}
+						answerSelections={this.state.answerSelections}
+						selectAnswer={this.selectAnswer}
+					/>
 				</div>
 			);
 		}
